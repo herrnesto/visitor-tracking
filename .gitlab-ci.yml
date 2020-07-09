@@ -1,5 +1,6 @@
 stages:
   - test
+  - deploy
 image: bitwalker/alpine-elixir-phoenix:latest
 test:
   stage: test
