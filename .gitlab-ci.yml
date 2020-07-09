@@ -10,7 +10,7 @@ test:
     POSTGRES_HOST: postgres
     POSTGRES_USER: postgres # must match config/test.exs
     POSTGRES_PASSWORD: postgress # must match config/test.exs
-    POSTGRES_PORT: 5440
+    POSTGRES_PORT: 5450
     MIX_ENV: "test"
   script:
     - mix deps.get --only test
