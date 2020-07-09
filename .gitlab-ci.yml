@@ -19,3 +19,11 @@ test:
   only:
     - master
     - merge_requests
+
+deploy: # Add this 'deploy' stage description
+  stage: deploy
+  script:
+    - git remote add gigalixir $GIGALIXIR_REMOTE_URL
+    - git push -f gigalixir HEAD:refs/heads/master
+  only:
+    - master
