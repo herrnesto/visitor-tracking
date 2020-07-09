@@ -7,9 +7,10 @@ use Mix.Config
 # Run `mix help test` for more information.
 config :visitor_tracking, VisitorTracking.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "postgress",
   database: "visitor_tracking_test#{System.get_env("MIX_TEST_PARTITION")}",
-  hostname: "localhost",
+  hostname: System.get_env("POSTGRES_HOST") || "localhost",
+  port: 5450,
   pool: Ecto.Adapters.SQL.Sandbox
 
 # We don't run a server during test. If one is required,
