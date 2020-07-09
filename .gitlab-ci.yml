@@ -9,7 +9,7 @@ test:
   variables:
     POSTGRES_DB: visitor_tracking_test
     POSTGRES_HOST: postgres
-    POSTGRES_PORT: 5450
+    POSTGRES_PORT: 5432
     POSTGRES_USER: postgres # must match config/test.exs
     POSTGRES_PASSWORD: postgress # must match config/test.exs
     MIX_ENV: "test"
