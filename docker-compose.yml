@@ -1,0 +1,26 @@
+version: '3.5'
+
+services:
+  db_dev:
+    container_name: vt_postgres
+    image: postgres
+    ports:
+      - 5440:5432
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgress
+      - POSTGRES_DB=visitor_tracking_dev
+
+  db_test:
+    container_name: vt_postgres_test
+    image: postgres
+    ports:
+      - 5450:5432
+    volumes:
+      - ./postgres-data_test:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgress
+      - POSTGRES_DB=visitor_tracking_test
