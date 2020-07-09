@@ -7,7 +7,7 @@ test:
   services:
     - postgres:latest
   variables:
-    POSTGRES_DB: db_name
+    POSTGRES_DB: visitor_tracking_test
     POSTGRES_HOST: postgres
     POSTGRES_PORT: 5450
     POSTGRES_USER: postgres # must match config/test.exs
