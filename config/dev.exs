@@ -3,12 +3,11 @@ use Mix.Config
 # Configure your database
 config :visitor_tracking, VisitorTracking.Repo,
   username: "postgres",
-  password: "postgress",
+  password: "postgres",
   database: "visitor_tracking_dev",
-  hostname: "0.0.0.0",
-  port: 5440,
+  hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
-  pool_size: 50
+  pool_size: 10
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
@@ -16,7 +15,7 @@ config :visitor_tracking, VisitorTracking.Repo,
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
-config :visitor_tracking_web, VisitorTrackingWeb.Endpoint,
+config :visitor_tracking, VisitorTrackingWeb.Endpoint,
   http: [port: 4000],
   debug_errors: true,
   code_reloader: true,
@@ -27,7 +26,7 @@ config :visitor_tracking_web, VisitorTrackingWeb.Endpoint,
       "--mode",
       "development",
       "--watch-stdin",
-      cd: Path.expand("../apps/visitor_tracking_web/assets", __DIR__)
+      cd: Path.expand("../assets", __DIR__)
     ]
   ]
 
@@ -56,7 +55,7 @@ config :visitor_tracking_web, VisitorTrackingWeb.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :visitor_tracking_web, VisitorTrackingWeb.Endpoint,
+config :visitor_tracking, VisitorTrackingWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
@@ -69,9 +68,9 @@ config :visitor_tracking_web, VisitorTrackingWeb.Endpoint,
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
 
-# Initialize plugs at runtime for faster development compilation
-config :phoenix, :plug_init_mode, :runtime
-
 # Set a higher stacktrace during development. Avoid configuring such
 # in production as building large stacktraces may be expensive.
 config :phoenix, :stacktrace_depth, 20
+
+# Initialize plugs at runtime for faster development compilation
+config :phoenix, :plug_init_mode, :runtime

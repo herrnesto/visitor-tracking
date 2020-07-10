@@ -1,3 +1,0 @@
-# VisitorTracking
-
-**TODO: Add description**
