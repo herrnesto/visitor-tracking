@@ -1,29 +1,22 @@
-# This file is responsible for configuring your umbrella
-# and **all applications** and their dependencies with the
-# help of Mix.Config.
+# This file is responsible for configuring your application
+# and its dependencies with the aid of the Mix.Config module.
 #
-# Note that all applications in your umbrella share the
-# same configuration and dependencies, which is why they
-# all use the same configuration file. If you want different
-# configurations or dependencies per app, it is best to
-# move said applications out of the umbrella.
+# This configuration file is loaded before any dependency and
+# is restricted to this project.
+
+# General application configuration
 use Mix.Config
 
-# Configure Mix tasks and generators
 config :visitor_tracking,
   ecto_repos: [VisitorTracking.Repo]
 
-config :visitor_tracking_web,
-  ecto_repos: [VisitorTracking.Repo],
-  generators: [context_app: :visitor_tracking]
-
 # Configures the endpoint
-config :visitor_tracking_web, VisitorTrackingWeb.Endpoint,
+config :visitor_tracking, VisitorTrackingWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "aBWX5lmsbLtwTzGAnvPDARqT+lJv3T1zcRuWxszS9YDcVY/Ht2HPZuXLhbWiTsNf",
+  secret_key_base: "TcdHqnS3dtFvzzl0FDL+E9G+cN+1a56DSTWh4eCXom6LDL/qhTWeGxaPoVtSf5dp",
   render_errors: [view: VisitorTrackingWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: VisitorTracking.PubSub,
-  live_view: [signing_salt: "Mtym5xHL"]
+  live_view: [signing_salt: "Ddpp4t0K"]
 
 # Configures Elixir's Logger
 config :logger, :console,
