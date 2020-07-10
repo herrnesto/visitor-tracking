@@ -23,6 +23,7 @@ defmodule VisitorTrackingWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import VisitorTrackingWeb.ConnCase
+      import VisitorTracking.Factory
 
       alias VisitorTrackingWeb.Router.Helpers, as: Routes
 

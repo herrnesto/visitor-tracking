@@ -18,6 +18,7 @@ defmodule VisitorTrackingWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
+    resources "/sessions", SessionController, only: [:new, :create, :delete]
   end
 
   # Other scopes may use custom stacks.

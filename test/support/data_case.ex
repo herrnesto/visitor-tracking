@@ -24,6 +24,7 @@ defmodule VisitorTracking.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import VisitorTracking.DataCase
+      import VisitorTracking.Factory
     end
   end
 
