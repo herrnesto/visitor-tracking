@@ -26,6 +26,7 @@ deploy: # Add this 'deploy' stage description
   stage: deploy
   script:
     - git remote add gigalixir $GIGALIXIR_REMOTE_URL
-    - git push -f gigalixir HEAD:refs/heads/master
+    - git push -f gigalixir master
+    - gigalixir run mix ecto.migrate
   only:
     - master
