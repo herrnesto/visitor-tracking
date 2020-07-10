@@ -41,6 +41,5 @@ defmodule VisitorTrackingWeb.Router do
     end
 
     forward "/sent_emails", Bamboo.SentEmailViewerPlug
-
   end
 end

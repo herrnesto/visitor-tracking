@@ -76,7 +76,4 @@ config :phoenix, :stacktrace_depth, 20
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
 
-# config/config.exs
-config :visitor_tracking, VisitorTracking.Mailer,
-  adapter: Bamboo.LocalAdapter,
-  api_key: "my_api_key"
+config :visitor_tracking, VisitorTracking.Mailer, adapter: Bamboo.LocalAdapter
