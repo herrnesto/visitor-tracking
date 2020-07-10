@@ -21,3 +21,6 @@ config :visitor_tracking, VisitorTrackingWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+# Config pbkdf2 to take only one round for faster testing
+config :pbkdf2_elixir, :rounds, 1
