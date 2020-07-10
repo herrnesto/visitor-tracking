@@ -1,4 +1,7 @@
 defmodule VisitorTracking.Email do
+  @moduledoc """
+  Contains functions for composing emails.
+  """
   use Bamboo.Phoenix, view: VisitorTrackingWeb.EmailView
 
   def verification_email(email, token) do
