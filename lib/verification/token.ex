@@ -1,6 +1,6 @@
 defmodule VisitorTracking.Verification.Token do
   @moduledoc false
-  
+
   use Ecto.Schema
 
   import Ecto.Changeset
