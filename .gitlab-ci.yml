@@ -2,6 +2,8 @@ stages:
   - build
   - quality
   - deploy_to_staging
+  - deploy_to_production
+
 
 build:
   stage: build
@@ -66,8 +68,21 @@ credo:
 deploy_to_staging: # Add this 'deploy' stage description
   stage: deploy_to_staging
   script:
-    - git remote add gigalixir $GIGALIXIR_REMOTE_URL
-    - git push -f gigalixir HEAD:refs/heads/master
+    - git remote add gigalixir $GIGALIXIR_REMOTE_URL_STAG
+    - git push gigalixir master
     - gigalixir run mix ecto.migrate
   only:
     - master
+
+
+
+deploy_to_production: # Add this 'deploy' stage description
+  stage: deploy_to_production
+  script:
+    - git remote add gigalixir $GIGALIXIR_REMOTE_URL_PROD
+    - git push gigalixir master
+    - gigalixir run mix ecto.migrate
+  WHEN: manual
+  only:
+    - master
+    - /^release.*$/i
