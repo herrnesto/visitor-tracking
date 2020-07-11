@@ -21,3 +21,5 @@ config :visitor_tracking, VisitorTrackingWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+config :visitor_tracking, VisitorTracking.Mailer, adapter: Bamboo.TestAdapter

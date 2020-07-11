@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Email</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link phx-track-static rel="stylesheet" href="<%= Routes.static_path(VisitorTrackingWeb.Endpoint, "/css/email.css") %>"/>
+</head>
+<body style="background-color: #e9ecef;">
+
+    <%= @inner_content %>
+
+</body>
+</html>
