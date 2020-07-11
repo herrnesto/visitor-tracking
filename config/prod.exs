@@ -6,7 +6,9 @@ secret_key_base =
     environment variable SECRET_KEY_BASE is missing.
     You can generate one by calling: mix phx.gen.secret
     """
-host = System.get_env("HOST") ||
+
+host =
+  System.get_env("HOST") ||
     raise """
     environment variable SECRET_KEY_BASE is missing.
     You can generate one by calling: mix phx.gen.secret
@@ -15,7 +17,7 @@ host = System.get_env("HOST") ||
 config :visitor_tracking, VisitorTrackingWeb.Endpoint,
   url: [host: host, port: 80],
   cache_static_manifest: "priv/static/cache_manifest.json",
-    http: [
+  http: [
     port: String.to_integer(System.get_env("PORT") || "4000"),
     transport_options: [socket_opts: [:inet6]]
   ],
@@ -72,4 +74,3 @@ config :visitor_tracking, VisitorTracking.Repo,
   # ssl: true,
   url: database_url,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
-
