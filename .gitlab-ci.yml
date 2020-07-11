@@ -4,7 +4,6 @@ stages:
   - deploy_to_staging
   - deploy_to_production
 
-
 build:
   stage: build
   image: bitwalker/alpine-elixir-phoenix:latest
@@ -23,7 +22,6 @@ build:
     - _build/
     - deps/
     expire_in: 10 minutes
-
 
 test:
   stage: quality
@@ -64,23 +62,19 @@ credo:
     - mix deps.get
     - mix credo suggest --min-priority 10
 
-
 deploy_to_staging: # Add this 'deploy' stage description
   stage: deploy_to_staging
   script:
     - git remote add gigalixir $GIGALIXIR_REMOTE_URL_STAG
-    - git push gigalixir master
-    - gigalixir run mix ecto.migrate
+    - git push -f gigalixir HEAD:refs/heads/master
   only:
     - master
-
-
 
 deploy_to_production: # Add this 'deploy' stage description
   stage: deploy_to_production
   script:
     - git remote add gigalixir $GIGALIXIR_REMOTE_URL_PROD
-    - git push gigalixir master
+    - git push -f gigalixir HEAD:refs/heads/master
     - gigalixir run mix ecto.migrate
   when: manual
   only:
