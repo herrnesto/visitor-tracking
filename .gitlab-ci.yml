@@ -82,7 +82,7 @@ deploy_to_production: # Add this 'deploy' stage description
     - git remote add gigalixir $GIGALIXIR_REMOTE_URL_PROD
     - git push gigalixir master
     - gigalixir run mix ecto.migrate
-  WHEN: manual
+  when: manual
   only:
     - master
     - /^release.*$/i
