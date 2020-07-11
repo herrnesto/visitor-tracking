@@ -1,4 +1,6 @@
 defmodule VisitorTracking.Verification do
+  @moduledoc false
+  
   alias VisitorTracking.Repo
   alias VisitorTracking.Verification.Token
 

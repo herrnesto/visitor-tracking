@@ -1,4 +1,6 @@
 defmodule VisitorTrackingWeb.PageLive do
+  @moduledoc false
+  
   use VisitorTrackingWeb, :live_view
 
   @impl true
