@@ -1,9 +1,31 @@
 stages:
-  - test
-  - deploy
-image: bitwalker/alpine-elixir-phoenix:latest
+  - build
+  - quality
+  - deploy_to_staging
+
+build:
+  stage: build
+  image: bitwalker/alpine-elixir-phoenix:latest
+  variables:
+    POSTGRES_DB: visitor_tracking_test
+    POSTGRES_HOST: postgres
+    POSTGRES_PORT: 5432
+    POSTGRES_USER: postgres # must match config/test.exs
+    POSTGRES_PASSWORD: postgress # must match config/test.exs
+    MIX_ENV: "test"
+  script:
+    - mix deps.get
+    - mix compile
+  artifacts:
+    paths:
+    - _build/
+    - deps/
+    expire_in: 10 minutes
+
+
 test:
-  stage: test
+  stage: quality
+  image: bitwalker/alpine-elixir-phoenix:latest
   services:
     - postgres:latest
   variables:
@@ -22,8 +44,27 @@ test:
     - master
     - merge_requests
 
-deploy: # Add this 'deploy' stage description
-  stage: deploy
+format:
+  stage: quality
+  image: bitwalker/alpine-elixir-phoenix:latest
+  variables:
+    MIX_ENV: "test"
+  script:
+    - mix deps.get
+    - mix format --check-formatted --dry-run
+
+credo:
+  stage: quality
+  image: bitwalker/alpine-elixir-phoenix:latest
+  variables:
+    MIX_ENV: "test"
+  script:
+    - mix deps.get
+    - mix credo suggest --min-priority 10
+
+
+deploy_to_staging: # Add this 'deploy' stage description
+  stage: deploy_to_staging
   script:
     - git remote add gigalixir $GIGALIXIR_REMOTE_URL
     - git push -f gigalixir HEAD:refs/heads/master
