@@ -74,3 +74,9 @@ config :visitor_tracking, VisitorTracking.Repo,
   # ssl: true,
   url: database_url,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
+
+# configure bamboo adapter by environment variable
+bamboo_adapter = if System.get_env("DEVELOPER_TOOLS") == "true", do: Bamboo.TestAdapter, else: Bamboo.SendgridAdapter
+
+config :visitor_tracking, VisitorTracking.Mailer, adapter: bamboo_adapter,
+  api_key: System.get_env("SENDGRID_API_KEY")
