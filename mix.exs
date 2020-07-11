@@ -63,6 +63,7 @@ defmodule VisitorTracking.MixProject do
       {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
       {:ex_machina, "~> 2.4", only: :test},
       {:httpoison, "~> 1.6"}
+      {:sentry, "~> 7.0"}
     ]
   end
 

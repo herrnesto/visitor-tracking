@@ -36,6 +36,11 @@ config :visitor_tracking,
   developer_tools: System.get_env("DEVELOPER_TOOLS") || true,
   host: host
 
+config :sentry,
+  dsn: "https://136efedacf3e4c56ab7ef0235f467033@o419092.ingest.sentry.io/5327878",
+  included_environments: [:prod],
+  environment_name: System.get_env("RELEASE_LEVEL") || "development"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
