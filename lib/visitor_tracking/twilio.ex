@@ -9,9 +9,9 @@ defmodule VisitorTracking.Twilio do
     end
   end
 
+  def send_token(_), do: {:error, "missing params"}
+
   def format_response(201), do: {:ok, "sms was sent"}
 
   def format_response(status_code), do: {:error, "status_code: #{status_code}"}
-
-  def send_token(args), do: {:error, "missing params"}
 end

@@ -5,8 +5,6 @@ defmodule VisitorTracking.Twilio.Responses do
   alias VisitorTracking.Repo
   alias VisitorTracking.Twilio.Responses.Response
 
-  import Ecto.Query
-
   @doc """
   Log the response in the database.
   """
