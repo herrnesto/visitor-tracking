@@ -54,10 +54,12 @@ defmodule VisitorTracking.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:bamboo, "~> 1.5"},
+      {:pbkdf2_elixir, "~> 1.0"},
       # Dev / Test specific deps
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:excoveralls, "~> 0.13.0", only: :test},
-      {:credo, "~> 1.4", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
+      {:ex_machina, "~> 2.4", only: :test}
     ]
   end
 

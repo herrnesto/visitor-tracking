@@ -23,3 +23,6 @@ config :visitor_tracking, VisitorTrackingWeb.Endpoint,
 config :logger, level: :warn
 
 config :visitor_tracking, VisitorTracking.Mailer, adapter: Bamboo.TestAdapter
+
+# Config pbkdf2 to take only one round for faster testing
+config :pbkdf2_elixir, :rounds, 1
