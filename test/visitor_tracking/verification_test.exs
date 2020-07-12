@@ -77,4 +77,13 @@ defmodule VisitorTracking.VerificationTest do
       assert {:error, _msg} = Verification.verify_link_token(token)
     end
   end
+
+  describe "get_token_by_email/1" do
+    test "returns a token if it exists and valid" do
+      %{id: id, email: email} = insert(:user)
+      Verification.create_link_token(id, email)
+
+      %Token{visitor_id: ^id} = Verification.get_token_by_email(email)
+    end
+  end
 end

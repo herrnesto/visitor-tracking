@@ -6,9 +6,7 @@ defmodule VisitorTracking.Verification.Token do
   import Ecto.Changeset
 
   schema "tokens" do
-    # TODO
-    # belongs_to :visitor, Visitor
-    field :visitor_id, :integer
+    belongs_to :visitor, VisitorTracking.Accounts.User
     field :type, :string
     field :token, :string
     field :email, :string

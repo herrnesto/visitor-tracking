@@ -85,6 +85,15 @@ defmodule VisitorTracking.Verification do
     |> Repo.one()
   end
 
+  def get_token_by_email(email) do
+    from(t in Token,
+      where: t.email == ^email,
+      order_by: [desc: :inserted_at],
+      limit: 1
+    )
+    |> Repo.one()
+  end
+
   defp check_code(1_000_000, mobile), do: check_code(1, mobile)
 
   defp check_code(code, mobile) do
