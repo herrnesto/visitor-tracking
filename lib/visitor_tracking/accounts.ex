@@ -3,8 +3,7 @@ defmodule VisitorTracking.Accounts do
   Accounts Context module
   """
 
-  alias VisitorTracking.Accounts.User
-  alias VisitorTracking.Repo
+  alias VisitorTracking.{Accounts.User, Repo, Verification}
 
   def get_user(id) do
     Repo.get(User, id)
@@ -42,5 +41,19 @@ defmodule VisitorTracking.Accounts do
     %User{}
     |> User.registration_changeset(params)
     |> Repo.insert()
+  end
+
+  def verify_email_by_token(token) do
+    with {:ok, visitor_id} <- Verification.verify_link_token(token),
+         user <- get_user(visitor_id) do
+        user
+        |> User.email_verification_changeset(%{email_verified: true})
+        |> Repo.update()
+    else
+      {:error, reason} ->
+        {:error, reason}
+      nil ->
+        {:error, :user_not_found}
+    end
   end
 end

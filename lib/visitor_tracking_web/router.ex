@@ -25,6 +25,8 @@ defmodule VisitorTrackingWeb.Router do
     get "/register", RegistrationController, :new
     post "/users", RegistrationController, :create
     get "/scan", ScanController, :index
+    get "/expecting_verification", RegistrationController, :expecting_verification
+    get "/v/:token", RegistrationController, :verify_email
   end
 
   # Other scopes may use custom stacks.

@@ -46,6 +46,12 @@ defmodule VisitorTracking.Accounts.User do
     |> unique_constraint(:email)
   end
 
+  def email_verification_changeset(user, attrs) do
+    user
+    |> cast(attrs, [:email_verified])
+    |> validate_required([:email_verified])
+  end
+
   defp hash_password(%{valid?: true, changes: %{password: pass}} = changeset) do
     put_change(changeset, :password_hash, Pbkdf2.hash_pwd_salt(pass))
   end
