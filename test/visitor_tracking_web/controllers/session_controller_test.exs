@@ -1,8 +1,17 @@
 defmodule VisitorTrackingWeb.SessionControllerTest do
   use VisitorTrackingWeb.ConnCase, async: true
 
-  test "GET /sessions/new", %{conn: conn} do
-    conn = get(conn, "/sessions/new")
+  setup %{conn: conn} do
+    conn =
+      conn
+      |> bypass_through(VisitorTrackingWeb.Router, :browser)
+      |> get("/")
+
+    {:ok, %{conn: conn}}
+  end
+
+  test "GET /login", %{conn: conn} do
+    conn = get(conn, "/login")
     assert html_response(conn, 200) =~ "Login"
     assert html_response(conn, 200) =~ "Email"
     assert html_response(conn, 200) =~ "Password"
@@ -50,5 +59,23 @@ defmodule VisitorTrackingWeb.SessionControllerTest do
       assert get_session(conn, :user_id) == user.id
       assert redirected_to(conn) == "/"
     end
+  end
+
+  test "DELETE /logout drops the session and brings us back to /sessions/new", %{conn: conn} do
+    user = insert(:user, email: "test@test.com")
+
+    conn =
+      post(conn, "/sessions", %{
+        "session" => %{"email" => "test@test.com", "password" => "testpass"}
+      })
+
+    assert conn.assigns.current_user == user
+    assert get_session(conn, :user_id) == user.id
+
+    conn = delete(conn, "/logout")
+
+    assert redirected_to(conn) == "/login"
+    assert get_session(conn, :user_id) == nil
+    assert Map.get(conn.assigns, :current_user) == nil
   end
 end

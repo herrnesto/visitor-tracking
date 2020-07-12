@@ -19,4 +19,10 @@ defmodule VisitorTrackingWeb.SessionController do
         render(conn, "new.html")
     end
   end
+
+  def delete(conn, _) do
+    conn
+    |> Auth.logout()
+    |> redirect(to: "/login")
+  end
 end
