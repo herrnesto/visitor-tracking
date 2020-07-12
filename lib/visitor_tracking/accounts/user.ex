@@ -37,7 +37,13 @@ defmodule VisitorTracking.Accounts.User do
       required: true,
       message: "password and confirmation do not match"
     )
+    |> validate_format(
+      :email,
+      ~r/\A[a-zA-Z0-9.!\#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\z/,
+      message: "invalid E-Mail address"
+    )
     |> hash_password()
+    |> unique_constraint(:email)
   end
 
   defp hash_password(%{valid?: true, changes: %{password: pass}} = changeset) do
