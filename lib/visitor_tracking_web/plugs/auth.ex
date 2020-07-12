@@ -1,4 +1,8 @@
 defmodule VisitorTrackingWeb.Plugs.Auth do
+  @moduledoc """
+  Authentication Plug module
+  """
+
   import Plug.Conn
 
   def init(opts), do: opts

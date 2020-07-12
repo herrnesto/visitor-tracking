@@ -1,4 +1,7 @@
 defmodule VisitorTracking.Accounts.User do
+  @moduledoc """
+  User Schema module
+  """
   use Ecto.Schema
   import Ecto.Changeset
 

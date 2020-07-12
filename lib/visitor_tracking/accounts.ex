@@ -1,4 +1,8 @@
 defmodule VisitorTracking.Accounts do
+  @moduledoc """
+  Accounts Context module
+  """
+
   alias VisitorTracking.Accounts.User
   alias VisitorTracking.Repo
 

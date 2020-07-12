@@ -1,4 +1,6 @@
 defmodule VisitorTracking.Factory do
+  @moduledoc false
+
   use ExMachina.Ecto, repo: VisitorTracking.Repo
   alias VisitorTracking.Accounts
 
