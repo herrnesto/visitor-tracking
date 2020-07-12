@@ -13,6 +13,13 @@ defmodule VisitorTracking.Accounts.User do
     field :password_confirmation, :string, virtual: true
     field :role, :string, default: "user"
 
+    many_to_many(
+      :events,
+      VisitorTracking.Events.Event,
+      join_through: "events_visitors",
+      on_replace: :delete
+    )
+
     timestamps()
   end
 
