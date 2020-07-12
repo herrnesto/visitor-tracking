@@ -59,7 +59,6 @@ defmodule VisitorTracking.MixProject do
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:excoveralls, "~> 0.13.0", only: :test},
       {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
-      {:pbkdf2_elixir, "~> 1.0"},
       {:ex_machina, "~> 2.4", only: :test}
     ]
   end
