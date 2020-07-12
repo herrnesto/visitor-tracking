@@ -8,6 +8,7 @@ defmodule VisitorTrackingWeb.Router do
     plug :put_root_layout, {VisitorTrackingWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug VisitorTrackingWeb.Plugs.Auth
   end
 
   pipeline :api do
@@ -18,6 +19,9 @@ defmodule VisitorTrackingWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
+    get "/login", SessionController, :new
+    post "/sessions", SessionController, :create
+    delete "/logout", SessionController, :delete
   end
 
   # Other scopes may use custom stacks.
