@@ -60,22 +60,4 @@ defmodule VisitorTrackingWeb.SessionControllerTest do
       assert redirected_to(conn) == "/"
     end
   end
-
-  test "DELETE /logout drops the session and brings us back to /sessions/new", %{conn: conn} do
-    user = insert(:user, email: "test@test.com")
-
-    conn =
-      post(conn, "/sessions", %{
-        "session" => %{"email" => "test@test.com", "password" => "testpass"}
-      })
-
-    assert conn.assigns.current_user == user
-    assert get_session(conn, :user_id) == user.id
-
-    conn = delete(conn, "/logout")
-
-    assert redirected_to(conn) == "/login"
-    assert get_session(conn, :user_id) == nil
-    assert Map.get(conn.assigns, :current_user) == nil
-  end
 end
