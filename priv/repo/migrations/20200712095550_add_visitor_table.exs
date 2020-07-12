@@ -5,7 +5,7 @@ defmodule VisitorTracking.Repo.Migrations.AddVisitorTable do
     create table(:events_visitors, primary_key: false) do
       add :event_id, references(:events, on_delete: :delete_all), primary_key: true
       add :user_id, references(:users, on_delete: :delete_all), primary_key: true
-      timestamps()
+      add :inserted_at, :utc_datetime, default: fragment("NOW()")
     end
 
     create index(:events_visitors, [:event_id])
