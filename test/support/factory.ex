@@ -6,6 +6,7 @@ defmodule VisitorTracking.Factory do
 
   def user_factory do
     %Accounts.User{
+      id: 3,
       email: sequence(:email, &"email-#{&1}@example.com"),
       password_hash: Pbkdf2.hash_pwd_salt("testpass"),
       email_verified: false
