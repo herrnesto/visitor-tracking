@@ -2,8 +2,12 @@ defmodule VisitorTracking.Accounts.User do
   @moduledoc """
   User Schema module
   """
+
   use Ecto.Schema
+
   import Ecto.Changeset
+
+  alias VisitorTracking.Events.Event
 
   schema "users" do
     field :email, :string
@@ -14,11 +18,13 @@ defmodule VisitorTracking.Accounts.User do
     field :role, :string, default: "user"
 
     many_to_many(
-      :events,
+      :visited_events,
       VisitorTracking.Events.Event,
       join_through: "events_visitors",
       on_replace: :delete
     )
+
+    has_many :organised_events, Event, foreign_key: :organiser_id
 
     timestamps()
   end
