@@ -3,7 +3,8 @@ defmodule VisitorTracking.Accounts do
   Accounts Context module
   """
 
-  alias VisitorTracking.{Accounts.User, Repo, Verification}
+  alias VisitorTracking.Accounts.{Profile, User}
+  alias VisitorTracking.{Repo, Verification}
 
   def get_user(id) do
     Repo.get(User, id)
@@ -55,5 +56,10 @@ defmodule VisitorTracking.Accounts do
       nil ->
         {:error, :user_not_found}
     end
+  end
+
+  def change_profile(user_id, params \\ %{}) do
+    params = Map.put_new(params, :user_id, user_id)
+    Profile.changeset(%Profile{}, params)
   end
 end

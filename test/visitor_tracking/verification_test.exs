@@ -9,10 +9,6 @@ defmodule VisitorTracking.VerificationTest do
       assert {:ok, _code} = Verification.create_sms_code(1, "+41791234567")
     end
 
-    test "missing plus in mobile number" do
-      assert {:error, _msg} = Verification.create_sms_code(1, "0791234567")
-    end
-
     test "are different each time" do
       assert {:ok, code_1} = Verification.create_sms_code(1, "+41791234567")
       assert {:ok, code_2} = Verification.create_sms_code(1, "+41791234567")
