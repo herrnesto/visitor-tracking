@@ -26,3 +26,8 @@ config :visitor_tracking, VisitorTracking.Mailer, adapter: Bamboo.TestAdapter
 
 # Config pbkdf2 to take only one round for faster testing
 config :pbkdf2_elixir, :rounds, 1
+
+config :visitor_tracking,
+  twilio_account_sid: "test",
+  twilio_auth_token: "test",
+  twilio_from: "+10000000000"

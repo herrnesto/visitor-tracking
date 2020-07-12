@@ -1,0 +1,17 @@
+defmodule VisitorTracking.Twilio do
+  alias VisitorTracking.Twilio.{Responses, Message}
+
+  def send_token(%{token: token, target_number: target_number} = args) do
+    with {:ok, response} <- Message.send_token(%{token: token, target_number: target_number}) do
+      Responses.log(response, args)
+
+      format_response(response.status_code)
+    end
+  end
+
+  def format_response(201), do: {:ok, "sms was sent"}
+
+  def format_response(status_code), do: {:error, "status_code: #{status_code}"}
+
+  def send_token(args), do: {:error, "missing params"}
+end
