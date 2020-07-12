@@ -13,6 +13,9 @@ build:
     POSTGRES_PORT: 5432
     POSTGRES_USER: postgres # must match config/test.exs
     POSTGRES_PASSWORD: postgress # must match config/test.exs
+    TWILIO_ACCOUNT_SID: xxx
+    TWILIO_AUTH_TOKEN: xxx
+    TWILIO_FROM: 12566175732
     MIX_ENV: "test"
   script:
     - mix deps.get
@@ -51,6 +54,9 @@ format:
   stage: quality
   image: bitwalker/alpine-elixir-phoenix:latest
   variables:
+    TWILIO_ACCOUNT_SID: xxx
+    TWILIO_AUTH_TOKEN: xxx
+    TWILIO_FROM: 12566175732
     MIX_ENV: "test"
   script:
     - mix deps.get
@@ -60,6 +66,9 @@ credo:
   stage: quality
   image: bitwalker/alpine-elixir-phoenix:latest
   variables:
+    TWILIO_ACCOUNT_SID: xxx
+    TWILIO_AUTH_TOKEN: xxx
+    TWILIO_FROM: 12566175732
     MIX_ENV: "test"
   script:
     - mix deps.get
