@@ -8,6 +8,7 @@ defmodule VisitorTracking.Accounts.User do
     field :email_verified, :boolean
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
+    field :role, :string, default: "user"
 
     timestamps()
   end
