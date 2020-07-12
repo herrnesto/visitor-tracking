@@ -81,6 +81,15 @@ bamboo_adapter =
     do: Bamboo.TestAdapter,
     else: Bamboo.SendgridAdapter
 
+twilio_account_sid = System.get_env("TWILIO_ACCOUNT_SID") || raise "Twilio account sid is missing"
+twilio_auth_token = System.get_env("TWILIO_AUTH_TOKEN") || raise "Twilio auth token missing"
+twilio_from = System.get_env("TWILIO_FROM") || raise "Twilio from number is missing"
+
+config :visitor_tracking,
+  twilio_account_sid: twilio_account_sid,
+  twilio_auth_token: twilio_auth_token,
+  twilio_from: twilio_from
+
 config :visitor_tracking, VisitorTracking.Mailer,
   adapter: bamboo_adapter,
   api_key: System.get_env("SENDGRID_API_KEY")

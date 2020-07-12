@@ -2,13 +2,9 @@ defmodule VisitorTracking.Events do
   @moduledoc """
   Events Context module
   """
-  alias __MODULE__
   alias VisitorTracking.Events.Event
   alias VisitorTracking.Accounts
   alias VisitorTracking.Repo
-
-  import Ecto.Query
-  import Ecto.Changeset
 
   def create(args \\ %{}) do
     %Event{}

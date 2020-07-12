@@ -10,7 +10,7 @@ defmodule VisitorTrackingWeb.RegistrationController do
 
   def create(conn, params) do
     case Accounts.create_user(params) do
-      {:ok, user} ->
+      {:ok, _user} ->
         redirect(conn, to: "/verify_email")
 
       {:error, changeset} ->

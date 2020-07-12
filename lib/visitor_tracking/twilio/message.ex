@@ -14,7 +14,7 @@ defmodule VisitorTracking.Twilio.Message do
     end
   end
 
-  def get_body(%{target_number: target_number, token: token} = args) do
+  def get_body(%{target_number: target_number, token: token}) do
     from_number = Application.fetch_env!(:visitor_tracking, :twilio_from)
 
     {:form,
