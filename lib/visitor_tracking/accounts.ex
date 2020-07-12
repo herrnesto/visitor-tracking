@@ -29,4 +29,18 @@ defmodule VisitorTracking.Accounts do
         {:error, :not_found}
     end
   end
+
+  def change_user(params \\ %{}) do
+    User.registration_changeset(%User{}, params)
+  end
+
+  def change_user(%User{} = user, params) do
+    User.registration_changeset(user, params)
+  end
+
+  def create_user(params) do
+    %User{}
+    |> User.registration_changeset(params)
+    |> Repo.insert()
+  end
 end

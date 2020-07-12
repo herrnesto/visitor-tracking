@@ -24,6 +24,7 @@
                 <%= link "Logout", to: "/logout",  method: "delete" %>
               </li>
             <% else %>
+              <li><%= link "Register", to: "/register" %></li>
               <li><%= link "Log in", to: Routes.session_path(@conn, :new) %></li>
             <% end %>
           </ul>

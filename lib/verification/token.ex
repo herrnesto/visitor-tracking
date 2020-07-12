@@ -26,11 +26,6 @@ defmodule VisitorTracking.Verification.Token do
     |> validate_inclusion(:type, ["sms", "link"])
     |> validate_format(:code, ~r/\A\d{6}\z/, message: "invalid code")
     |> validate_format(
-      :email,
-      ~r/\A[a-zA-Z0-9.!\#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\z/,
-      message: "invalid E-Mail address"
-    )
-    |> validate_format(
       :mobile,
       ~r/\A\+\d+\z/,
       message: "invalid mobile number, must be of format +XXXXXXXXX"

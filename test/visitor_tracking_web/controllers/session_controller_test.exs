@@ -36,7 +36,7 @@ defmodule VisitorTrackingWeb.SessionControllerTest do
     end
 
     test "with actual form data renders error if user exists but password is wrong", %{conn: conn} do
-      user = insert(:user, email: "test@test.com")
+      insert(:user, email: "test@test.com")
 
       conn =
         post(conn, "/sessions", %{

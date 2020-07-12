@@ -25,10 +25,6 @@ defmodule VisitorTracking.VerificationTest do
       assert {:ok, _token} = Verification.create_link_token(1, "mark.renton@trainspotting.com")
     end
 
-    test "invalid email" do
-      assert {:error, _msg} = Verification.create_link_token(1, "mark.renton@ts,com")
-    end
-
     test "are different each time" do
       assert {:ok, token_1} = Verification.create_link_token(1, "mark.renton@trainspotting.com")
       assert {:ok, token_2} = Verification.create_link_token(1, "mark.renton@trainspotting.com")
