@@ -38,7 +38,7 @@ defmodule VisitorTrackingWeb.RegistrationControllerTest do
 
       conn = get(conn, "/v/#{token}")
 
-      assert redirected_to(conn) == "/create_profile"
+      assert redirected_to(conn) == "/profiles/new"
     end
   end
 end

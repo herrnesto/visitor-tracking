@@ -27,6 +27,10 @@ defmodule VisitorTrackingWeb.Router do
     get "/scan", ScanController, :index
     get "/expecting_verification", RegistrationController, :expecting_verification
     get "/v/:token", RegistrationController, :verify_email
+    get "/profiles/new", ProfileController, :new
+    post "/profiles/create", ProfileController, :create
+    get "/profiles/phone_verification", ProfileController, :phone_verification
+    post "/profiles/phone", ProfileController, :verify_phone
   end
 
   # Other scopes may use custom stacks.

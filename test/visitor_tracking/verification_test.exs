@@ -14,13 +14,9 @@ defmodule VisitorTracking.VerificationTest do
       assert {:ok, _code} = Verification.create_sms_code(user.id, "+41791234567")
     end
 
-    test "missing plus in mobile number", %{user: user} do
-      assert {:error, _msg} = Verification.create_sms_code(user.id, "0791234567")
-    end
-
-    test "are different each time", %{user: user} do
-      assert {:ok, code_1} = Verification.create_sms_code(user.id, "+41791234567")
-      assert {:ok, code_2} = Verification.create_sms_code(user.id, "+41791234567")
+    test "are different each time" do
+      assert {:ok, code_1} = Verification.create_sms_code(1, "+41791234567")
+      assert {:ok, code_2} = Verification.create_sms_code(1, "+41791234567")
       refute code_1 == code_2
     end
   end

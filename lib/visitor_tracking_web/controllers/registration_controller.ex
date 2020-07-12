@@ -30,7 +30,7 @@ defmodule VisitorTrackingWeb.RegistrationController do
       {:ok, _user} ->
         conn
         |> put_flash(:info, "Email verified")
-        |> redirect(to: "/create_profile")
+        |> redirect(to: "/profiles/new")
 
       {:error, reason} ->
         conn

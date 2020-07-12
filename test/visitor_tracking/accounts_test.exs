@@ -96,4 +96,11 @@ defmodule VisitorTracking.AccountsTest do
       assert user.email_verified == true
     end
   end
+
+  describe "change_profile/2" do
+    test "returns a changeset of an empty profile for a user" do
+      %{id: id} = insert(:user)
+      assert %Ecto.Changeset{changes: %{user_id: ^id}} = Accounts.change_profile(id)
+    end
+  end
 end

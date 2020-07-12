@@ -1,0 +1,12 @@
+<h1>New Profile</h1>
+<%= f = form_for(@changeset, "/profiles/create") %>
+<%= label f, :firstname %>
+<%= text_input f, :firstname %>
+<%= label f, :lastname %>
+<%= text_input f, :lastname %>
+<%= label f, :zip %>
+<%= text_input f, :zip %>
+<%= label f, :city %>
+<%= text_input f, :city %>
+<%= label f, :phone %>
+<%= text_input f, :phone %>
