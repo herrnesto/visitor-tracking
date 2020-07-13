@@ -11,6 +11,9 @@
 @import "bulma/helpers/_all";
 @import "bulma/layout/_all";
 
+/* Bulma extensions */
+@import "bulma_extensions/bulma_steps.sass";
+
 /* LiveView specific classes for your customizations */
 .invalid-feedback {
   color: #a94442;
