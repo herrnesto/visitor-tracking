@@ -1,7 +1,25 @@
-<h1>Login</h1>
-<%= f = form_for @conn, Routes.session_path(@conn, :create), [as: :session] %>
-<%= label f, :email %>
-<%= email_input f, :email %>
-<%= label f, :password %>
-<%= password_input f, :password %>
-<%= submit "Login" %>
+<!-- closes the header section -->
+</section>
+<div class="container">
+	<div class="columns">
+		<div class="column is-4 is-offset-4 has-text-centered">
+			<h1 class="title is-4">Anmelden</h1>
+		  <p class="description">Um deinen QR Code zu erhalten musst du dich zuerst anmelden.</p>
+			<%= form_for @conn, Routes.session_path(@conn, :create), [as: :session], fn f -> %>
+		    <div class="field">
+		      <div class="control">
+		      	<%= email_input f, :email, class: "input is-medium", placeholder: "E-Mail" %>
+		      </div>
+		    </div>
+
+		    <div class="field">
+		      <div class="control">
+		      	<%= password_input f, :password, class: "input is-medium", placeholder: "Passwort" %>
+		      </div>
+		    </div>
+		    <%= submit "Anmelden", class: "button is-block is-primary is-fullwidth is-medium" %>
+		    <br />
+			<% end %>
+		</div>
+	</div>
+</div>
