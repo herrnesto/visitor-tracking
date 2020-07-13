@@ -1,4 +1,8 @@
 defmodule VisitorTracking.Twilio do
+  @moduledoc """
+  Twilio Context module
+  """
+
   alias VisitorTracking.Twilio.{Responses, Message}
 
   def send_token(%{token: token, target_number: target_number} = args) do

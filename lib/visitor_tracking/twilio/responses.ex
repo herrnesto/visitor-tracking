@@ -11,8 +11,6 @@ defmodule VisitorTracking.Twilio.Responses do
   Log the response in the database.
   """
   def log(response, args) do
-    IO.inspect(response.request)
-
     %Response{}
     |> Response.changeset(%{args: args, body: response.body, status_code: response.status_code})
     |> Repo.insert()

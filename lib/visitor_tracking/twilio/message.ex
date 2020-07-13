@@ -1,4 +1,8 @@
 defmodule VisitorTracking.Twilio.Message do
+  @moduledoc """
+  Module for Twilio that composes and send a text message.
+  """
+
   alias VisitorTracking.Twilio.InMemoryApi
 
   @api_url "https://api.twilio.com/2010-04-01/Accounts/"
