@@ -5,10 +5,10 @@ defmodule VisitorTracking.Verification.Token do
 
   import Ecto.Changeset
 
+  alias VisitorTracking.Accounts.User
+
   schema "tokens" do
-    # TODO
-    # belongs_to :visitor, Visitor
-    field :visitor_id, :integer
+    belongs_to :user, User
     field :type, :string
     field :token, :string
     field :email, :string
@@ -21,8 +21,8 @@ defmodule VisitorTracking.Verification.Token do
   @doc false
   def changeset(token, attrs) do
     token
-    |> cast(attrs, [:visitor_id, :type, :token, :code, :email, :mobile])
-    |> validate_required([:visitor_id, :type])
+    |> cast(attrs, [:user_id, :type, :token, :code, :email, :mobile])
+    |> validate_required([:user_id, :type])
     |> validate_inclusion(:type, ["sms", "link"])
     |> validate_format(:code, ~r/\A\d{6}\z/, message: "invalid code")
     |> validate_format(
