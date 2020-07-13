@@ -23,6 +23,7 @@ defmodule VisitorTrackingWeb do
 
       import Plug.Conn
       import VisitorTrackingWeb.Gettext
+      import VisitorTrackingWeb.Plugs.Auth, only: [authenticate_user: 2]
       alias VisitorTrackingWeb.Router.Helpers, as: Routes
     end
   end
@@ -66,6 +67,7 @@ defmodule VisitorTrackingWeb do
       import Plug.Conn
       import Phoenix.Controller
       import Phoenix.LiveView.Router
+      import VisitorTrackingWeb.Plugs.Auth, only: [authenticate_user: 2]
     end
   end
 

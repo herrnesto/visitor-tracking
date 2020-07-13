@@ -21,14 +21,19 @@ defmodule VisitorTrackingWeb.Router do
     get "/", HomepageController, :index
     get "/login", SessionController, :new
     post "/sessions", SessionController, :create
-    delete "/logout", SessionController, :delete
     get "/register", RegistrationController, :new
     post "/users", RegistrationController, :create
     get "/scan", ScanController, :index
+  end
+
+  scope "/", VisitorTrackingWeb do
+    pipe_through [:browser, :authenticate_user]
+
+    delete "/logout", SessionController, :delete
     get "/expecting_verification", RegistrationController, :expecting_verification
     get "/v/:token", RegistrationController, :verify_email
     get "/profiles/new", ProfileController, :new
-    post "/profiles/create", ProfileController, :create
+    post "/profiles", ProfileController, :create
     get "/profiles/phone_verification", ProfileController, :phone_verification
     post "/profiles/phone", ProfileController, :verify_phone
   end
