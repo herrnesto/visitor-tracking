@@ -12,10 +12,10 @@ defmodule VisitorTracking.Verification do
   # 24 hours
   @link_expire_threshold 24 * 60 * 60
 
-  def create_sms_code(visitor_id, mobile) do
+  def create_sms_code(user_id, mobile) do
     case create_token(%{
            type: "sms",
-           visitor_id: visitor_id,
+           user_id: user_id,
            mobile: mobile,
            code: generate_code(mobile)
          }) do
@@ -24,10 +24,10 @@ defmodule VisitorTracking.Verification do
     end
   end
 
-  def create_link_token(visitor_id, email) do
+  def create_link_token(user_id, email) do
     case create_token(%{
            type: "link",
-           visitor_id: visitor_id,
+           user_id: user_id,
            email: email,
            token: generate_token(email)
          }) do
@@ -39,14 +39,14 @@ defmodule VisitorTracking.Verification do
   def verify_sms_code(code, mobile) do
     case get_valid_sms_token(code, mobile) do
       nil -> {:error, "code not found or expired"}
-      token -> {:ok, token.visitor_id}
+      token -> {:ok, token.user_id}
     end
   end
 
   def verify_link_token(token) do
     case get_valid_link_token(token) do
       nil -> {:error, "token not found or expired"}
-      token -> {:ok, token.visitor_id}
+      token -> {:ok, token.user_id}
     end
   end
 

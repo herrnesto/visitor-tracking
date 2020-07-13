@@ -3,52 +3,57 @@ defmodule VisitorTracking.VerificationTest do
 
   alias VisitorTracking.Verification
   alias VisitorTracking.Verification.Token
+  alias VisitorTracking.Factory
+
+  setup do
+    %{user: Factory.insert(:user)}
+  end
 
   describe "create sms code" do
-    test "success" do
-      assert {:ok, _code} = Verification.create_sms_code(1, "+41791234567")
+    test "success", %{user: user} do
+      assert {:ok, _code} = Verification.create_sms_code(user.id, "+41791234567")
     end
 
-    test "missing plus in mobile number" do
-      assert {:error, _msg} = Verification.create_sms_code(1, "0791234567")
+    test "missing plus in mobile number", %{user: user} do
+      assert {:error, _msg} = Verification.create_sms_code(user.id, "0791234567")
     end
 
-    test "are different each time" do
-      assert {:ok, code_1} = Verification.create_sms_code(1, "+41791234567")
-      assert {:ok, code_2} = Verification.create_sms_code(1, "+41791234567")
+    test "are different each time", %{user: user} do
+      assert {:ok, code_1} = Verification.create_sms_code(user.id, "+41791234567")
+      assert {:ok, code_2} = Verification.create_sms_code(user.id, "+41791234567")
       refute code_1 == code_2
     end
   end
 
   describe "create link token" do
-    test "success" do
-      assert {:ok, _token} = Verification.create_link_token(1, "mark.renton@trainspotting.com")
+    test "success", %{user: user} do
+      assert {:ok, _token} = Verification.create_link_token(user.id, "mark.renton@trainspotting.com")
     end
 
-    test "are different each time" do
-      assert {:ok, token_1} = Verification.create_link_token(1, "mark.renton@trainspotting.com")
-      assert {:ok, token_2} = Verification.create_link_token(1, "mark.renton@trainspotting.com")
+    test "are different each time", %{user: user} do
+      assert {:ok, token_1} = Verification.create_link_token(user.id, "mark.renton@trainspotting.com")
+      assert {:ok, token_2} = Verification.create_link_token(user.id, "mark.renton@trainspotting.com")
       refute token_1 == token_2
     end
   end
 
   describe "verify sms code" do
-    test "valid" do
-      {:ok, token} = Verification.create_sms_code(1, "+41791234567")
+    test "valid", %{user: user} do
+      {:ok, token} = Verification.create_sms_code(user.id, "+41791234567")
 
-      assert {:ok, 1} == Verification.verify_sms_code(token, "+41791234567")
+      assert {:ok, user.id} == Verification.verify_sms_code(token, "+41791234567")
     end
 
     test "not found" do
       assert {:error, _msg} = Verification.verify_sms_code("123456", "+41791234567")
     end
 
-    test "expired" do
+    test "expired", %{user: user} do
       time = NaiveDateTime.utc_now() |> NaiveDateTime.add(-30 * 60)
 
-      {:ok, code} = Verification.create_sms_code(1, "+41791234567")
+      {:ok, code} = Verification.create_sms_code(user.id, "+41791234567")
 
-      from(t in Token, where: t.visitor_id == 1)
+      from(t in Token, where: t.user_id == ^user.id)
       |> Repo.update_all(set: [updated_at: time])
 
       assert {:error, _msg} = Verification.verify_sms_code(code, "+41791234567")
@@ -56,22 +61,22 @@ defmodule VisitorTracking.VerificationTest do
   end
 
   describe "verify link token" do
-    test "valid" do
-      {:ok, token} = Verification.create_link_token(1, "mark.renton@trainspotting.com")
+    test "valid", %{user: user} do
+      {:ok, token} = Verification.create_link_token(user.id, "mark.renton@trainspotting.com")
 
-      assert {:ok, 1} == Verification.verify_link_token(token)
+      assert {:ok, user.id} == Verification.verify_link_token(token)
     end
 
     test "not found" do
       assert {:error, _msg} = Verification.verify_link_token("ABCDEF123456")
     end
 
-    test "expired" do
+    test "expired", %{user: user} do
       time = NaiveDateTime.utc_now() |> NaiveDateTime.add(-48 * 60 * 60)
 
-      {:ok, token} = Verification.create_link_token(1, "mark.renton@trainspotting.com")
+      {:ok, token} = Verification.create_link_token(user.id, "mark.renton@trainspotting.com")
 
-      from(t in Token, where: t.visitor_id == 1)
+      from(t in Token, where: t.user_id == ^user.id)
       |> Repo.update_all(set: [updated_at: time])
 
       assert {:error, _msg} = Verification.verify_link_token(token)

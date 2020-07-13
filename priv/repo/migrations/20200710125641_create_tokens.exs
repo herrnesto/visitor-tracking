@@ -3,8 +3,7 @@ defmodule VisitorTracking.Repo.Migrations.CreateTokens do
 
   def change do
     create table("tokens") do
-      # TODO
-      # add :visitor, references(:visitors, on_delete: :delete_all)
+      # visitor_id will be replaced with user
       add :visitor_id, :integer, null: false
       add :type, :string, null: false
       add :token, :string
