@@ -1,19 +1,15 @@
   <div class="hero-body">
     <div class="columns">
       <div class="column has-text-centered">
-        
-      </div>
-    </div>
-    <div class="columns is-multiline">
-      <div class="column is-8 is-offset-2">
-        <div class="columns">
-          <div class="column left">
-            <h1 class="title is-1">Schnell und diskret</h1>
-            <h2 class="subtitle colored is-4">Mit uns erfüllst du die Covid 19 Auflagen ohne grossen Aufwand.</h2>
-            <p>Wir verifizieren eine E-Mail und deine Mobilenummer - Für den Veranstalter selber bleibst du anonym. Im Notfall leiten wir deine Daten direkt ans BAG weiter.</p>
-          </div>
-          
-        </div>
+        <p class="title">
+          Die sichere und einfache Art deine Personalien bei der Veranstaltung zu hinterlegen.
+        </p>
+        <h2 class="subtitle colored is-5">Mit uns erfüllst du die Covid 19 Auflagen ohne grossen Aufwand.</h2>
+        <p>Wir verifizieren eine E-Mail und deine Mobilenummer - Für den Veranstalter selber bleibst du anonym. Im Notfall leiten wir deine Daten direkt ans BAG weiter.</p>
+        <p>
+        <p>
+          <a href="<%= Routes.registration_path(@conn, :new) %>"><button class="button is-primary">Jetzt Registrieren</button></a>
+        </p>
       </div>
     </div>
   </div>

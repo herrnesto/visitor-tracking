@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
   <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -8,32 +8,52 @@
     <%= live_title_tag assigns[:page_title] || "VisitorTracking", suffix: " · Phoenix Framework" %>
     <link phx-track-static rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+    <script src="https://kit.fontawesome.com/15181efa86.js" crossorigin="anonymous"></script>
   </head>
   <body>
-    <header>
-      <section class="container">
-        <nav role="navigation">
-          <ul>
-            <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
-            <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-              <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
-            <% end %>
-            <li><%= Plug.Conn.get_session(@conn, :user_id) %></li>
+
+<section class="hero is-medium is-info is-bold">
+  <div class="hero-head">
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="/">
+            Visitor Tracker
+          </a>
+          <span class="navbar-burger burger" data-target="navbarMenuHeroB">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </div>
+        <div id="navbarMenuHeroB" class="navbar-menu">
+          <div class="navbar-end">
+            <a class="navbar-item">User id? <%= Plug.Conn.get_session(@conn, :user_id) %></a>
             <%= if @current_user do %>
-              <li>
-                <%= link "Logout", to: "/logout",  method: "delete" %>
-              </li>
+              <%= link "Logout", to: "/logout",  method: "delete", class: "navbar-item" %>
             <% else %>
-              <li><%= link "Register", to: "/register" %></li>
-              <li><%= link "Log in", to: Routes.session_path(@conn, :new) %></li>
+              <%= link "Registrieren", to: "/register", class: "navbar-item" %>
+              <span class="navbar-item">
+                <a class="button is-info is-inverted" href="<%= Routes.session_path(@conn, :new) %>">
+                  <span class="icon">
+                    <i class="fas fa-user"></i>
+                  </span>
+                  <span>Login</span>
+                </a>
+              </span>
             <% end %>
-          </ul>
-        </nav>
-        <a href="https://phoenixframework.org/" class="phx-logo">
-          <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
-        </a>
-      </section>
-    </header>
-    <%= @inner_content %>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <%= @inner_content %>
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p>
+        <strong>Visitor Tracker</strong> made with <i class="fas fa-heart"></i>
+      </p>
+    </div>
+  </footer>
   </body>
 </html>

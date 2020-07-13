@@ -1,9 +1,32 @@
-<h1>New User</h1>
-<%= f = form_for @changeset, "/users" %>
-<%= label f, :email %>
-<%= email_input f, :email %>
-<%= label f, :password %>
-<%= password_input f, :password %>
-<%= label f, :password_confirmation %>
-<%= password_input f, :password_confirmation %>
-<%= submit "Register" %>
+<!-- closes the header section -->
+</section>
+
+<div class="container">
+	<div class="columns">
+		<div class="column is-4 is-offset-4 has-text-centered">
+			<h1 class="title is-4">Registriere dich jetzt</h1>
+			  <!--- <p class="description">Deine Daten </p> --->
+			<%= form_for @changeset, "/users", fn f ->	 %>
+		    <div class="field">
+		      <div class="control">
+		      	<%= email_input f, :email, class: "input is-medium", placeholder: "E-Mail" %>
+		      </div>
+		    </div>
+
+		    <div class="field">
+		      <div class="control">
+		      	<%= password_input f, :password, class: "input is-medium", placeholder: "Passwort" %>
+		      </div>
+		    </div>
+		    <div class="field">
+		      <div class="control">
+		      	<%= password_input f, :password, class: "input is-medium", placeholder: "Passwort bestätigen" %>
+		      </div>
+		    </div>
+		    <%= submit "Kostenlos Registrieren", class: "button is-block is-primary is-fullwidth is-medium" %>
+		    <br />
+		    <small><em>Mit dem Klicken auf Anmelden, bestätigst du unsere Datenschutzrichtlinien gelesen zu haben.</em></small>
+	    <% end %>
+		</div>
+	</div>
+</div>
