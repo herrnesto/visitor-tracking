@@ -1,0 +1,69 @@
+<div class="container mb-6">
+	<div class="columns is-centered mb-6">
+		<h2 class="title is-3">Registriere dich jetzt kostenlos!</h2>
+	</div>
+</div>
+<div class="container mb-6">
+	<div class="columns">
+		<div class="column">
+			<ul class="steps is-narrow is-medium is-centered has-content-centered">
+			  <li class="steps-segment has-gaps <%= if @step == 1 do %>is-active<% end %>">
+			    <a href="#" class="has-text-dark">
+			      <span class="steps-marker">
+			        <span class="icon">
+			          <i class="fa fa-user-plus"></i>
+			        </span>
+			      </span>
+			      <div class="steps-content">
+			        <p class="heading">Registrieren</p>
+			      </div>
+			    </a>
+			  </li>
+			  <li class="steps-segment has-gaps <%= if @step == 2 do %>is-active<% end %>">
+			    <a hef=#" class="has-text-dark">
+			      <span class="steps-marker">
+			        <span class="icon">
+			          <i class="fa fa-envelope-o"></i>
+			        </span>
+			      </span>
+			      <div class="steps-content">
+			        <p class="heading">E-Mail bestätigen</p>
+			      </div>
+			    </a>
+			  </li>
+			  <li class="steps-segment has-gaps <%= if @step == 3 do %>is-active<% end %>">
+			    <a hef=#" class="has-text-dark">
+			      <span class="steps-marker">
+			        <span class="icon">
+			          <i class="fa fa-user"></i>
+			        </span>
+			      </span>
+			      <div class="steps-content">
+			        <p class="heading">Personalien</p>
+			      </div>
+			    </a>
+			  </li>
+			  <li class="steps-segment has-gaps <%= if @step == 4 do %>is-active<% end %>">
+			    <span class="steps-marker">
+			      <span class="icon">
+			        <i class="fa fa-mobile"></i>
+			      </span>
+			    </span>
+			    <div class="steps-content">
+			      <p class="heading">Mobile bestätigen</p>
+			    </div>
+			  </li>
+			  <li class="steps-segment has-gaps <%= if @step == 5 do %>is-active<% end %>">
+			    <span class="steps-marker is-hollow">
+			      <span class="icon">
+			        <i class="fa fa-check"></i>
+			      </span>
+			    </span>
+			    <div class="steps-content">
+			      <p class="heading">Fertig!</p>
+			    </div>
+			  </li>
+			</ul>
+		</div>
+	</div>
+</div>

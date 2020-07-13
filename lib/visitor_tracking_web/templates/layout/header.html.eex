@@ -1,0 +1,11 @@
+<section class="hero is-medium is-info is-bold mb-6">
+  <div class="hero-head">
+    <%= render(VisitorTrackingWeb.LayoutView, "navigation.html", %{conn: @conn, current_user: @current_user}) %>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <%= render(VisitorTrackingWeb.LayoutView, "alert.html", conn: @conn) %>
+  </div>
+</section>
