@@ -47,12 +47,13 @@ defmodule VisitorTracking.Accounts do
   def verify_email_by_token(token) do
     with {:ok, visitor_id} <- Verification.verify_link_token(token),
          user <- get_user(visitor_id) do
-        user
-        |> User.email_verification_changeset(%{email_verified: true})
-        |> Repo.update()
+      user
+      |> User.email_verification_changeset(%{email_verified: true})
+      |> Repo.update()
     else
       {:error, reason} ->
         {:error, reason}
+
       nil ->
         {:error, :user_not_found}
     end
@@ -61,5 +62,11 @@ defmodule VisitorTracking.Accounts do
   def change_profile(user_id, params \\ %{}) do
     params = Map.put_new(params, :user_id, user_id)
     Profile.changeset(%Profile{}, params)
+  end
+
+  def create_profile(params) do
+    %Profile{}
+    |> Profile.changeset(params)
+    |> Repo.insert()
   end
 end
