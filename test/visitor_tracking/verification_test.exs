@@ -27,12 +27,17 @@ defmodule VisitorTracking.VerificationTest do
 
   describe "create link token" do
     test "success", %{user: user} do
-      assert {:ok, _token} = Verification.create_link_token(user.id, "mark.renton@trainspotting.com")
+      assert {:ok, _token} =
+               Verification.create_link_token(user.id, "mark.renton@trainspotting.com")
     end
 
     test "are different each time", %{user: user} do
-      assert {:ok, token_1} = Verification.create_link_token(user.id, "mark.renton@trainspotting.com")
-      assert {:ok, token_2} = Verification.create_link_token(user.id, "mark.renton@trainspotting.com")
+      assert {:ok, token_1} =
+               Verification.create_link_token(user.id, "mark.renton@trainspotting.com")
+
+      assert {:ok, token_2} =
+               Verification.create_link_token(user.id, "mark.renton@trainspotting.com")
+
       refute token_1 == token_2
     end
   end
