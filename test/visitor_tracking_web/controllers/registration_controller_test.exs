@@ -4,10 +4,9 @@ defmodule VisitorTrackingWeb.RegistrationControllerTest do
   test "GET /register shows a registration form", %{conn: conn} do
     conn = get(conn, "/register")
 
-    assert html_response(conn, 200) =~ "Register"
-    assert html_response(conn, 200) =~ "Email"
-    assert html_response(conn, 200) =~ "Password"
-    assert html_response(conn, 200) =~ "Password confirmation"
+    assert html_response(conn, 200) =~ "Registrieren"
+    assert html_response(conn, 200) =~ "E-Mail"
+    assert html_response(conn, 200) =~ "Passwort"
   end
 
   describe "POST /users" do
