@@ -18,7 +18,7 @@ defmodule VisitorTrackingWeb.Router do
   scope "/", VisitorTrackingWeb do
     pipe_through :browser
 
-    live "/", PageLive, :index
+    get "/", HomepageController, :index
     get "/login", SessionController, :new
     post "/sessions", SessionController, :create
     delete "/logout", SessionController, :delete
