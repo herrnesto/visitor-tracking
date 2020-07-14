@@ -9,11 +9,10 @@ defmodule VisitorTracking.VerificationTest do
     %{user: Factory.insert(:user)}
   end
 
-    test "are different each time" do
-      assert {:ok, code_1} = Verification.create_sms_code(1, "+41791234567")
-      assert {:ok, code_2} = Verification.create_sms_code(1, "+41791234567")
-      refute code_1 == code_2
-    end
+  test "are different each time" do
+    assert {:ok, code_1} = Verification.create_sms_code(1, "+41791234567")
+    assert {:ok, code_2} = Verification.create_sms_code(1, "+41791234567")
+    refute code_1 == code_2
   end
 
   describe "create link token" do
