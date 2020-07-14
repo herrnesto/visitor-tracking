@@ -61,7 +61,7 @@ defmodule VisitorTrackingWeb.Router do
 
     get "/events", EventController, :index
 
-    get "/profile/qrcode", ProfileController, :show_qr
+    get "/profile/qrcode", ProfileController, :show
   end
 
   # Other scopes may use custom stacks.

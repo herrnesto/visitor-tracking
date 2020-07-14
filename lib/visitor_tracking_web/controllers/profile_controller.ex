@@ -62,14 +62,31 @@ defmodule VisitorTrackingWeb.ProfileController do
     end
   end
 
-  def show_qr(conn, _params) do
-    render(conn, "show_qr.html", qrcode: generate_qrcode(11))
+  def show(conn, _params) do
+    with {:login, user_id} when not is_nil(user_id) <-
+           {:login, get_session(conn, :user_id)},
+         {:account, user} when not is_nil(user) <-
+           {:account, Accounts.get_user(user_id)} do
+      render(conn, "show.html", qrcode: generate_qrcode(user.uuid))
+    else
+      {:login, nil} ->
+        conn
+        |> put_flash(:error, "Login required")
+        |> redirect(to: Routes.session_path(conn, :new))
+
+      {:account, nil} ->
+        conn
+        |> put_flash(:error, "User could not be found")
+        |> redirect(to: Routes.registration_path(conn, :new))
+    end
   end
 
-  defp generate_qrcode(id) do
+  # or show a default error image
+  defp generate_qrcode(nil), do: raise("to generate a qrcode we need a uuid for the user")
+
+  defp generate_qrcode(uuid) do
     data =
-      id
-      |> Integer.to_string()
+      uuid
       |> EQRCode.encode()
       |> EQRCode.png()
       |> Base.encode64()

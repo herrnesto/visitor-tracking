@@ -33,4 +33,11 @@ defmodule VisitorTrackingWeb.ProfileControllerTest do
 
     assert redirected_to(conn) == "/profiles/phone_verification"
   end
+
+  describe "GET profile" do
+    test "show qrcode", %{conn: conn} do
+      conn = get(conn, "/profile/qrcode")
+      assert html_response(conn, 200)
+    end
+  end
 end
