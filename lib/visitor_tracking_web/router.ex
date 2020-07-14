@@ -23,6 +23,7 @@ defmodule VisitorTrackingWeb.Router do
     post "/sessions", SessionController, :create
     get "/register", RegistrationController, :new
     post "/users", RegistrationController, :create
+    get "/v/:token", RegistrationController, :verify_email
   end
 
   scope "/", VisitorTrackingWeb do
@@ -31,7 +32,6 @@ defmodule VisitorTrackingWeb.Router do
     delete "/logout", SessionController, :delete
     get "/expecting_verification", RegistrationController, :expecting_verification
     get "/new_token", RegistrationController, :new_token
-    get "/v/:token", RegistrationController, :verify_email
   end
 
   scope "/", VisitorTrackingWeb do
