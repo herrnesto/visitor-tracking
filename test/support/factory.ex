@@ -22,7 +22,7 @@ defmodule VisitorTracking.Factory do
 
     %Verification.Token{
       id: 5,
-      visitor: insert(:user),
+      user: insert(:user),
       type: "link",
       token: token,
       email: email,
@@ -34,7 +34,7 @@ defmodule VisitorTracking.Factory do
   def sms_token_factory do
     %Verification.Token{
       id: 5,
-      visitor: insert(:user),
+      user: insert(:user),
       type: "sms",
       token: nil,
       email: nil,

@@ -8,7 +8,7 @@ defmodule VisitorTracking.Verification.Token do
   alias VisitorTracking.Accounts.User
 
   schema "tokens" do
-    belongs_to :visitor, VisitorTracking.Accounts.User
+    belongs_to :user, User
     field :type, :string
     field :token, :string
     field :email, :string
