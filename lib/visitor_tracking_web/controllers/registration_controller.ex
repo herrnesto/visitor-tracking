@@ -59,7 +59,7 @@ defmodule VisitorTrackingWeb.RegistrationController do
       {:error, reason} ->
         conn
         |> put_flash(:error, "Invalid token or token expired")
-        |> render("/expecting_verification")
+        |> redirect(to: "/expecting_verification")
     end
   end
 end

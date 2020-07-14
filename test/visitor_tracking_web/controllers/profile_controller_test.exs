@@ -25,8 +25,12 @@ defmodule VisitorTrackingWeb.ProfileControllerTest do
   end
 
   test "POST /profiles", %{conn: conn} do
+    user = insert(:user, email_verified: true)
+
     conn =
-      post(conn, "/profiles", %{
+    conn
+    |> put_session(:user_id, user.id)
+    |> post("/profiles", %{
         firstname: "Test first name",
         lastname: "Test last name",
         zip: "15555",
