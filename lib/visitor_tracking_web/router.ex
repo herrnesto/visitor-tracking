@@ -24,6 +24,7 @@ defmodule VisitorTrackingWeb.Router do
     delete "/logout", SessionController, :delete
     get "/register", RegistrationController, :new
     post "/users", RegistrationController, :create
+    get "/scan", ScanController, :index
   end
 
   # Other scopes may use custom stacks.
