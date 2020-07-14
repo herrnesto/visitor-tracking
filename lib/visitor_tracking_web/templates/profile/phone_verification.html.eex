@@ -1,0 +1,6 @@
+<h1>You must verify your phone before you proceed</h1>
+<p>A code has been sent in your phone. Please enter it below</p>
+<%= f = form_for @conn, "/profiles/phone" %>
+<%= label f, :code %>
+<%= text_input f, :code %>
+<%= submit "Submit" %>

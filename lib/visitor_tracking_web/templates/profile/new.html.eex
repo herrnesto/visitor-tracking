@@ -1,12 +1,18 @@
 <h1>New Profile</h1>
-<%= f = form_for(@changeset, "/profiles/create") %>
+<%= f = form_for(@changeset, "/profiles") %>
 <%= label f, :firstname %>
 <%= text_input f, :firstname %>
+<%= error_tag f, :firstname %>
 <%= label f, :lastname %>
 <%= text_input f, :lastname %>
+<%= error_tag f, :lastname %>
 <%= label f, :zip %>
 <%= text_input f, :zip %>
+<%= error_tag f, :zip %>
 <%= label f, :city %>
 <%= text_input f, :city %>
+<%= error_tag f, :city %>
 <%= label f, :phone %>
 <%= text_input f, :phone %>
+<%= error_tag f, :phone %>
+<%= submit "Save profile" %>

@@ -9,28 +9,52 @@ defmodule VisitorTrackingWeb.ProfileController do
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(conn, params) do
-    with {:ok, profile} <- Accounts.create_profile(params),
-         {:ok, token} <- Verification.create_sms_code(profile.user_id, profile.phone),
-         {:ok, _} <- Twilio.send_token(%{token: token, target_number: profile.phone}) do
-      conn
-      |> put_flash(:info, "Profile created. Check your mobile for an sms with a code")
-      |> redirect(to: "/profiles/phone_verification")
-    else
-      {:error, %Ecto.Changeset{} = changeset} ->
+  def create(conn, %{"profile" => profile_params}) do
+    profile_params = Map.put_new(profile_params, "user_id", get_session(conn, :user_id))
+
+    case Accounts.create_profile(profile_params) do
+      {:ok, profile} ->
+        conn
+        |> put_flash(:info, "Profile created. Check your mobile for an sms with a code")
+        |> redirect(to: "/profiles/phone_verification")
+
+      {:error, changeset} ->
         conn
         |> put_flash(:error, "There was a problem creating your profile")
         |> render("new.html", changeset: changeset)
+    end
+  end
 
+  def phone_verification(conn, _) do
+    profile = conn.assigns.current_user.profile
+    with {:ok, token} <- Verification.create_sms_code(profile.user_id, profile.phone),
+         {:ok, _} <- Twilio.send_token(%{token: token, target_number: profile.phone}) do
+      render(conn, "phone_verification.html")
+    else
       {:error, status} ->
         conn
         |> put_flash(:error, status)
-        |> render(to: "/profiles/phone_verification")
+        |> render("phone_verification.html")
 
       error ->
         conn
         |> put_flash(:error, error)
-        |> render(to: "/profiles/phone_verification")
+        |> render("phone_verification.html")
+    end
+  end
+
+  def verify_phone(conn, %{"code" => code}) do
+    profile = conn.assigns.current_user.profile
+    case Verification.verify_sms_code(code, profile.phone) do
+      {:error, reason} ->
+        conn
+        |> put_flash(:error, reason)
+        |> redirect(to: "/profiles/phone_verification")
+
+      {:ok, _} ->
+        conn
+        |> put_flash(:info, "Phone Verified!")
+        |> redirect(to: "/events")
     end
   end
 end
