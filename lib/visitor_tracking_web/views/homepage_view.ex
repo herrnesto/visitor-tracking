@@ -1,3 +1,3 @@
-defmodule VisitorTrackingWeb.HomepageView do
+defmodule VisitorTrackingWeb.CmsView do
   use VisitorTrackingWeb, :view
 end
