@@ -7,7 +7,9 @@ defmodule VisitorTracking.Accounts do
   alias VisitorTracking.{Repo, Verification}
 
   def get_user(id) do
-    Repo.get(User, id)
+    User
+    |> Repo.get(id)
+    |> Repo.preload(:profile)
   end
 
   def get_user_by(params) do

@@ -30,11 +30,28 @@ defmodule VisitorTrackingWeb.Router do
 
     delete "/logout", SessionController, :delete
     get "/expecting_verification", RegistrationController, :expecting_verification
+    get "/new_token", RegistrationController, :new_token
     get "/v/:token", RegistrationController, :verify_email
+  end
+
+  scope "/", VisitorTrackingWeb do
+    pipe_through [:browser, :authenticate_user, :check_email_verified]
+
     get "/profiles/new", ProfileController, :new
     post "/profiles", ProfileController, :create
+  end
+
+  scope "/", VisitorTrackingWeb do
+    pipe_through [:browser, :authenticate_user, :check_email_verified, :profile_created]
+
     get "/profiles/phone_verification", ProfileController, :phone_verification
     post "/profiles/phone", ProfileController, :verify_phone
+  end
+
+  scope "/", VisitorTrackingWeb do
+    pipe_through [:browser, :authenticate_user, :check_email_verified, :check_phone_verified]
+
+    get "/events", EventController, :index
   end
 
   # Other scopes may use custom stacks.

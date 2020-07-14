@@ -9,6 +9,7 @@ defmodule VisitorTracking.Accounts.Profile do
     field :zip, :string
     field :city, :string
     field :phone, :string
+    field :phone_verified, :boolean, default: false
 
     timestamps()
   end
@@ -19,8 +20,8 @@ defmodule VisitorTracking.Accounts.Profile do
     |> validate_required([:user_id, :firstname, :lastname, :zip, :city, :phone])
     |> validate_format(
       :phone,
-    ~r/\A\+\d+\z/,
-    message: "invalid mobile number, must be of format +XXXXXXXXX"
+      ~r/\A\+\d+\z/,
+      message: "invalid mobile number, must be of format +XXXXXXXXX"
     )
   end
 end

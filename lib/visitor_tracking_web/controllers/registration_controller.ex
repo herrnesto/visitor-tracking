@@ -1,18 +1,21 @@
 defmodule VisitorTrackingWeb.RegistrationController do
   use VisitorTrackingWeb, :controller
 
-  alias VisitorTracking.{Accounts, Email, Verification}
+  alias VisitorTracking.{Accounts, Email, Mailer, Verification}
 
   def new(conn, _) do
     changeset = Accounts.change_user()
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(conn, params) do
-    case Accounts.create_user(params) do
+  def create(conn, %{"user" => user_params}) do
+    case Accounts.create_user(user_params) do
       {:ok, user} ->
         {:ok, token} = Verification.create_link_token(user.id, user.email)
-        Email.verification_email(user.email, token)
+
+        user.email
+        |> Email.verification_email(token)
+        |> Mailer.deliver_now()
 
         redirect(conn, to: "/expecting_verification")
 
@@ -22,7 +25,28 @@ defmodule VisitorTrackingWeb.RegistrationController do
   end
 
   def expecting_verification(conn, _) do
-    render(conn, "expecting_verification.html.eex")
+    render(conn, "expecting_verification.html")
+  end
+
+  def new_token(conn, _) do
+    case conn.assigns.current_user do
+      nil ->
+        redirect(conn, to: "/login")
+
+      %{email_verified: true} ->
+        conn
+        |> put_flash(:info, "Already verified")
+        |> redirect(to: "/profiles")
+
+      user ->
+        {:ok, token} = Verification.create_link_token(user.id, user.email)
+
+        user.email
+        |> Email.verification_email(token)
+        |> Mailer.deliver_now()
+
+        redirect(conn, to: "/expecting_verification")
+    end
   end
 
   def verify_email(conn, %{"token" => token}) do

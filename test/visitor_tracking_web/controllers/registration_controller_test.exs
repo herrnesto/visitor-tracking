@@ -28,10 +28,10 @@ defmodule VisitorTrackingWeb.RegistrationControllerTest do
     test "valid token verifies user email", %{conn: conn} do
       conn =
         post(conn, "/users", %{
-              email: "test@example.com",
-              password: "testpass",
-              password_confirmation: "testpass"
-             })
+          email: "test@example.com",
+          password: "testpass",
+          password_confirmation: "testpass"
+        })
 
       assert redirected_to(conn) == "/expecting_verification"
 
