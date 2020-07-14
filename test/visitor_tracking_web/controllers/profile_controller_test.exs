@@ -30,7 +30,7 @@ defmodule VisitorTrackingWeb.ProfileControllerTest do
     conn =
     conn
     |> put_session(:user_id, user.id)
-    |> post("/profiles", %{
+    |> post("/profiles", %{ 
         firstname: "Test first name",
         lastname: "Test last name",
         zip: "15555",
