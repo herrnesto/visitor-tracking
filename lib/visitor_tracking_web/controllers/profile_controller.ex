@@ -51,7 +51,9 @@ defmodule VisitorTrackingWeb.ProfileController do
         |> put_flash(:error, reason)
         |> redirect(to: "/profiles/phone_verification")
 
-      {:ok, _} ->
+      {:ok, visitor_id} ->
+        Accounts.verify_phone(visitor_id)
+
         conn
         |> put_flash(:info, "Phone Verified!")
         |> redirect(to: "/events")

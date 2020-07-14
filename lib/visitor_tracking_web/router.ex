@@ -49,7 +49,7 @@ defmodule VisitorTrackingWeb.Router do
   end
 
   scope "/", VisitorTrackingWeb do
-    pipe_through [:browser, :authenticate_user, :check_email_verified, :check_phone_verified]
+    pipe_through [:browser, :authenticate_user, :check_email_verified, :profile_created, :check_phone_verified]
 
     get "/events", EventController, :index
   end

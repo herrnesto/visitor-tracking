@@ -61,6 +61,14 @@ defmodule VisitorTracking.Accounts do
     end
   end
 
+  def verify_phone(visitor_id) do
+    visitor_id
+    |> get_user()
+    |> Map.get(:profile)
+    |> Profile.phone_verification_changeset(%{phone_verified: true})
+    |> Repo.update()
+  end
+
   def change_profile(user_id, params \\ %{}) do
     params = Map.put_new(params, :user_id, user_id)
     Profile.changeset(%Profile{}, params)
