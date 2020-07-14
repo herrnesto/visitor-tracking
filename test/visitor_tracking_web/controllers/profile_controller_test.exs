@@ -4,17 +4,16 @@ defmodule VisitorTrackingWeb.ProfileControllerTest do
   alias VisitorTracking.Verification
 
   setup %{conn: conn} do
-    %{email: email} = insert(:user)
-
-    %Verification.Token{token: token} = Verification.get_token_by_email("test@example.com")
-
-    conn = get(conn, "/v/#{token}")
+    user = insert(:user, email_verified: true)
+    conn = assign(conn, :current_user, user)
 
     {:ok, %{conn: conn}}
   end
 
   test "GET /profiles/new", %{conn: conn} do
-    conn = get(conn, "/profiles/new")
+    conn = conn
+    |> fetch_session()
+    |> get("/profiles/new")
 
     assert html_response(conn, 200) =~ "New Profile"
     assert html_response(conn, 200) =~ "Firstname"
