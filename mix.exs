@@ -55,6 +55,7 @@ defmodule VisitorTracking.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:bamboo, "~> 1.5"},
       {:pbkdf2_elixir, "~> 1.0"},
+      {:eqrcode, "~> 0.1.7"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:excoveralls, "~> 0.13.0", only: :test},
       {:credo, "~> 1.4", only: [:dev, :test], runtime: false},

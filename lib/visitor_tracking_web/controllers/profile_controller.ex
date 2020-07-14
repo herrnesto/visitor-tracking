@@ -61,4 +61,19 @@ defmodule VisitorTrackingWeb.ProfileController do
         |> redirect(to: "/events")
     end
   end
+
+  def show_qr(conn, _params) do
+    render(conn, "show_qr.html", qrcode: generate_qrcode(11))
+  end
+
+  defp generate_qrcode(id) do
+    data =
+      id
+      |> Integer.to_string()
+      |> EQRCode.encode()
+      |> EQRCode.png()
+      |> Base.encode64()
+
+    "data:image/png;base64," <> data
+  end
 end
