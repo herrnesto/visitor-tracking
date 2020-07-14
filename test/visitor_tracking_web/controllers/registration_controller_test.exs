@@ -25,19 +25,8 @@ defmodule VisitorTrackingWeb.RegistrationControllerTest do
 
   describe "GET /v/:token" do
     test "valid token verifies user email", %{conn: conn} do
-      conn =
-        post(conn, "/users", %{
-          email: "test@example.com",
-          password: "testpass",
-          password_confirmation: "testpass"
-        })
-
-      assert redirected_to(conn) == "/expecting_verification"
-
-      %Verification.Token{token: token} = Verification.get_token_by_email("test@example.com")
-
+      %{token: token} = insert(:email_token)
       conn = get(conn, "/v/#{token}")
-
       assert redirected_to(conn) == "/profiles/new"
     end
   end
