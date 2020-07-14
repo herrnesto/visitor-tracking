@@ -12,7 +12,7 @@
         <p>Wir verifizieren eine E-Mail und deine Mobilenummer - Für den Veranstalter selber bleibst du anonym. Im Notfall leiten wir deine Daten direkt ans BAG weiter.</p>
         <p>
         <p>
-          <a href="<%= Routes.registration_path(@conn, :new) %>"><button class="button is-primary">Jetzt Registrieren</button></a>
+          <a href="<%= Routes.registration_path(@conn, :new) %>"><button class="button is-large is-inverted is-outlined is-primary">Jetzt Registrieren</button></a>
         </p>
       </div>
     </div>
@@ -22,6 +22,70 @@
 <section>
   <div class="container">
     <%= render(VisitorTrackingWeb.LayoutView, "alert.html", conn: @conn) %>
+  </div>
+</section>
+
+<section>
+  <div class="container mb-4">
+    <div class="column has-text-centered">
+      <h2 class="title">
+        Unsere Vorteile
+      </h1>
+      <p class="subtitle is-4">Wir glauben, dass unser Konzept optimal an die aktuelle Sitation angepasst ist.</p>
+    </div>
+  </div>
+  <div class="container">
+    <div class="column">
+      <ul class="featurelist">
+        <li>
+          <h2 class="colored is-5 is-primary">
+            <figure>
+              <i class="fa fa-check is-primary"></i>
+            </figure>
+            100% Transparent</h2>
+          <p class="subtitle">Du hast die <strong>Kontrolle über deine Daten</strong>. Der Veranstalter weiss nicht, wer an seinem. Sollte eine Anordnung vom BAG kommen, so werden wir dich informieren, wann und an wen wir deine Daten weitergeleitet haben.</p>
+        </li>
+        <li>
+          <h2 class="colored is-5 is-primary">
+            <figure>
+              <i class="fa fa-check is-primary"></i>
+            </figure>
+            Keine Lizenzkosten oder Abogebühren</h2>
+          <p class="subtitle">Die App soll erschwinglich sein für jeden. Als Veranstalter bezahlst du lediglich eine kleine Gebühr pro Besucher.</p>
+        </li>
+        <li>
+          <h2 class="colored is-5 is-primary">
+            <figure>
+              <i class="fa fa-check is-primary"></i>
+            </figure>
+            Effiziente Abwicklung</h2>
+          <p class="subtitle">Unser Workflow ist simpel und erlaubt eine <strong>effiziente Abwicklung</strong> am Eingang zum Event.</p>
+        </li>
+        <li>
+          <h2 class="colored is-5 is-primary">
+            <figure>
+              <i class="fa fa-check is-primary"></i>
+            </figure>
+            Agiles Entwicklungsteam</h2>
+          <p class="subtitle">Wir sind in der Lage, die App jederzeiz den neuen Bedingungen anzupassen.</p>
+        </li>
+        <li>
+          <h2 class="colored is-5 is-primary">
+            <figure>
+              <i class="fa fa-check is-primary"></i>
+            </figure>
+            Moderne Technologie</h2>
+          <p class="subtitle">Wir setzen auf <strong>Elixir</strong>, ist eine moderne und performante Programmiersprache.</p>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+        </div>
+    </div>
   </div>
 </section>
 
