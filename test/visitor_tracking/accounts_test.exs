@@ -5,7 +5,8 @@ defmodule VisitorTracking.AccountsTest do
   @valid_user_params %{
     email: "test_email@example.com",
     password: "anotherpassword",
-    password_confirmation: "anotherpassword"
+    password_confirmation: "anotherpassword",
+    uuid: UUID.uuid1()
   }
 
   describe "get_user_by/1" do

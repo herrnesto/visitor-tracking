@@ -16,6 +16,7 @@ defmodule VisitorTracking.Accounts.User do
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
     field :role, :string, default: "user"
+    field :uuid, :string
 
     many_to_many(
       :visited_events,
@@ -33,8 +34,8 @@ defmodule VisitorTracking.Accounts.User do
 
   def registration_changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :password, :password_confirmation])
-    |> validate_required([:email])
+    |> cast(attrs, [:email, :password, :password_confirmation, :uuid])
+    |> validate_required([:email, :password, :password_confirmation, :uuid])
     |> validate_confirmation(:password,
       required: true,
       message: "password and confirmation do not match"

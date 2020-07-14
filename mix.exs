@@ -56,6 +56,7 @@ defmodule VisitorTracking.MixProject do
       {:bamboo, "~> 1.5"},
       {:pbkdf2_elixir, "~> 1.0"},
       {:eqrcode, "~> 0.1.7"},
+      {:uuid, "~> 1.1"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:excoveralls, "~> 0.13.0", only: :test},
       {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
