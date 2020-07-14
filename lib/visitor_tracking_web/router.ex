@@ -18,7 +18,8 @@ defmodule VisitorTrackingWeb.Router do
   scope "/", VisitorTrackingWeb do
     pipe_through :browser
 
-    get "/", HomepageController, :index
+    get "/", CmsController, :homepage
+    get "/datenschutz", CmsController, :privacy
     get "/login", SessionController, :new
     post "/sessions", SessionController, :create
     get "/register", RegistrationController, :new

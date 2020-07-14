@@ -1,0 +1,49 @@
+<%= render(VisitorTrackingWeb.LayoutView, "header.html", %{conn: @conn, current_user: @current_user}) %>
+
+<section>
+  <div class="container mb-4">
+    <div class="column">
+			<div class="content is-medium">
+		    <h1 class="title">Datenschutzrichtlinien</h1>
+		   	<p class="subtitle">Stand: 2020-07-14</p>
+		    <h2 class="is-2">Welche personenbezogenen Daten wir sammeln und warum wir sie sammeln</h2>
+		    <h3>Allgemeine Daten</h3>
+		    <p>Wenn Sie auf diese Webseite zugreifen werden automatisch Informationen allgemeiner Natur erfasst. Diese Informationen werden im Server-Logfile erfasst und beinhalten die Art des Webbrowsers, das verwendete Betriebssystem, den Domainnamen Ihres Internet-Service-Providers, Ihre IP-Adresse und ähnliches.</p>
+<p>Dies aus folgendem Grund:
+	<ul>
+<li>Sicherstellung eines problemlosen Verbindungsaufbaus der Website</li>
+<li>Sicherstellung einer reibungslosen Nutzung unserer Website</li>
+<li>Auswertung der Systemsicherheit und -stabilität sowie</li>
+<li>zu weiteren administrativen Zwecken</li>
+</ul></p>
+<p>Ihre Daten werden nicht verwendet, um Rückschlüsse auf Ihre Person zu ziehen. Informationen dieser Art werden lediglich statistisch ausgewertet, um unseren Internetauftritt und die dahinterstehende Technik zu optimieren.</p>
+
+<h3>Personenbezogene Daten</h3>
+<p>Alle persönlichen Daten sie sie in ihrem Profil angegeben haben werden gespeichert. Dies dient dazu, dass dem BAG im Falle einer bekannten Infektion eine Liste aller Besucher übermittelt werden kann.</p>
+
+<h2>Speicherdauer von Daten</h2>
+<p>Für Benutzer, die sich auf unserer Website registrieren, speichern wir zusätzlich die persönlichen Informationen, die sie in ihren Benutzerprofilen angeben. Alle Benutzer können jederzeit ihre persönlichen Informationen einsehen, verändern oder löschen (nur per E-Mail Anfrage -> Rechtliche Grundlagen beachten).</p>
+<p>Alle Personenbezogenen Daten müssen per Gesetz während 14 Tagen nach der letzten Anmeldung an einem Event gespeichert werden. Nach dem Ablauf dieser Frist löschen wir in jedem Fall die Verknüpfung ihrer Daten zu einem Event.</p>
+
+<h2>Wer hat Einsicht in ihre Daten</h2>
+<p>Der Veranstalter kann ihre Daten zu keiner Zeit auslesen. Lediglich beim Scannen des QR Codes wird ihr Name kurz erscheinen. Dies dient zur Identifikation zusammen mit der ID.</p>
+<p>Der Bund (BAG) kann per Gesetz eine Liste aller Gäste inklusive Kontaktdaten anfordern. Sollten wir aufgefordert werden ihre Daten auszuhändigen, werden sie von uns per E-Mail informiert.</p>
+
+<h2>Datenübertragung</h2>
+<p>Um die Sicherheit Ihrer Daten bei der Übertragung zu schützen, verwenden wir dem aktuellen Stand der Technik entsprechende Verschlüsselungsverfahren (z. B. SSL) über HTTPS.</p>
+
+<h2>SMS und E-Mail Gateway</h2>
+<p>Wir übermitteln lediglich die E-Mail-Adresse und den Vornamen per E-Mail. Als Gateway nutzen wir <a href="https://sendgrid.com/" target="_blank">SendGrid</a> von Twilio</p>
+<p>Da SMS prinzipiell ein unsicheres Kommunikationsmittel ist, verzichten wir auf das übermitteln von personifizierten Daten. SMS werden nur für das übermittel der Verifizierungstokens und eventuell für eine Bestätigung verwendet. Für die Übermittlung der SMS verwenden wir wiederum Twilio.</p>
+<p>Da SMS prinzipiell ein unsicheres Kommunikationsmittel ist, verzichten wir auf das übermitteln von personifizierten Daten. SMS werden nur für das übermittel der Verifizierungstokens und eventuell für eine Bestätigung verwendet. Für die Übermittlung der SMS verwenden wir Twilio</p>
+<p>
+	Informationen über Twilio / SendGrid
+<ul>
+	<li><a href="https://www.twilio.com/legal/tos#4-customer-data" target="_blank">Datenschutz</a></li>
+	<li><a href="https://www.twilio.com/security" target="_blank">Sicherheit</a></li>
+</ul>
+</p>
+		  </div>
+    </div>
+  </div>
+</h2>

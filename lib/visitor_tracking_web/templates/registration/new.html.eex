@@ -6,7 +6,7 @@
 	<div class="container">
 		<div class="columns">
 			<div class="column is-4 is-offset-4 has-text-centered">
-				<h2 class="title is-4">Registriere dich jetzt</h2>
+				<h2 class="title is-4">Registieren</h2>
 				  <!--- <p class="description">Deine Daten </p> --->
 				<%= form_for @changeset, "/users", fn f ->	 %>
 			    <div class="field">
@@ -27,7 +27,7 @@
 			    </div>
 			    <%= submit "Kostenlos Registrieren", class: "button is-block is-primary is-fullwidth is-medium" %>
 			    <br />
-			    <small><em>Mit dem Klicken auf Anmelden, bestätigst du unsere Datenschutzrichtlinien gelesen zu haben.</em></small>
+			    <small><em>Mit dem Klicken auf Anmelden, stimmst du unseren <%= link "Datenschutzrichtlinien", to: Routes.cms_path(@conn, :privacy) %> zu.</em></small>
 		    <% end %>
 			</div>
 		</div>
