@@ -2,9 +2,7 @@ defmodule VisitorTracking.Events do
   @moduledoc """
   Events Context module
   """
-  alias VisitorTracking.Events.Event
-  alias VisitorTracking.Accounts
-  alias VisitorTracking.Repo
+  alias VisitorTracking.{Accounts, Events.Event, Repo}
 
   def create(args \\ %{}) do
     %Event{}

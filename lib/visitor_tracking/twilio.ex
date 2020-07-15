@@ -3,7 +3,7 @@ defmodule VisitorTracking.Twilio do
   Twilio Context module
   """
 
-  alias VisitorTracking.Twilio.{Responses, Message}
+  alias VisitorTracking.Twilio.{Message, Responses}
 
   def send_token(%{token: token, target_number: target_number} = args) do
     with {:ok, response} <- Message.send_token(%{token: token, target_number: target_number}) do

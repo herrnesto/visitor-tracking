@@ -1,6 +1,5 @@
 defmodule VisitorTrackingWeb.RegistrationControllerTest do
   use VisitorTrackingWeb.ConnCase, async: true
-  alias VisitorTracking.Verification
 
   test "GET /register shows a registration form", %{conn: conn} do
     conn = get(conn, "/register")
@@ -13,11 +12,13 @@ defmodule VisitorTrackingWeb.RegistrationControllerTest do
   describe "POST /users" do
     test "with valid data brings us to /expecting_verification page", %{conn: conn} do
       conn =
-        post(conn, "/users", %{user: %{
-          email: "test@example.com",
-          password: "testpass",
-          password_confirmation: "testpass"
-        }})
+        post(conn, "/users", %{
+          user: %{
+            email: "test@example.com",
+            password: "testpass",
+            password_confirmation: "testpass"
+          }
+        })
 
       assert redirected_to(conn) == "/expecting_verification"
     end

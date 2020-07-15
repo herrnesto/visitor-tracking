@@ -1,9 +1,9 @@
 defmodule VisitorTracking.VerificationTest do
   use VisitorTracking.DataCase
 
+  alias VisitorTracking.Factory
   alias VisitorTracking.Verification
   alias VisitorTracking.Verification.Token
-  alias VisitorTracking.Factory
 
   setup do
     %{user: Factory.insert(:user)}
