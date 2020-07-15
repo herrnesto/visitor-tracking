@@ -48,7 +48,7 @@ defmodule VisitorTrackingWeb.SessionControllerTest do
     end
 
     test "with actual form data redirects if user exists and password correct", %{conn: conn} do
-      user = insert(:user, email: "test@test.com")
+      user = insert(:user, email: "test@test.com", email_verified: true)
 
       conn =
         post(conn, "/sessions", %{
@@ -57,7 +57,7 @@ defmodule VisitorTrackingWeb.SessionControllerTest do
 
       assert conn.assigns.current_user == user
       assert get_session(conn, :user_id) == user.id
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/events"
     end
   end
 end

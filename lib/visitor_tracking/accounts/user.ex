@@ -26,13 +26,15 @@ defmodule VisitorTracking.Accounts.User do
 
     has_many :organised_events, Event, foreign_key: :organiser_id
 
+    has_one :profile, VisitorTracking.Accounts.Profile
+
     timestamps()
   end
 
   def registration_changeset(user, attrs) do
     user
     |> cast(attrs, [:email, :password, :password_confirmation])
-    |> validate_required([:email, :password, :password_confirmation])
+    |> validate_required([:email])
     |> validate_confirmation(:password,
       required: true,
       message: "password and confirmation do not match"
@@ -44,6 +46,12 @@ defmodule VisitorTracking.Accounts.User do
     )
     |> hash_password()
     |> unique_constraint(:email)
+  end
+
+  def email_verification_changeset(user, attrs) do
+    user
+    |> cast(attrs, [:email_verified])
+    |> validate_required([:email_verified])
   end
 
   defp hash_password(%{valid?: true, changes: %{password: pass}} = changeset) do

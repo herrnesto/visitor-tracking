@@ -5,8 +5,6 @@ defmodule VisitorTracking.Events.EventTest do
   alias VisitorTracking.Events.Event
   alias VisitorTracking.Factory
 
-  @schema_fields [:organiser, :name, :venue, :date_start]
-
   describe "changeset/1" do
     test "success: returns a valid changeset when given valid arguments" do
       user = Factory.user_factory()

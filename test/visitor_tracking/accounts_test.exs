@@ -1,6 +1,6 @@
 defmodule VisitorTracking.AccountsTest do
   use VisitorTracking.DataCase, async: true
-  alias VisitorTracking.Accounts
+  alias VisitorTracking.{Accounts, Verification}
 
   @valid_user_params %{
     email: "test_email@example.com",
@@ -85,6 +85,22 @@ defmodule VisitorTracking.AccountsTest do
                  password: "testpass",
                  password_confirmation: "anotherpass"
                })
+    end
+  end
+
+  describe "verify_email_by_token/1" do
+    test "verifies email of a user if token is valid" do
+      %{id: id, email: email, email_verified: false} = insert(:user)
+      {:ok, token} = Verification.create_link_token(id, email)
+      assert {:ok, user} = Accounts.verify_email_by_token(token)
+      assert user.email_verified == true
+    end
+  end
+
+  describe "change_profile/2" do
+    test "returns a changeset of an empty profile for a user" do
+      %{id: id} = insert(:user)
+      assert %Ecto.Changeset{changes: %{user_id: ^id}} = Accounts.change_profile(id)
     end
   end
 end

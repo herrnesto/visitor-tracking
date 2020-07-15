@@ -25,11 +25,6 @@ defmodule VisitorTracking.Verification.Token do
     |> validate_required([:user_id, :type])
     |> validate_inclusion(:type, ["sms", "link"])
     |> validate_format(:code, ~r/\A\d{6}\z/, message: "invalid code")
-    |> validate_format(
-      :mobile,
-      ~r/\A\+\d+\z/,
-      message: "invalid mobile number, must be of format +XXXXXXXXX"
-    )
     |> unique_constraint(:token)
     |> unique_constraint([:code, :mobile])
   end

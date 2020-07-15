@@ -9,20 +9,10 @@ defmodule VisitorTracking.VerificationTest do
     %{user: Factory.insert(:user)}
   end
 
-  describe "create sms code" do
-    test "success", %{user: user} do
-      assert {:ok, _code} = Verification.create_sms_code(user.id, "+41791234567")
-    end
-
-    test "missing plus in mobile number", %{user: user} do
-      assert {:error, _msg} = Verification.create_sms_code(user.id, "0791234567")
-    end
-
-    test "are different each time", %{user: user} do
-      assert {:ok, code_1} = Verification.create_sms_code(user.id, "+41791234567")
-      assert {:ok, code_2} = Verification.create_sms_code(user.id, "+41791234567")
-      refute code_1 == code_2
-    end
+  test "are different each time" do
+    assert {:ok, code_1} = Verification.create_sms_code(1, "+41791234567")
+    assert {:ok, code_2} = Verification.create_sms_code(1, "+41791234567")
+    refute code_1 == code_2
   end
 
   describe "create link token" do
@@ -85,6 +75,15 @@ defmodule VisitorTracking.VerificationTest do
       |> Repo.update_all(set: [updated_at: time])
 
       assert {:error, _msg} = Verification.verify_link_token(token)
+    end
+  end
+
+  describe "get_token_by_email/1" do
+    test "returns a token if it exists and valid" do
+      %{id: id, email: email} = insert(:user)
+      Verification.create_link_token(id, email)
+
+      %Token{user_id: ^id} = Verification.get_token_by_email(email)
     end
   end
 end

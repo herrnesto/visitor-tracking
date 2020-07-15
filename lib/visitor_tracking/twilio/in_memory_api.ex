@@ -3,7 +3,7 @@ defmodule VisitorTracking.Twilio.InMemoryApi do
   Simulates Twilio API without doing real calls.
   """
 
-  def post(url, body, header, options) do
+  def post(url, _body, header, _options) do
     {:ok,
      %HTTPoison.Response{
        body:

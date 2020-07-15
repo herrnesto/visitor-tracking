@@ -7,7 +7,6 @@ defmodule VisitorTracking.Events.Event do
   import Ecto.Changeset
 
   alias VisitorTracking.Accounts.User
-  alias VisitorTracking.Repo
 
   schema "events" do
     belongs_to :organiser, User

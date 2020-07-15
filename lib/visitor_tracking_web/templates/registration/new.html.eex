@@ -20,7 +20,7 @@
 		    </div>
 		    <div class="field">
 		      <div class="control">
-		      	<%= password_input f, :password, class: "input is-medium", placeholder: "Passwort bestätigen" %>
+		      	<%= password_input f, :password_confirmation, class: "input is-medium", placeholder: "Passwort bestätigen" %>
 		      </div>
 		    </div>
 		    <%= submit "Kostenlos Registrieren", class: "button is-block is-primary is-fullwidth is-medium" %>
