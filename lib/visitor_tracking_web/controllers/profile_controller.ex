@@ -10,10 +10,10 @@ defmodule VisitorTrackingWeb.ProfileController do
   end
 
   def create(conn, %{"profile" => profile_params}) do
-    profile_params = Map.put_new(profile_params, "user_id", get_session(conn, :user_id))
+    profile_params = Map.put_new(profile_params, "user_id", conn.assigns.current_user.id)
 
     case Accounts.create_profile(profile_params) do
-      {:ok, profile} ->
+      {:ok, _profile} ->
         conn
         |> put_flash(:info, "Profile created. Check your mobile for an sms with a code")
         |> redirect(to: "/profiles/phone_verification")
