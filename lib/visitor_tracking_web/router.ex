@@ -18,7 +18,8 @@ defmodule VisitorTrackingWeb.Router do
   scope "/", VisitorTrackingWeb do
     pipe_through :browser
 
-    get "/", HomepageController, :index
+    get "/", CmsController, :homepage
+    get "/datenschutz", CmsController, :privacy
     get "/login", SessionController, :new
     post "/sessions", SessionController, :create
     get "/register", RegistrationController, :new
@@ -50,7 +51,13 @@ defmodule VisitorTrackingWeb.Router do
   end
 
   scope "/", VisitorTrackingWeb do
-    pipe_through [:browser, :authenticate_user, :check_email_verified, :profile_created, :check_phone_verified]
+    pipe_through [
+      :browser,
+      :authenticate_user,
+      :check_email_verified,
+      :profile_created,
+      :check_phone_verified
+    ]
 
     get "/events", EventController, :index
   end

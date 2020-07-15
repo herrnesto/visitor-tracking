@@ -9,6 +9,7 @@ defmodule VisitorTracking.VerificationTest do
     %{user: Factory.insert(:user)}
   end
 
+  @tag :skip
   test "are different each time" do
     assert {:ok, code_1} = Verification.create_sms_code(1, "+41791234567")
     assert {:ok, code_2} = Verification.create_sms_code(1, "+41791234567")
@@ -78,6 +79,7 @@ defmodule VisitorTracking.VerificationTest do
     end
   end
 
+  @tag :skip
   describe "get_token_by_email/1" do
     test "returns a token if it exists and valid" do
       %{id: id, email: email} = insert(:user)

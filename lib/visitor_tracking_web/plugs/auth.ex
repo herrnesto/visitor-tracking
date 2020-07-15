@@ -10,6 +10,7 @@ defmodule VisitorTrackingWeb.Plugs.Auth do
 
   def call(conn, _) do
     user_id = get_session(conn, :user_id)
+
     cond do
       conn.assigns[:current_user] ->
         conn

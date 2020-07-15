@@ -27,6 +27,7 @@ defmodule VisitorTrackingWeb.ProfileController do
 
   def phone_verification(conn, _) do
     profile = conn.assigns.current_user.profile
+
     with {:ok, token} <- Verification.create_sms_code(profile.user_id, profile.phone),
          {:ok, _} <- Twilio.send_token(%{token: token, target_number: profile.phone}) do
       render(conn, "phone_verification.html")
@@ -45,6 +46,7 @@ defmodule VisitorTrackingWeb.ProfileController do
 
   def verify_phone(conn, %{"code" => code}) do
     profile = conn.assigns.current_user.profile
+
     case Verification.verify_sms_code(code, profile.phone) do
       {:error, reason} ->
         conn

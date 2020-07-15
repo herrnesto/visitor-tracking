@@ -1,0 +1,32 @@
+<nav class="navbar">
+  <div class="container">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="/">
+        Visitor Tracker
+      </a>
+      <span class="navbar-burger burger" data-target="navbarMenuHeroB">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+    </div>
+    <div id="navbarMenuHeroB" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item">User id? <%= Plug.Conn.get_session(@conn, :user_id) %></a>
+        <%= if @current_user do %>
+          <%= link "Logout", to: "/logout",  method: "delete", class: "navbar-item" %>
+        <% else %>
+          <%= link "Registrieren", to: "/register", class: "navbar-item" %>
+          <span class="navbar-item">
+            <a class="button is-info is-inverted" href="<%= Routes.session_path(@conn, :new) %>">
+              <span class="icon">
+                <i class="fas fa-user"></i>
+              </span>
+              <span>Login</span>
+            </a>
+          </span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</nav>
