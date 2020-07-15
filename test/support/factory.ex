@@ -6,7 +6,6 @@ defmodule VisitorTracking.Factory do
 
   def user_factory do
     %Accounts.User{
-      id: 3,
       email: sequence(:email, &"email-#{&1}@example.com"),
       password_hash: Pbkdf2.hash_pwd_salt("testpass"),
       email_verified: false
@@ -22,7 +21,6 @@ defmodule VisitorTracking.Factory do
       |> Base.encode16()
 
     %Verification.Token{
-      id: 5,
       user: insert(:user),
       type: "link",
       token: token,
@@ -34,7 +32,6 @@ defmodule VisitorTracking.Factory do
 
   def sms_token_factory do
     %Verification.Token{
-      id: 5,
       user: insert(:user),
       type: "sms",
       token: nil,

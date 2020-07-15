@@ -10,15 +10,14 @@ defmodule VisitorTrackingWeb.RegistrationControllerTest do
     assert html_response(conn, 200) =~ "Passwort"
   end
 
-  @tag :skip
   describe "POST /users" do
     test "with valid data brings us to /expecting_verification page", %{conn: conn} do
       conn =
-        post(conn, "/users", %{
+        post(conn, "/users", %{user: %{
           email: "test@example.com",
           password: "testpass",
           password_confirmation: "testpass"
-        })
+        }})
 
       assert redirected_to(conn) == "/expecting_verification"
     end
