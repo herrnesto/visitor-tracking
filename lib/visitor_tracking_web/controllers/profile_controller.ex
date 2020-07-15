@@ -63,22 +63,8 @@ defmodule VisitorTrackingWeb.ProfileController do
   end
 
   def show(conn, _params) do
-    with {:login, user_id} when not is_nil(user_id) <-
-           {:login, get_session(conn, :user_id)},
-         {:account, user} when not is_nil(user) <-
-           {:account, Accounts.get_user(user_id)} do
-      render(conn, "show.html", qrcode: generate_qrcode(user.uuid))
-    else
-      {:login, nil} ->
-        conn
-        |> put_flash(:error, "Login required")
-        |> redirect(to: Routes.session_path(conn, :new))
-
-      {:account, nil} ->
-        conn
-        |> put_flash(:error, "User could not be found")
-        |> redirect(to: Routes.registration_path(conn, :new))
-    end
+    user = conn.assigns.current_user
+    render(conn, "show.html", qrcode: generate_qrcode(user.uuid))
   end
 
   # or show a default error image
