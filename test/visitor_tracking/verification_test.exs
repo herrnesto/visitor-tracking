@@ -83,7 +83,7 @@ defmodule VisitorTracking.VerificationTest do
       %{id: id, email: email} = insert(:user)
       Verification.create_link_token(id, email)
 
-      %Token{visitor_id: ^id} = Verification.get_token_by_email(email)
+      %Token{user_id: ^id} = Verification.get_token_by_email(email)
     end
   end
 end
