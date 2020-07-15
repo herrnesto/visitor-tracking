@@ -1,6 +1,5 @@
 defmodule VisitorTrackingWeb.RegistrationControllerTest do
   use VisitorTrackingWeb.ConnCase, async: true
-  alias VisitorTracking.Verification
 
   test "GET /register shows a registration form", %{conn: conn} do
     conn = get(conn, "/register")
