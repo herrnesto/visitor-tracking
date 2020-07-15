@@ -13,6 +13,17 @@ defmodule VisitorTracking.Factory do
     }
   end
 
+  def profile_factory do
+    %Accounts.Profile{
+      firstname: "Test",
+      lastname: "User",
+      zip: "15500",
+      city: "Athens",
+      phone: "+10000000000",
+      phone_verified: false
+    }
+  end
+
   def email_token_factory do
     key = Time.utc_now() |> Time.to_string()
     email = sequence(:email, &"email-#{&1}@example.com")
