@@ -12,13 +12,14 @@ defmodule VisitorTracking.Factory do
       email_verified: false
     }
   end
-  
+
   def email_token_factory do
     key = Time.utc_now() |> Time.to_string()
     email = sequence(:email, &"email-#{&1}@example.com")
 
-    token = :crypto.hmac(:sha256, key, email)
-    |> Base.encode16()
+    token =
+      :crypto.hmac(:sha256, key, email)
+      |> Base.encode16()
 
     %Verification.Token{
       id: 5,
