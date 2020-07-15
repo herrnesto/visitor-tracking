@@ -20,13 +20,16 @@ defmodule VisitorTrackingWeb.ProfileControllerTest do
   end
 
   test "POST /profiles", %{conn: conn} do
-    conn = post(conn, "/profiles", %{profile: %{
-        firstname: "Test first name",
-        lastname: "Test last name",
-        zip: "15555",
-        city: "Athens",
-        phone: "+1000000000"
-      }})
+    conn =
+      post(conn, "/profiles", %{
+        profile: %{
+          firstname: "Test first name",
+          lastname: "Test last name",
+          zip: "15555",
+          city: "Athens",
+          phone: "+1000000000"
+        }
+      })
 
     assert redirected_to(conn) == "/profiles/phone_verification"
   end
