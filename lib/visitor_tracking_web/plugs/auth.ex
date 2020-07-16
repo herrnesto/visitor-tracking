@@ -50,7 +50,7 @@ defmodule VisitorTrackingWeb.Plugs.Auth do
       conn
     else
       conn
-      |> put_flash(:error, "You must create a profile to proceed")
+      # |> put_flash(:error, "You must create a profile to proceed")
       |> redirect(to: "/profiles/new")
       |> halt()
     end

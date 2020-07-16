@@ -15,7 +15,6 @@ defmodule VisitorTrackingWeb.ProfileController do
     case Accounts.create_profile(profile_params) do
       {:ok, _profile} ->
         conn
-        |> put_flash(:info, "Profile created. Check your mobile for an sms with a code")
         |> redirect(to: "/profiles/phone_verification")
 
       {:error, changeset} ->
