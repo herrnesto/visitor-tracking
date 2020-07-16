@@ -33,7 +33,7 @@ defmodule VisitorTrackingWeb.ProfileController do
     else
       {:error, status} ->
         conn
-        |> put_flash(:error, status)
+        |> put_flash(:error, "SMS Gateway Fehler (#{status})")
         |> render("phone_verification.html")
 
       error ->
@@ -56,14 +56,14 @@ defmodule VisitorTrackingWeb.ProfileController do
         Accounts.verify_phone(visitor_id)
 
         conn
-        |> put_flash(:info, "Phone Verified!")
-        |> redirect(to: "/events")
+        |> put_flash(:info, "Mobilnummer bestätigt!")
+        |> redirect(to: Routes.profile_path(conn, :show))
     end
   end
 
   def show(conn, _params) do
     user = conn.assigns.current_user
-    render(conn, "show.html", qrcode: generate_qrcode(user.uuid))
+    render(conn, "show.html", %{user: user, qrcode: generate_qrcode(user.uuid)})
   end
 
   # or show a default error image
