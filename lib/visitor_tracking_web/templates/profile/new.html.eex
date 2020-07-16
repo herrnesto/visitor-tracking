@@ -7,7 +7,7 @@
 		<div class="column is-4 is-offset-4">
 			<%= form_for @changeset, "/profiles", fn f ->	 %>
 			<div class="field">
-			  <label class="label">Name</label>
+			  <label class="label">Nachname</label>
 			  <div class="control">
 					<%= text_input f, :lastname, class: "input is-medium" %>
 			  </div>
@@ -39,7 +39,7 @@
 			</div>
 			
 			<div class="field">
-			  <label class="label">Mobile</label>
+			  <label class="label">Mobilnummer</label>
 			  <div class="control has-icons-left">
 					<%= text_input f, :phone, class: "input is-medium", placeholder: "+41 79 111 11 11"%>
 					<span class="icon is-small is-left">
