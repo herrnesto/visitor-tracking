@@ -3,7 +3,7 @@ Hallo!
 Bitte bestätige den Erhalt dieses E-Mails und verifiziere somit deine E-Mail-Adresse.
 
 Rufe bitte folgenden Link in deinem Browser auf:
-https://same-link-as-button.url/<%= @args.token %>
+<%= @args.url %>
 
 Liebe Grüsse,
 
