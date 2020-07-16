@@ -1,16 +1,14 @@
 <footer class="footer mt-6">
   <div class="content has-text-centered">
     <a href="/">
-       <strong>Visitor Tracker</strong>
+       <strong>vesita</strong>
     </a>  
 
     <div class="footer-links">
         <%= link "Datenschutz", to: Routes.cms_path(@conn, :privacy), class: "button is-text" %>
     </div>
 
-    <p>
-    	<strong>Visitor Tracker</strong> made with <i class="fas fa-heart"></i>
-    </p>
+    <p>Developed with <i class="fas fa-heart"></i></p>
 
   </div>
 </footer>
