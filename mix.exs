@@ -54,6 +54,7 @@ defmodule VisitorTracking.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:bamboo, "~> 1.5"},
+      {:bamboo_smtp, "~> 2.1.0"},
       {:pbkdf2_elixir, "~> 1.0"},
       {:eqrcode, "~> 0.1.7"},
       {:uuid, "~> 1.1"},
