@@ -57,7 +57,7 @@ defmodule VisitorTrackingWeb.SessionControllerTest do
 
       assert conn.assigns.current_user == user
       assert get_session(conn, :user_id) == user.id
-      assert redirected_to(conn) == "/events"
+      assert redirected_to(conn) == "/profiles/show"
     end
   end
 end
