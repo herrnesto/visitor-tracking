@@ -60,7 +60,7 @@ defmodule VisitorTrackingWeb.Router do
     ]
 
     get "/events", EventController, :index
-
+    get "/profiles/show", ProfileController, :show
     get "/profile/qrcode", ProfileController, :show
   end
 
