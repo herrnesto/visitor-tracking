@@ -6,10 +6,10 @@
     <div class="columns">
       <div class="column has-text-centered is-6 is-offset-3">
         <h1 class="title mb-6">
-          Für einen raschen und sicheren Einlass an jede Veranstaltung.
+          COVID19 Schutzkozept einfach umgesetzt.
         </h1>
         <h2 class="subtitle colored is-5 mb-6">
-Mit Vizita hast Du die Möglichkeit, innert Sekunden deine validierten Kontaktdaten über einen QR-Code an den Veranstalter zu übermitteln. Die Daten werden einmal verifizerit und du kannst so viele Veranstaltungen besuchen wie du willst. Der Veranstalter hat dabei keine Einsicht in deine Daten.</h2>
+Mit Vesita hast Du die Möglichkeit, innert Sekunden die validierten Kontaktdaten deiner Gäste zu sammeln. Die Daten des Kunden sind zu 100% verifizerit. Im Notfall kannst du sie direkt dem BAG weiterleiten, ohne dass du dich mit Listen oder Downloads herumschlagen musst.</h2>
         <p>
           <a href="<%= Routes.registration_path(@conn, :new) %>"><button class="button is-large is-inverted is-outlined is-primary">Jetzt Registrieren</button></a>
         </p>
@@ -36,13 +36,30 @@ Mit Vizita hast Du die Möglichkeit, innert Sekunden deine validierten Kontaktda
   <div class="container">
     <div class="column">
       <ul class="featurelist">
+
+        <li>
+          <h2 class="colored is-5 is-primary">
+            <figure>
+              <i class="fa fa-check is-primary"></i>
+            </figure>
+            Minimaler Aufwand</h2>
+          <p class="subtitle">Kein mühsames Verwalten von handgeschriebenen Zetteln oder Tabellen. Wir übernehmen die Verwaltung der Daten</p>
+        </li>
+        <li>
+          <h2 class="colored is-5 is-primary">
+            <figure>
+              <i class="fa fa-check is-primary"></i>
+            </figure>
+            Keine Probleme mit dem Datenschutz</h2>
+          <p class="subtitle">Per Gesetz müssen personifizierten Daten innert 14 Tagen beim Veranstalter gelöscht werden. Der Veranstalter ist bei uns nie im Besitz der Daten. Jede Verbindung zum Event wird nach 14 Tagen gelöscht.</p>
+        </li>
         <li>
           <h2 class="colored is-5 is-primary">
             <figure>
               <i class="fa fa-check is-primary"></i>
             </figure>
             100% Transparent</h2>
-          <p class="subtitle">Du hast die <strong>Kontrolle über deine Daten</strong>. Der Veranstalter weiss nicht, wer an seinem. Sollte eine Anordnung vom BAG kommen, so werden wir dich informieren, wann und an wen wir deine Daten weitergeleitet haben.</p>
+          <p class="subtitle">Der Kunde hat zu jeder Zeit die <strong>Kontrolle über seine Daten</strong>.</p>
         </li>
         <li>
           <h2 class="colored is-5 is-primary">
@@ -50,7 +67,7 @@ Mit Vizita hast Du die Möglichkeit, innert Sekunden deine validierten Kontaktda
               <i class="fa fa-check is-primary"></i>
             </figure>
             Keine Lizenzkosten oder Abogebühren</h2>
-          <p class="subtitle">Die App soll erschwinglich sein für jeden. Als Veranstalter bezahlst du lediglich eine kleine Gebühr pro Besucher.</p>
+          <p class="subtitle">Vesita ist für jeden User kostenlos. Als Veranstalter bezahlst du lediglich eine kleine Gebühr pro Besucher.</p>
         </li>
         <li>
           <h2 class="colored is-5 is-primary">
