@@ -26,13 +26,13 @@ defmodule VisitorTrackingWeb.Router do
     post "/users", RegistrationController, :create
     get "/scan", ScanController, :index
     get "/v/:token", RegistrationController, :verify_email
+    get "/expecting_verification", RegistrationController, :expecting_verification
   end
 
   scope "/", VisitorTrackingWeb do
     pipe_through [:browser, :authenticate_user]
 
     delete "/logout", SessionController, :delete
-    get "/expecting_verification", RegistrationController, :expecting_verification
     get "/new_token", RegistrationController, :new_token
   end
 
