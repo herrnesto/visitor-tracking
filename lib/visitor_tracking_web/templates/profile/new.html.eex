@@ -1,18 +1,62 @@
-<h1>New Profile</h1>
-<%= f = form_for(@changeset, "/profiles") %>
-<%= label f, :firstname %>
-<%= text_input f, :firstname %>
-<%= error_tag f, :firstname %>
-<%= label f, :lastname %>
-<%= text_input f, :lastname %>
-<%= error_tag f, :lastname %>
-<%= label f, :zip %>
-<%= text_input f, :zip %>
-<%= error_tag f, :zip %>
-<%= label f, :city %>
-<%= text_input f, :city %>
-<%= error_tag f, :city %>
-<%= label f, :phone %>
-<%= text_input f, :phone %>
-<%= error_tag f, :phone %>
-<%= submit "Save profile" %>
+<%= render(VisitorTrackingWeb.LayoutView, "header.html", %{conn: @conn, current_user: @current_user}) %>
+
+<section>
+	<%= render(VisitorTrackingWeb.RegistrationView, "steps.html", step: 3) %>
+
+	<div class="container">
+		<div class="column is-4 is-offset-4">
+			<h2 class="title is-4 has-text-centered">Personalien</h2>
+			<%= form_for @changeset, "/profiles", fn f ->	 %>
+			<div class="field">
+			  <label class="label">Name</label>
+			  <div class="control">
+					<%= text_input f, :lastname, class: "input is-medium" %>
+					<p class="help is-danger"><%= error_tag f, :lastname %></p>
+			  </div>
+			</div>
+
+			<div class="field">
+			  <label class="label">Vorname</label>
+			  <div class="control">
+					<%= text_input f, :firstname, class: "input is-medium" %>
+					<p class="help is-danger"><%= error_tag f, :firstname %></p>
+			  </div>
+			</div>
+
+			<div class="field">
+			  <label class="label">Postleitzahl</label>
+			  <div class="control">
+					<%= text_input f, :zip, class: "input is-medium" %>
+					<p class="help is-danger"><%= error_tag f, :zip %></p>
+			  </div>
+			</div>
+
+			<div class="field">
+			  <label class="label">Stadt</label>
+			  <div class="control">
+					<%= text_input f, :city, class: "input is-medium" %>
+					<p class="help is-danger"><%= error_tag f, :city %></p>
+			  </div>
+			</div>
+
+			
+			<div class="field">
+			  <label class="label">Mobile</label>
+			  <div class="control has-icons-left">
+					<%= text_input f, :phone, class: "input is-medium", placeholder: "+41 79 111 11 11"%>
+					<span class="icon is-small is-left">
+    				<i class="fas fa-phone"></i>
+  				</span>
+					<p class="help is-danger"><%= error_tag f, :phone %></p>
+			  </div>
+			</div>
+
+			<div class="field is-grouped">
+			  <div class="control">
+			    <%= submit "Speichern", class: "button is-block is-primary is-fullwidth is-medium" %>
+			  </div>
+			</div>
+			<% end %>
+		</div>
+	</div>
+</section>
