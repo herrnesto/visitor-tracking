@@ -22,6 +22,6 @@ defmodule VisitorTracking.Email do
   end
 
   def get_verification_url(token) do
-    VisitorTrackingWeb.Endpoint.url <>"/v/#{token}"
+    VisitorTrackingWeb.Endpoint.url() <> "/v/#{token}"
   end
 end
