@@ -5,8 +5,6 @@
 
 	<div class="container">
 		<div class="column is-4 is-offset-4 has-text-centered">
-			<h2 class="title is-4">Registieren</h2>
-			  <!--- <p class="description">Deine Daten </p> --->
 			<%= form_for @changeset, "/users", fn f ->	 %>
 		    <div class="field">
 		      <div class="control">

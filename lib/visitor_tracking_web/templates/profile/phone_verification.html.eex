@@ -6,7 +6,6 @@
 
 	<div class="container">
 		<div class="column is-4 is-offset-4">
-			<h2 class="title is-4 has-text-centered">Molbilenummer bestätigen</h2>
 			<p class="subtitle has-text-centered"">Wir haben dir einen Code als SMS geschickt. Tippe ihn ins Textfeld:
 			<%= form_for @conn, "/profiles/phone", fn f ->	 %>
 			<div class="field">
