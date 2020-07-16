@@ -16,5 +16,12 @@ For `dev` and `prod` you have to setup environment variables:
 ```
 export TWILIO_ACCOUNT_SID=xxx
 export TWILIO_AUTH_TOKEN=xxx
-export TWILIO_FROM=12566175732
+export TWILIO_FROM=41793154409
+export MAILTRAP_USER=xxxx
+export MAILTRAP_PASSWORD=xxx
 ```
+
+## Email test
+```
+"hello@vesita.ch" |> Email.verification_email("tokentest") |> Mailer.deliver_now()
+```	
