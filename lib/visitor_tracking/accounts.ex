@@ -41,7 +41,7 @@ defmodule VisitorTracking.Accounts do
   end
 
   def create_user(params) do
-    %User{}
+    %User{uuid: UUID.uuid1()}
     |> User.registration_changeset(params)
     |> Repo.insert()
   end

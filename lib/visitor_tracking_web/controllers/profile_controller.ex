@@ -61,4 +61,22 @@ defmodule VisitorTrackingWeb.ProfileController do
         |> redirect(to: "/events")
     end
   end
+
+  def show(conn, _params) do
+    user = conn.assigns.current_user
+    render(conn, "show.html", qrcode: generate_qrcode(user.uuid))
+  end
+
+  # or show a default error image
+  defp generate_qrcode(nil), do: raise("to generate a qrcode we need a uuid for the user")
+
+  defp generate_qrcode(uuid) do
+    data =
+      uuid
+      |> EQRCode.encode()
+      |> EQRCode.png()
+      |> Base.encode64()
+
+    "data:image/png;base64," <> data
+  end
 end
