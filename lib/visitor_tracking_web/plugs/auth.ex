@@ -28,7 +28,7 @@ defmodule VisitorTrackingWeb.Plugs.Auth do
       conn
     else
       conn
-      |> put_flash(:error, "You must be logged in to access that page")
+      |> put_flash(:error, "Du musst dich anmelden, um diese Seite zu sehen.")
       |> redirect(to: "/login")
       |> halt()
     end
@@ -39,7 +39,7 @@ defmodule VisitorTrackingWeb.Plugs.Auth do
       conn
     else
       conn
-      |> put_flash(:error, "You must verify your email to proceed")
+      |> put_flash(:error, "Du musst zuerst deine E-Mail-Adresse bestätigen.")
       |> redirect(to: "/expecting_verification")
       |> halt()
     end
