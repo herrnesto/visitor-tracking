@@ -56,8 +56,8 @@ defmodule VisitorTrackingWeb.RegistrationController do
     case Accounts.verify_email_by_token(token) do
       {:ok, _user} ->
         conn
-        |> put_flash(:info, "E-Mail-Adresse bestätigt")
-        |> redirect(to: "/profiles/new")
+        |> put_flash(:info, "Deine E-Mail-Adresse wurde bestätigt.")
+        |> redirect(to: Routes.profile_path(conn, :new))
 
       {:error, reason} ->
         conn
