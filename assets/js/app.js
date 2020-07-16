@@ -12,11 +12,13 @@ import "../css/app.scss"
 //     import {Socket} from "phoenix"
 //     import socket from "./socket"
 //
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 import "phoenix_html"
 import { Socket } from "phoenix"
 import NProgress from "nprogress"
 import { LiveSocket } from "phoenix_live_view"
-import Scanner from "./scanner"
+import Scanner from "./components/Scanner/Scanner"
 import React from "react"
 import ReactDOM from "react-dom"
 
