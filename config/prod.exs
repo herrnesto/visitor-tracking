@@ -90,7 +90,6 @@ config :visitor_tracking,
   twilio_auth_token: twilio_auth_token,
   twilio_from: twilio_from
 
-
 sendgrid_key = System.get_env("SENDGRID_KEY") || raise "SendGrid API key is missing"
 
 config :visitor_tracking, VisitorTracking.Mailer,
