@@ -6,14 +6,19 @@
 
 	<div class="container">
 		<div class="column is-4 is-offset-4">
-			<p class="subtitle has-text-centered"">Wir haben dir einen Code als SMS geschickt. Tippe ihn ins Textfeld:
-			<%= form_for @conn, "/profiles/phone", fn f ->	 %>
-			<div class="field">
-			  <div class="control">
-					<%= text_input f, :code, class: "input is-medium" %>
-					<p class="help is-danger"><%= error_tag f, :code %></p>
+			<p class="subtitle has-text-centered">
+				Wir haben dir einen Code als SMS geschickt. Tippe ihn ins Textfeld:
+				<%= form_for @conn, "/profiles/phone", fn f ->	 %>
+				<div class="field">
+				  <div class="control">
+						<%= text_input f, :code, class: "input is-medium" %>
+						<p class="help is-danger">
+							<%= error_tag f, :code %>
+						</p>
 			  </div>
-			  <p class="help is-danger"><%= error_tag f, :code %></p>
+			  <p class="help is-danger">
+			  	<%= error_tag f, :code %>
+			  </p>
 			</div>
 
 			<div class="field is-grouped is-grouped-centered">

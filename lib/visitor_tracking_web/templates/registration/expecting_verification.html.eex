@@ -10,7 +10,9 @@
 				Du hast keine E-Mail bekommen?
 			</p>
 			<p class="mt-2">
-				<a href="<%= Routes.registration_path(@conn, :new_token) %>"><button class="button is-primary">E-Mail erneut senden</button></a>
+				<a href="<%= Routes.registration_path(@conn, :new_token) %>">
+					<button class="button is-primary">E-Mail erneut senden</button>
+				</a>
 			</p>
 		</div>
 	</div>

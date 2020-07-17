@@ -10,24 +10,34 @@
 		      <div class="control">
 		      	<%= email_input f, :email, class: "input is-medium", placeholder: "E-Mail" %>
 		      </div>
-		     	<p class="help is-danger"><%= error_tag f, :email %></p>
+		     	<p class="help is-danger">
+		     		<%= error_tag f, :email %>
+		     	</p>
 		    </div>
 
 		    <div class="field">
 		      <div class="control">
 		      	<%= password_input f, :password, class: "input is-medium", placeholder: "Passwort" %>
 		      </div>
-		     	<p class="help is-danger"><%= error_tag f, :password %></p>
+		     	<p class="help is-danger">
+		     		<%= error_tag f, :password %>
+		     	</p>
 		    </div>
 		    <div class="field">
 		      <div class="control">
 		      	<%= password_input f, :password_confirmation, class: "input is-medium", placeholder: "Passwort bestätigen" %>
 		      </div>
-		     	<p class="help is-danger"><%= error_tag f, :password_confirmation %></p>
+		     	<p class="help is-danger">
+		     		<%= error_tag f, :password_confirmation %>
+		     	</p>
 		    </div>
 		    <%= submit "Kostenlos Registrieren", class: "button is-block is-primary is-fullwidth is-medium" %>
 		    <br />
-		    <small><em>Mit dem Klicken auf Anmelden, stimmst du unseren <%= link "Datenschutzrichtlinien", to: Routes.cms_path(@conn, :privacy) %> zu.</em></small>
+		    <small>
+		    	<em>
+		    		Mit dem Klicken auf Anmelden, stimmst du unseren <%= link "Datenschutzrichtlinien", to: Routes.cms_path(@conn, :privacy) %> zu.
+		    	</em>
+		    </small>
 	    <% end %>
 		</div>
 	</div>
