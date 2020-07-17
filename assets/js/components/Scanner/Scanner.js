@@ -2,29 +2,9 @@ import React, { useCallback, useReducer } from 'react'
 import { useAsync, IfPending, IfFulfilled, IfRejected } from 'react-async'
 import ConfirmationButton from "../ConfirmationButton/ConfirmationButton"
 import QrReader from 'react-qr-reader'
-
-const initialState = {
-  status: "idle",
-}
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'scanned':
-      return { status: 'scanned' };
-    case 'processed':
-      return { status: 'processed' };
-    default:
-      throw new Error();
-  }
-}
-
-const fetchVisitor = async ([setScannedStatus]) => {
-  const response = await fetch('https://jsonplaceholder.typicode.com/todos/1')
-  if (!response.ok) throw new Error(response.statusText)
-
-  setScannedStatus();
-  return response.json()
-}
+import { fetchVisitor } from '../../api'
+import { reducer } from '../../reducer'
+import { initialState } from '../../state'
 
 const Scanner = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -41,14 +21,16 @@ const Scanner = () => {
 
   return (
     <>
-      <div>
-        <QrReader
-          delay={1000}
-          onError={handleError}
-          onScan={handleScan}
-          style={{ width: '300px', height: '300px' }}
-        />
-      </div>
+      {state.status !== 'scanned' &&
+        <div>
+          <QrReader
+            delay={1000}
+            onError={handleError}
+            onScan={handleScan}
+            style={{ width: '300px', height: '300px' }}
+          />
+        </div>
+      }
 
       <div className="box">
         <IfPending state={loadVisitor}>Loading...</IfPending>
