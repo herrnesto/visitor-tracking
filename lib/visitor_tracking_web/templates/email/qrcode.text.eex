@@ -1,0 +1,3 @@
+<%= @user.profile.firstname %> <%= @user.profile.lastname %>		
+<%= @user.profile.zip %> <%= @user.profile.city %>		
+<%= @qrcode %>

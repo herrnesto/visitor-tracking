@@ -12,6 +12,15 @@ defmodule VisitorTracking.Email do
     |> render(:verification)
   end
 
+  def qrcode_email(user, qrcode) do
+    base_email()
+    |> to(user.email)
+    |> subject("User QR Code")
+    |> assign(:user, user)
+    |> assign(:qrcode, qrcode)
+    |> render(:qrcode)
+  end
+
   defp base_email do
     new_email()
     |> from("Rob Ot<robot@changelog.com>")
