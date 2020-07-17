@@ -1,7 +1,7 @@
 defmodule VisitorTrackingWeb.ProfileController do
   use VisitorTrackingWeb, :controller
 
-  alias VisitorTracking.{Accounts, Twilio, Verification}
+  alias VisitorTracking.{Accounts, Email, Mailer, Twilio, Verification}
 
   def new(conn, _) do
     user_id = get_session(conn, :user_id)
@@ -44,9 +44,9 @@ defmodule VisitorTrackingWeb.ProfileController do
   end
 
   def verify_phone(conn, %{"code" => code}) do
-    profile = conn.assigns.current_user.profile
+    user = conn.assigns.current_user
 
-    case Verification.verify_sms_code(code, profile.phone) do
+    case Verification.verify_sms_code(code, user.profile.phone) do
       {:error, reason} ->
         conn
         |> put_flash(:error, reason)
@@ -54,6 +54,11 @@ defmodule VisitorTrackingWeb.ProfileController do
 
       {:ok, visitor_id} ->
         Accounts.verify_phone(visitor_id)
+
+
+        user
+        |> Email.qrcode_email(generate_qrcode(user.uuid))
+        |> Mailer.deliver_now()
 
         conn
         |> put_flash(:info, "Mobilnummer bestätigt!")
