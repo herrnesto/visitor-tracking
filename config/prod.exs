@@ -79,7 +79,7 @@ config :visitor_tracking, VisitorTracking.Repo,
 bamboo_adapter =
   if System.get_env("DEVELOPER_TOOLS") == "true",
     do: Bamboo.TestAdapter,
-    else: Bamboo.SendgridAdapter
+    else: Bamboo.SendGridAdapter
 
 twilio_account_sid = System.get_env("TWILIO_ACCOUNT_SID") || raise "Twilio account sid is missing"
 twilio_auth_token = System.get_env("TWILIO_AUTH_TOKEN") || raise "Twilio auth token missing"
