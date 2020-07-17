@@ -2,6 +2,7 @@ defmodule VisitorTrackingWeb.RegistrationController do
   use VisitorTrackingWeb, :controller
 
   alias VisitorTracking.{Accounts, Email, Mailer, Verification}
+  alias VisitorTrackingWeb.Plugs.Auth
 
   def new(conn, _) do
     changeset = Accounts.change_user()
@@ -17,7 +18,9 @@ defmodule VisitorTrackingWeb.RegistrationController do
         |> Email.verification_email(token)
         |> Mailer.deliver_now()
 
-        redirect(conn, to: "/expecting_verification")
+        conn
+        |> Auth.login(user)
+        |> redirect(to: "/expecting_verification")
 
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
