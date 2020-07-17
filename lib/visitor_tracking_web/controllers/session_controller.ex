@@ -13,7 +13,7 @@ defmodule VisitorTrackingWeb.SessionController do
       {:ok, user} ->
         conn
         |> Auth.login(user)
-        |> redirect(to: "/events")
+        |> redirect(to: Routes.profile_path(conn, :show))
 
       {:error, _} ->
         render(conn, "new.html")

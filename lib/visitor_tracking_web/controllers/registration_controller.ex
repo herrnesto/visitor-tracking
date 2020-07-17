@@ -38,7 +38,7 @@ defmodule VisitorTrackingWeb.RegistrationController do
 
       %{email_verified: true} ->
         conn
-        |> put_flash(:info, "Already verified")
+        |> put_flash(:info, "Bereits bestätigt")
         |> redirect(to: "/profiles")
 
       user ->
@@ -56,8 +56,8 @@ defmodule VisitorTrackingWeb.RegistrationController do
     case Accounts.verify_email_by_token(token) do
       {:ok, _user} ->
         conn
-        |> put_flash(:info, "Email verified")
-        |> redirect(to: "/profiles/new")
+        |> put_flash(:info, "Deine E-Mail-Adresse wurde bestätigt.")
+        |> redirect(to: Routes.profile_path(conn, :new))
 
       {:error, reason} ->
         conn

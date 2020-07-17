@@ -11,12 +11,11 @@ defmodule VisitorTrackingWeb.ProfileControllerTest do
   test "GET /profiles/new", %{conn: conn} do
     conn = get(conn, "/profiles/new")
 
-    assert html_response(conn, 200) =~ "New Profile"
-    assert html_response(conn, 200) =~ "Firstname"
-    assert html_response(conn, 200) =~ "Lastname"
-    assert html_response(conn, 200) =~ "Zip"
-    assert html_response(conn, 200) =~ "City"
-    assert html_response(conn, 200) =~ "Phone"
+    assert html_response(conn, 200) =~ "Vorname"
+    assert html_response(conn, 200) =~ "Nachname"
+    assert html_response(conn, 200) =~ "Postleitzahl"
+    assert html_response(conn, 200) =~ "Stadt"
+    assert html_response(conn, 200) =~ "Mobilnummer"
   end
 
   test "POST /profiles", %{conn: conn} do

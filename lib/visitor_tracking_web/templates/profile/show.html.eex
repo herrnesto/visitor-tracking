@@ -1,1 +1,52 @@
-<%= img_tag(@qrcode) %>
+<%= render(VisitorTrackingWeb.LayoutView, "header.html", %{conn: @conn, current_user: @current_user}) %>
+
+<section>
+	<div class="container">
+		<div class="column is-4 is-offset-4">
+			<div class="card">
+			  <div class="card-image">
+			    <figure class="image is-4by4">
+			      <%= img_tag(@qrcode) %>
+			    </figure>
+			  </div>
+			  <div class="card-content">
+			    <div class="media">
+			      <div class="media-content">
+			        <p class="title is-4">
+			        	<%= @user.profile.firstname %> <%= @user.profile.lastname %>		
+			        </p>
+			        <p class="subtitle is-6">
+			        	<%= @user.profile.zip %> <%= @user.profile.city %>		
+			        </p>
+			      </div>
+			    </div>
+
+			    <div class="content">
+			      <%= @user.email %>
+			      <%= if @user.email_verified == true do %>
+				      <span class="icon has-text-success">
+				      	<i class="fas fa-check"></i>
+				      </span> 
+			      <% else %>
+				      <span class="icon has-text-danger">
+				      	<i class="fas fa-times"></i>
+				      </span> 
+			      <% end %>
+			      <br>
+			      <%= @user.profile.phone %>
+			      <%= if @user.profile.phone_verified == true do %>
+				      	<span class="icon has-text-success">
+				      		<i class="fas fa-check"></i>
+				      	</span>
+			      	<% else %>
+				      	<span class="icon has-text-danger">
+				      		<i class="fas fa-times"></i>
+				      	</span>
+			      	<% end %>
+			      <br>
+			    </div>
+			  </div>
+			</div>
+		</div>
+	</div>
+</section>

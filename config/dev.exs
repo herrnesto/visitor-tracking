@@ -76,7 +76,16 @@ config :phoenix, :stacktrace_depth, 20
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
 
-config :visitor_tracking, VisitorTracking.Mailer, adapter: Bamboo.LocalAdapter
+mailtrap_user = System.get_env("MAILTRAP_USER") || raise "Mailtrap user is missing"
+mailtrap_password = System.get_env("MAILTRAP_PASSWORD") || raise "Mailtrap password missing"
+
+config :visitor_tracking, VisitorTracking.Mailer,
+  adapter: Bamboo.SMTPAdapter,
+  server: "smtp.mailtrap.io",
+  port: 2525,
+  auth: :always,
+  username: mailtrap_user,
+  password: mailtrap_password
 
 twilio_account_sid = System.get_env("TWILIO_ACCOUNT_SID") || raise "Twilio account sid is missing"
 twilio_auth_token = System.get_env("TWILIO_AUTH_TOKEN") || raise "Twilio auth token missing"

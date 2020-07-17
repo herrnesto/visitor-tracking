@@ -1,2 +1,19 @@
-<h1>You need to verify your email first</h1>
-<a href="/new_token">Didn't receive an email? Click here to retry!</a>
+<%= render(VisitorTrackingWeb.LayoutView, "header.html", %{conn: @conn, current_user: @current_user}) %>
+
+<section>
+		<%= render(VisitorTrackingWeb.RegistrationView, "steps.html", step: 2) %>
+
+	<div class="container">
+		<div class="column is-8 is-offset-2 has-text-centered">
+			<h2 class="title is-2">Du hast eine E-Mail in deinem Postfach!</h2>
+			<p class="mt-6">
+				Du hast keine E-Mail bekommen?
+			</p>
+			<p class="mt-2">
+				<a href="<%= Routes.registration_path(@conn, :new_token) %>">
+					<button class="button is-primary">E-Mail erneut senden</button>
+				</a>
+			</p>
+		</div>
+	</div>
+</section>

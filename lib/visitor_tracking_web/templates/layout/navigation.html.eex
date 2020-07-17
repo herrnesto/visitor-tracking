@@ -2,7 +2,7 @@
   <div class="container">
     <div class="navbar-brand">
       <a class="navbar-item" href="/">
-        Visitor Tracker
+        vesita
       </a>
       <span class="navbar-burger burger" data-target="navbarMenuHeroB">
         <span></span>
@@ -12,8 +12,8 @@
     </div>
     <div id="navbarMenuHeroB" class="navbar-menu">
       <div class="navbar-end">
-        <a class="navbar-item">User id? <%= Plug.Conn.get_session(@conn, :user_id) %></a>
         <%= if @current_user do %>
+          <%= link "Profil", to: Routes.profile_path(@conn, :show), class: "navbar-item" %>
           <%= link "Logout", to: "/logout",  method: "delete", class: "navbar-item" %>
         <% else %>
           <%= link "Registrieren", to: "/register", class: "navbar-item" %>
