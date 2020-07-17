@@ -6,7 +6,7 @@
     <div class="columns">
       <div class="column has-text-centered is-6 is-offset-3">
         <h1 class="title mb-6">
-          COVID19 Schutzkozept einfach umgesetzt.
+          COVID19 Schutzkonzept einfach umgesetzt.
         </h1>
         <h2 class="subtitle colored is-5 mb-6">
 Mit Vesita hast Du die Möglichkeit, innert Sekunden die validierten Kontaktdaten deiner Gäste zu sammeln. Die Daten des Kunden sind zu 100% verifizerit. Im Notfall kannst du sie direkt dem BAG weiterleiten, ohne dass du dich mit Listen oder Downloads herumschlagen musst.</h2>
@@ -28,22 +28,21 @@ Mit Vesita hast Du die Möglichkeit, innert Sekunden die validierten Kontaktdate
   <div class="container mb-4">
     <div class="column has-text-centered">
       <h2 class="title">
-        Vorteile
+        Deine Vorteile
       </h2>
-      <p class="subtitle is-4">Wir glauben, dass unser Konzept optimal an die aktuelle Sitation angepasst ist.</p>
+      <p class="subtitle is-4"></p>
     </div>
   </div>
   <div class="container">
     <div class="column">
       <ul class="featurelist">
-
         <li>
           <h2 class="colored is-5 is-primary">
             <figure>
               <i class="fa fa-check is-primary"></i>
             </figure>
             Minimaler Aufwand</h2>
-          <p class="subtitle">Kein mühsames Verwalten von handgeschriebenen Zetteln oder Tabellen. Wir übernehmen die Verwaltung der Daten</p>
+          <p class="subtitle">Kein mühsames Verwalten von handgeschriebenen Zetteln oder Tabellen. Wir übernehmen die Verwaltung der Daten.</p>
         </li>
         <li>
           <h2 class="colored is-5 is-primary">
@@ -60,6 +59,14 @@ Mit Vesita hast Du die Möglichkeit, innert Sekunden die validierten Kontaktdate
             </figure>
             100% Transparent</h2>
           <p class="subtitle">Der Kunde hat zu jeder Zeit die <strong>Kontrolle über seine Daten</strong>.</p>
+        </li>
+        <li>
+          <h2 class="colored is-5 is-primary">
+            <figure>
+              <i class="fa fa-check is-primary"></i>
+            </figure>
+            Laufkundschaft</h2>
+          <p class="subtitle">Die Verifizierung ist <strong>nicht an ein Ticket gebunden</strong>. Du kannst auch sponten noch Eintritte verkaufen.</p>
         </li>
         <li>
           <h2 class="colored is-5 is-primary">
