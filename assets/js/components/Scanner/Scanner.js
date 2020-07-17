@@ -27,7 +27,7 @@ const Scanner = ({ eventId }) => {
             delay={1000}
             onError={handleError}
             onScan={handleScan}
-            style={{ width: '300px', height: '300px' }}
+            style={{ width: '100%' }}
           />
         </div>
       }
@@ -40,19 +40,26 @@ const Scanner = ({ eventId }) => {
             <>
               {state.status === 'scanned' ?
                 <>
-                  <p>This QR code belongs to:</p>
-                  <strong>{data.firstname} {data.lastname}</strong>
-                  <p>Check this visitor ID and confirm or decline.</p>
+                  <p class="title is-6 mt-6">Name des Gastes:</p>
+                  <h2 class="title is-3 mb-6">{data.firstname} {data.lastname}</h2>
 
-                  <div>
-                    <ConfirmationButton action="decline" state={state} dispatch={dispatch} />
-                    <ConfirmationButton action="confirm" state={state} dispatch={dispatch} />
+                  <p>&nbsp;</p>
+                  <h2 class="title is-5 mt-4">Prüfe den Namen mit der ID</h2>
+                  <div class="field is-grouped is-grouped-centered">
+                    <p class="control">
+                      <ConfirmationButton action="decline" state={state} dispatch={dispatch} />
+                    </p>
+                    <p class="control">
+                      <ConfirmationButton action="confirm" state={state} dispatch={dispatch} />
+                    </p>
                   </div>
                 </>
                 :
-                <div>
-                  <p>Done! Scan a new visitor</p>
-                </div>
+                <article className="message is-info">
+                  <div className="message-body">
+                    <strong>OK</strong>, du kannst jetzt den Code des nächsten Gastes scannen.
+                  </div>
+                </article>
               }
             </>
           }
