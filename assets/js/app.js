@@ -39,4 +39,7 @@ window.liveSocket = liveSocket
 
 // render the QR-code scanner
 const domContainer = document.querySelector("#scan")
-ReactDOM.render(<Scanner />, domContainer)
+if (domContainer) {
+  const eventId = document.getElementById('event_id').value
+  ReactDOM.render(<Scanner eventId={eventId} />, domContainer)
+}

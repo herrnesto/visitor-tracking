@@ -6,14 +6,14 @@ import { fetchVisitor } from '../../api'
 import { reducer } from '../../reducer'
 import { initialState } from '../../state'
 
-const Scanner = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+const Scanner = ({ eventId }) => {
+  const [state, dispatch] = useReducer(reducer, initialState(eventId));
 
   const loadVisitor = useAsync({ deferFn: fetchVisitor })
-  const setScannedStatus = () => dispatch({ type: 'scanned' })
+  const setScannedStatus = (code) => dispatch({ type: 'scanned', payload: { code } })
 
   const handleScan = useCallback(
-    (code) => code && loadVisitor.run(setScannedStatus)
+    (code) => code && loadVisitor.run(setScannedStatus, code)
   )
   const handleError = useCallback(
     () => console.log("This QR code cannot be read."), []
@@ -41,12 +41,12 @@ const Scanner = () => {
               {state.status === 'scanned' ?
                 <>
                   <p>This QR code belongs to:</p>
-                  <strong>{data.title}</strong>
+                  <strong>{data.firstname} {data.lastname}</strong>
                   <p>Check this visitor ID and confirm or decline.</p>
 
                   <div>
-                    <ConfirmationButton action="decline" dispatch={dispatch} />
-                    <ConfirmationButton action="confirm" dispatch={dispatch} />
+                    <ConfirmationButton action="decline" state={state} dispatch={dispatch} />
+                    <ConfirmationButton action="confirm" state={state} dispatch={dispatch} />
                   </div>
                 </>
                 :

@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react'
-import { useAsync, IfPending, IfFulfilled, IfRejected } from 'react-async'
-import { confirmVisitor, declineVisitor } from '../../api'
+import { useAsync } from 'react-async'
+import { confirmVisitor } from '../../api'
 
-const ConfirmationButton = ({ action, dispatch }) => {
+const ConfirmationButton = ({ action, state, dispatch }) => {
   let text, style, apiCall, handleClick
   const processVisitor = () => dispatch({ type: 'processed' })
 
@@ -10,7 +10,7 @@ const ConfirmationButton = ({ action, dispatch }) => {
     text = "Confirm visitor"
     style = "is-success"
     apiCall = useAsync({ deferFn: confirmVisitor })
-    handleClick = useCallback(() => apiCall.run(processVisitor), [])
+    handleClick = useCallback(() => apiCall.run(processVisitor, state.code, state.eventId), [])
   } else {
     text = "Decline visitor"
     style = "is-danger"
