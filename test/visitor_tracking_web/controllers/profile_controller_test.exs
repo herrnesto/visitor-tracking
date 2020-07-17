@@ -26,7 +26,7 @@ defmodule VisitorTrackingWeb.ProfileControllerTest do
           lastname: "Test last name",
           zip: "15555",
           city: "Athens",
-          phone: "+1000000000"
+          phone: "+41790000000"
         }
       })
 

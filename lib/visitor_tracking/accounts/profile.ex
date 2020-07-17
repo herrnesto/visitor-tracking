@@ -29,7 +29,7 @@ defmodule VisitorTracking.Accounts.Profile do
     |> validate_format(
       :phone,
       ~r/\A\+\d+\z/,
-      message: "invalid mobile number, must be of format +XXXXXXXXX"
+      message: "invalid mobile number, must be of format +00000000000"
     )
   end
 
