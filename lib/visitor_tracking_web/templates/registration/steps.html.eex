@@ -2,7 +2,7 @@
 	<div class="column has-text-centered mb-6">
 		<h1 class="title is-3">
 			<%= if @step == 1 do %>Registriere dich jetzt kostenlos<% end %>
-			<%= if @step == 2 do %>Bestätige deine E-Mail<% end %>
+			<%= if @step == 2 do %>Bestätige deine E-Mail-Adresse<% end %>
 			<%= if @step == 3 do %>Erstelle dein Profil<% end %>
 			<%= if @step == 4 do %>Bestätige deine Mobilnummer<% end %>
 		</h1>
@@ -10,63 +10,14 @@
 </div>
 <div class="container mb-6">
 	<div class="column">
-		<ul class="steps is-narrow is-medium is-centered has-content-centered">
-		  <li class="steps-segment has-gaps <%= if @step == 1 do %>is-active<% end %>">
-		    <a href="#" class="has-text-dark">
-		      <span class="steps-marker">
-		        <span class="icon">
-		          <i class="fa fa-user-plus"></i>
-		        </span>
-		      </span>
-		      <div class="steps-content">
-		        <p class="heading">Registrieren</p>
-		      </div>
-		    </a>
-		  </li>
-		  <li class="steps-segment has-gaps <%= if @step == 2 do %>is-active<% end %>">
-		    <a hef=#" class="has-text-dark">
-		      <span class="steps-marker">
-		        <span class="icon">
-		          <i class="fa fa-envelope-o"></i>
-		        </span>
-		      </span>
-		      <div class="steps-content">
-		        <p class="heading">E-Mail bestätigen</p>
-		      </div>
-		    </a>
-		  </li>
-		  <li class="steps-segment has-gaps <%= if @step == 3 do %>is-active<% end %>">
-		    <a hef=#" class="has-text-dark">
-		      <span class="steps-marker">
-		        <span class="icon">
-		          <i class="fa fa-user"></i>
-		        </span>
-		      </span>
-		      <div class="steps-content">
-		        <p class="heading">Personalien</p>
-		      </div>
-		    </a>
-		  </li>
-		  <li class="steps-segment has-gaps <%= if @step == 4 do %>is-active<% end %>">
-		    <span class="steps-marker">
-		      <span class="icon">
-		        <i class="fa fa-mobile"></i>
-		      </span>
-		    </span>
-		    <div class="steps-content">
-		      <p class="heading">Mobile bestätigen</p>
-		    </div>
-		  </li>
-		  <li class="steps-segment has-gaps <%= if @step == 5 do %>is-active<% end %>">
-		    <span class="steps-marker is-hollow">
-		      <span class="icon">
-		        <i class="fa fa-check"></i>
-		      </span>
-		    </span>
-		    <div class="steps-content">
-		      <p class="heading">Fertig!</p>
-		    </div>
-		  </li>
+		<ul class="steps is-medium is-centered has-content-centered is-horizontal">
+
+		  <%= render(VisitorTrackingWeb.RegistrationView, "steps_segment.html", %{step: @step, order: 1, icon: "fa-user-plus", text: "Registrieren"}) %>
+		  <%= render(VisitorTrackingWeb.RegistrationView, "steps_segment.html", %{step: @step, order: 2, icon: "fa-envelope-o", text: "E-Mail bestätigen"}) %>
+		  <%= render(VisitorTrackingWeb.RegistrationView, "steps_segment.html", %{step: @step, order: 3, icon: "fa-user", text: "Personalien"}) %>
+		  <%= render(VisitorTrackingWeb.RegistrationView, "steps_segment.html", %{step: @step, order: 4, icon: "fa-mobile", text: "Mobile bestätigen"}) %>
+	    <%= render(VisitorTrackingWeb.RegistrationView, "steps_segment.html", %{step: @step, order: 5, icon: "fa-check", text: "Fertig!"}) %>
+
 		</ul>
 	</div>
 </div>
