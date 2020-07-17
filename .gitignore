@@ -38,3 +38,4 @@ npm-debug.log
 postgres*
 .idea
 twilio*
+.envrc
