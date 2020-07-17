@@ -55,7 +55,6 @@ defmodule VisitorTrackingWeb.ProfileController do
       {:ok, visitor_id} ->
         Accounts.verify_phone(visitor_id)
 
-
         user
         |> Email.qrcode_email(generate_qrcode(user.uuid))
         |> Mailer.deliver_now()
