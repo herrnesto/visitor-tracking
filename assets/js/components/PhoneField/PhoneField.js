@@ -1,24 +1,39 @@
-import React, { useState } from 'react'
-import PhoneInput, { formatPhoneNumber, formatPhoneNumberIntl } from 'react-phone-number-input'
-import 'react-phone-number-input/style.css'
+import React from "react";
+import { render } from "react-dom";
+import PhoneInput from "react-phone-input-2";
+//import 'react-phone-input-2/lib/style.css'
 
-const PhoneField = () => {
-  const [value, setValue] = useState()
 
-  return (
-    <PhoneInput
-      name="profile[phone]"
-      defaultCountry="CH"
-      country="CH"
-      international
-      class="input is-medium"
-      placeholder="Enter phone number"
-      value={value}
-      onChange={setValue}
-      error={value ? (isValidPhoneNumber(value) ? undefined : 'Invalid phone number') : 'Phone number required'}
-      id="profile_phone"
-    />
-  )
+class PhoneField extends React.Component {
+  state = { phone: "" };
+
+  handleOnChange = value => {
+    this.setState({ phone: value }, () => {
+      console.log(this.state.phone);
+    });
+  };
+
+  render() {
+    return (
+      <div>
+        <PhoneInput
+          inputProps={{
+            name: "profile[phone]",
+            required: true,
+            autoFocus: true,
+          }}
+          containerClass={"control"}
+          inputClass={"input is-medium"}
+          onlyCountries={['ch']}
+          localization={{ch: 'Schweiz'}}
+          country={"ch"}
+          value={this.state.phone}
+          onChange={this.handleOnChange}
+          placeholder={"+41 79 000 00 00"}
+        />
+      </div>
+    );
+  }
 }
 
 export default PhoneField
