@@ -36,6 +36,7 @@ defmodule VisitorTracking.Accounts.User do
     user
     |> cast(attrs, [:email, :password, :password_confirmation, :uuid])
     |> validate_required([:email, :password, :password_confirmation, :uuid])
+    |> validate_length(:password, min: 8)
     |> validate_confirmation(:password,
       required: true,
       message: "password and confirmation do not match"
