@@ -4,7 +4,9 @@
 <div class="container">
 	<div class="columns">
 		<div class="column is-4 is-offset-4 has-text-centered">
-			<h1 class="title is-4">Scan</h1>
+			<h1 class="title is-4"><%= @event.name %></h1>
+			<p class="subtitle is-6">QR-Code Scanner</p>
+			<input type="hidden" id="event_id" value="<%= @event.id %>" />
       <div id="scan"></div>
 		</div>
 	</div>
