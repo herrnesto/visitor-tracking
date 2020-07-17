@@ -35,7 +35,7 @@
 		    <br />
 		    <small>
 		    	<em>
-		    		Mit dem Klicken auf Anmelden, stimmst du unseren <%= link "Datenschutzrichtlinien", to: Routes.cms_path(@conn, :privacy) %> zu.
+		    		Mit dem Registrieren stimmst du unseren <%= link "Datenschutzrichtlinien", to: Routes.cms_path(@conn, :privacy) %> zu.
 		    	</em>
 		    </small>
 	    <% end %>
