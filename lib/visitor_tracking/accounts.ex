@@ -6,9 +6,15 @@ defmodule VisitorTracking.Accounts do
   alias VisitorTracking.Accounts.{Profile, User}
   alias VisitorTracking.{Repo, Verification}
 
-  def get_user(id) do
+  def get_user(id) when is_integer(id) do
     User
     |> Repo.get(id)
+    |> Repo.preload(:profile)
+  end
+
+  def get_user(uuid) do
+    User
+    |> Repo.get_by(uuid: uuid)
     |> Repo.preload(:profile)
   end
 

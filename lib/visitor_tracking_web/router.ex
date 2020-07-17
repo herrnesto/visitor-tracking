@@ -24,7 +24,6 @@ defmodule VisitorTrackingWeb.Router do
     post "/sessions", SessionController, :create
     get "/register", RegistrationController, :new
     post "/users", RegistrationController, :create
-    get "/scan", ScanController, :index
     get "/v/:token", RegistrationController, :verify_email
     get "/expecting_verification", RegistrationController, :expecting_verification
   end
@@ -60,14 +59,18 @@ defmodule VisitorTrackingWeb.Router do
     ]
 
     get "/events", EventController, :index
+    get "/events/:event_id/scan", ScanController, :show
     get "/profiles/show", ProfileController, :show
     get "/profile/qrcode", ProfileController, :show
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", VisitorTrackingWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", VisitorTrackingWeb do
+    pipe_through :api
+
+    post "/scan/user", ScanController, :user
+    post "/scan/assign_visitor", ScanController, :assign_visitor
+  end
 
   # Enables LiveDashboard only for development
   #

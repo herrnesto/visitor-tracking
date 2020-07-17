@@ -5,6 +5,7 @@
 	<div class="columns">
 		<div class="column is-4 is-offset-4 has-text-centered">
 			<h1 class="title is-4">Scan</h1>
+			<p class="subtitle is-6"><%= @event.name %></p>
       <div id="scan"></div>
 		</div>
 	</div>
