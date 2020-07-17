@@ -15,7 +15,7 @@ defmodule VisitorTracking.Email do
   def qrcode_email(user, qrcode) do
     base_email()
     |> to(user.email)
-    |> subject("User QR Code")
+    |> subject("Dein QR-Code")
     |> assign(:user, user)
     |> assign(:qrcode, qrcode)
     |> render(:qrcode)
@@ -23,8 +23,8 @@ defmodule VisitorTracking.Email do
 
   defp base_email do
     new_email()
-    |> from("Rob Ot<robot@changelog.com>")
-    |> put_header("Reply-To", "editors@changelog.com")
+    |> from("Vesita<hello@vesita.ch>")
+    |> put_header("Reply-To", "hello@vesita.ch")
     # This will use the "email.html.eex" file as a layout when rendering html emails.
     # Plain text emails will not use a layout unless you use `put_text_layout`
     |> put_html_layout({VisitorTrackingWeb.LayoutView, "email.html"})

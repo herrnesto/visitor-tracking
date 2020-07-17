@@ -1,50 +1,72 @@
-<section>
-	<div class="container">
-		<div class="column is-4 is-offset-4">
-			<div class="card">
-			  <div class="card-image">
-			    <figure class="image is-4by4">
-			      <%= img_tag(@qrcode) %>
-			    </figure>
-			  </div>
-			  <div class="card-content">
-			    <div class="media">
-			      <div class="media-content">
-			        <p class="title is-4">
-			        	<%= @user.profile.firstname %> <%= @user.profile.lastname %>		
-			        </p>
-			        <p class="subtitle is-6">
-			        	<%= @user.profile.zip %> <%= @user.profile.city %>		
-			        </p>
-			      </div>
-			    </div>
+<!-- start preheader -->
+<div class="preheader" style="display: none; max-width: 0; max-height: 0; overflow: hidden; font-size: 1px; line-height: 1px; color: #fff; opacity: 0;">
+  Dein QR-Code ist bereit.
+</div>
+<!-- end preheader -->
+<!-- start body -->
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
 
-			    <div class="content">
-			      <%= @user.email %>
-			      <%= if @user.email_verified == true do %>
-				      <span class="icon has-text-success">
-				      	<i class="fas fa-check"></i>
-				      </span> 
-			      <% else %>
-				      <span class="icon has-text-danger">
-				      	<i class="fas fa-times"></i>
-				      </span> 
-			      <% end %>
-			      <br>
-			      <%= @user.profile.phone %>
-			      <%= if @user.profile.phone_verified == true do %>
-				      	<span class="icon has-text-success">
-				      		<i class="fas fa-check"></i>
-				      	</span>
-			      	<% else %>
-				      	<span class="icon has-text-danger">
-				      		<i class="fas fa-times"></i>
-				      	</span>
-			      	<% end %>
-			      <br>
-			    </div>
-			  </div>
-			</div>
-		</div>
-	</div>
-</section>
+
+  <!-- start hero -->
+  <tr>
+    <td align="center" bgcolor="#e9ecef">
+      <!--[if (gte mso 9)|(IE)]>
+      <table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
+      <tr>
+      <td align="center" valign="top" width="600">
+      <![endif]-->
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+          <td align="left" bgcolor="#ffffff" style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #d4dadf;">
+            <h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;">Hallo <%= @user.profile.firstname %>!</h1>
+          </td>
+        </tr>
+      </table>
+      <!--[if (gte mso 9)|(IE)]>
+      </td>
+      </tr>
+      </table>
+      <![endif]-->
+    </td>
+  </tr>
+  <!-- end hero -->
+
+  <!-- start copy block -->
+  <tr>
+    <td align="center" bgcolor="#e9ecef">
+      <!--[if (gte mso 9)|(IE)]>
+      <table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
+      <tr>
+      <td align="center" valign="top" width="600">
+      <![endif]-->
+      <table border="0" cellpadding="0" cellspacing="0" width="100%" style="">
+
+        <!-- start copy -->
+        <tr>
+          <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
+            <p style="margin: 0;">Diesen QR Code kannst du bei der Eingangskontrolle vorzeigen.</p>
+            <p><%= img_tag(@qrcode) %></p>
+          </td>
+        </tr>
+        <!-- end copy -->
+
+        <!-- start copy -->
+        <tr>
+          <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; border-bottom: 3px solid #d4dadf">
+            <p style="margin: 0;">Liebe Grüsse,<br> Vesita Team</p>
+          </td>
+        </tr>
+        <!-- end copy -->
+
+      </table>
+      <!--[if (gte mso 9)|(IE)]>
+      </td>
+      </tr>
+      </table>
+      <![endif]-->
+    </td>
+  </tr>
+  <!-- end copy block -->
+
+</table>
+<!-- end body -->
