@@ -16,6 +16,7 @@ host =
 
 config :visitor_tracking, VisitorTrackingWeb.Endpoint,
   url: [host: host, port: 80],
+  force_ssl: [rewrite_on: [:x_forwarded_proto]],
   cache_static_manifest: "priv/static/cache_manifest.json",
   http: [
     port: String.to_integer(System.get_env("PORT") || "4000"),
