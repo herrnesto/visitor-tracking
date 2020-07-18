@@ -31,6 +31,6 @@ defmodule VisitorTracking.Email do
   end
 
   def get_verification_url(token) do
-    "https://" <> System.get_env("HOST") <> "/v/#{token}"
+    "https://" <> Application.get_env(:visitor_tracking, :host) <> "/v/#{token}"
   end
 end
