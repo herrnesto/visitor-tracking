@@ -65,6 +65,7 @@ defmodule VisitorTracking.MixProject do
       {:httpoison, "~> 1.6"},
       {:sentry, "~> 7.0"},
       {:cors_plug, "~> 2.0"}
+      {:phoenix_meta_tags, ">= 0.1.8"}
     ]
   end
 
