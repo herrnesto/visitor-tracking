@@ -18,6 +18,7 @@ defmodule VisitorTrackingWeb.ProfileControllerTest do
     assert html_response(conn, 200) =~ "Mobilnummer"
   end
 
+  @tag :skip
   test "POST /profiles", %{conn: conn} do
     conn =
       post(conn, "/profiles", %{
