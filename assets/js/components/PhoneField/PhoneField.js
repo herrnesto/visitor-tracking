@@ -20,7 +20,7 @@ class PhoneField extends React.Component {
           inputProps={{
             name: "profile[phone]",
             required: true,
-            autoFocus: true,
+            autoFocus: false,
           }}
           containerClass={"control"}
           inputClass={"input is-medium"}

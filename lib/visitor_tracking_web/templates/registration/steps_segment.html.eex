@@ -4,7 +4,7 @@
       <i class="fa <%= @icon %>"></i>
     </span>
   </span>
-  <div class="steps-content">
+  <div class="steps-content is-hidden-mobile	">
     <p class="heading"><%= @text %></p>
   </div>
 </li>
