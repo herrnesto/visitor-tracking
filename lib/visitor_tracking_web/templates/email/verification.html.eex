@@ -1,101 +1,14 @@
-<!-- start preheader -->
-<div class="preheader" style="display: none; max-width: 0; max-height: 0; overflow: hidden; font-size: 1px; line-height: 1px; color: #fff; opacity: 0;">
-  Verifizere deine E-Mail-Adresse.
-</div>
-<!-- end preheader -->
+<h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;">Hallo Simon!</h1>
+<p style="margin: 0;">Bitte verifiziere deine E-Mail-Adresse durch ein klicken auf den Button.</p>
 
-<!-- start body -->
-<table border="0" cellpadding="0" cellspacing="0" width="100%">
-
-
-  <!-- start hero -->
+<table border="0" cellpadding="0" cellspacing="0">
   <tr>
-    <td align="center" bgcolor="#e9ecef">
-      <!--[if (gte mso 9)|(IE)]>
-      <table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
-      <tr>
-      <td align="center" valign="top" width="600">
-      <![endif]-->
-      <table border="0" cellpadding="0" cellspacing="0" width="100%">
-        <tr>
-          <td align="left" bgcolor="#ffffff" style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #d4dadf;">
-            <h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;">Hallo!</h1>
-          </td>
-        </tr>
-      </table>
-      <!--[if (gte mso 9)|(IE)]>
-      </td>
-      </tr>
-      </table>
-      <![endif]-->
+    <td align="center" bgcolor="#1a82e2" style="border-radius: 6px;">
+      <a href="<%= @args.url %>" target="_blank" style="display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;">E-Mail-Adresse bestätigen</a>
     </td>
   </tr>
-  <!-- end hero -->
-
-  <!-- start copy block -->
-  <tr>
-    <td align="center" bgcolor="#e9ecef">
-      <!--[if (gte mso 9)|(IE)]>
-      <table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
-      <tr>
-      <td align="center" valign="top" width="600">
-      <![endif]-->
-      <table border="0" cellpadding="0" cellspacing="0" width="100%" style="">
-
-        <!-- start copy -->
-        <tr>
-          <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-            <p style="margin: 0;">Bitte verifiziere deine E-Mail-Adresse durch ein klicken auf den Button.</p>
-          </td>
-        </tr>
-        <!-- end copy -->
-
-        <!-- start button -->
-        <tr>
-          <td align="left" bgcolor="#ffffff">
-            <table border="0" cellpadding="0" cellspacing="0" width="100%">
-              <tr>
-                <td align="" bgcolor="#ffffff" style="padding: 12px;">
-                  <table border="0" cellpadding="0" cellspacing="0">
-                    <tr>
-                      <td align="center" bgcolor="#1a82e2" style="border-radius: 6px;">
-                        <a href="<%= @args.url %>" target="_blank" style="display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;">E-Mail-Adresse bestätigen</a>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-        <!-- end button -->
-
-        <!-- start copy -->
-        <tr>
-          <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-            <p style="margin: 0;">Sollte der Link nicht funktionieren, kopiere bitte den folgenden URL in deinen Browser:</p>
-            <p style="margin: 0;"><%= @args.url %></p>
-          </td>
-        </tr>
-        <!-- end copy -->
-
-        <!-- start copy -->
-        <tr>
-          <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; border-bottom: 3px solid #d4dadf">
-            <p style="margin: 0;">Liebe Grüsse,<br> Vesita Team</p>
-          </td>
-        </tr>
-        <!-- end copy -->
-
-      </table>
-      <!--[if (gte mso 9)|(IE)]>
-      </td>
-      </tr>
-      </table>
-      <![endif]-->
-    </td>
-  </tr>
-  <!-- end copy block -->
-
 </table>
-<!-- end body -->
+
+<p style="margin: 0;">Sollte der Link nicht funktionieren, kopiere bitte den folgenden URL in deinen Browser:</p>
+<p style="margin: 0;"><%= @args.url %></p>
+<p style="margin: 0;">Liebe Grüsse,<br> Simon</p>
