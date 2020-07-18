@@ -7,6 +7,12 @@ secret_key_base =
     You can generate one by calling: mix phx.gen.secret
     """
 
+host =
+  System.get_env("HOST") ||
+    raise """
+    Host variable is missing.
+    """
+
 config :visitor_tracking, VisitorTrackingWeb.Endpoint,
   url: [host: host, port: 80],
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
