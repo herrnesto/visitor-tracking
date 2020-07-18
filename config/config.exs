@@ -36,7 +36,7 @@ config :visitor_tracking,
   protocol: "https://"
 
 config :phoenix_meta_tags,
-  title: "COVID19 Schutzkonzept easy | Vesita ",
+  title: "COVID19 konformes Besuchertracking | Vesita ",
   description: "Das COVID19 Schutzkonzept des Bundes einfach umgesetzt für Clubs und Bars.",
   url: "https://www.vesita.ch"
 
