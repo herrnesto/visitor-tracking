@@ -1,0 +1,10 @@
+<li class="steps-segment has-gaps <%= if @step <= @order do %>is-dashed<% end %> <%= if @step == @order do %>is-active<% end %>">
+  <span class="steps-marker ">
+    <span class="icon">
+      <i class="fa <%= @icon %>"></i>
+    </span>
+  </span>
+  <div class="steps-content">
+    <p class="heading"><%= @text %></p>
+  </div>
+</li>

@@ -19,13 +19,17 @@ defmodule VisitorTracking.Accounts.Profile do
   end
 
   def changeset(profile, attrs) do
+    attrs = clean_phone_number(attrs)
+
     profile
     |> cast(attrs, [:user_id, :firstname, :lastname, :zip, :city, :phone])
     |> validate_required([:user_id, :firstname, :lastname, :zip, :city, :phone])
+    |> validate_length(:phone, is: 12)
+    |> validate_length(:zip, is: 4)
     |> validate_format(
       :phone,
       ~r/\A\+\d+\z/,
-      message: "invalid mobile number, must be of format +XXXXXXXXX"
+      message: "invalid mobile number, must be of format +00000000000"
     )
   end
 
@@ -34,4 +38,13 @@ defmodule VisitorTracking.Accounts.Profile do
     |> cast(attrs, [:phone_verified])
     |> validate_required([:phone_verified])
   end
+
+  defp clean_phone_number(%{"phone" => phone} = attrs) do
+    phone = String.replace(phone, " ", "")
+
+    attrs
+    |> Map.put("phone", phone)
+  end
+
+  defp clean_phone_number(attrs), do: attrs
 end
