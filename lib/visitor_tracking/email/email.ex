@@ -31,6 +31,6 @@ defmodule VisitorTracking.Email do
   end
 
   def get_verification_url(token) do
-    VisitorTrackingWeb.Endpoint.url() <> "/v/#{token}"
+    "https://" <> System.get_env("HOST") <> "/v/#{token}"
   end
 end
