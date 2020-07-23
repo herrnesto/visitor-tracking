@@ -62,7 +62,8 @@ defmodule VisitorTracking.MixProject do
       {:excoveralls, "~> 0.13.0", only: :test},
       {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
       {:ex_machina, "~> 2.4", only: :test},
-      {:httpoison, "~> 1.6"}
+      {:httpoison, "~> 1.6"},
+      {:sentry, "~> 7.0"}
     ]
   end
 
@@ -77,7 +78,8 @@ defmodule VisitorTracking.MixProject do
       setup: ["deps.get", "ecto.setup", "cmd npm install --prefix assets"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.reset", "ecto.create --quiet", "ecto.migrate --quiet", "test"]
+      test: ["ecto.reset", "ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      sentry_recompile: ["compile", "deps.compile sentry --force"]
     ]
   end
 end

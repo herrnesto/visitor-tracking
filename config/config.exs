@@ -26,11 +26,7 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-host =
-  System.get_env("HOST") ||
-    raise """
-    Host variable is missing.
-    """
+host = System.get_env("HOST") || "0.0.0.0"
 
 config :visitor_tracking,
   developer_tools: System.get_env("DEVELOPER_TOOLS") || true,
