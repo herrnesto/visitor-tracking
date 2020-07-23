@@ -25,3 +25,8 @@ export MAILTRAP_PASSWORD=xxx
 ```
 "hello@vesita.ch" |> Email.verification_email("tokentest") |> Mailer.deliver_now()
 ```	
+
+## Sentry test
+```
+MIX_ENV=prod mix sentry.send_test_event
+```
