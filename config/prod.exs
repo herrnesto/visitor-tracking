@@ -95,3 +95,16 @@ sendgrid_key = System.get_env("SENDGRID_KEY") || raise "SendGrid API key is miss
 config :visitor_tracking, VisitorTracking.Mailer,
   adapter: bamboo_adapter,
   api_key: sendgrid_key
+
+sentry_dsn =
+  System.get_env("SENTRY_DSN") ||
+    raise """
+    SENTRY_DSN variable is missing.
+    """
+
+config :sentry,
+       enable_source_code_context: true,
+       root_source_code_path: File.cwd!(),
+       dsn: sentry_dsn,
+       included_environments: [:prod, "staging"],
+       environment_name: System.get_env("RELEASE_LEVEL") || "development"
