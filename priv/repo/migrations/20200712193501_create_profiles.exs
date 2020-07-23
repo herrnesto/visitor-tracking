@@ -8,12 +8,13 @@ defmodule VisitorTracking.Repo.Migrations.CreateProfiles do
       add :lastname, :string
       add :zip, :string
       add :city, :string
-      add :phone, :string
-      add :phone_verified, :boolean, default: false
+      add :email, :string
+      add :email_verified, :boolean, default: false
 
       timestamps()
     end
 
     create unique_index(:profiles, :user_id)
+    create unique_index(:profiles, :email)
   end
 end
