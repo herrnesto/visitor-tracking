@@ -103,8 +103,8 @@ sentry_dsn =
     """
 
 config :sentry,
-       enable_source_code_context: true,
-       root_source_code_path: File.cwd!(),
-       dsn: sentry_dsn,
-       included_environments: [:prod, "staging"],
-       environment_name: System.get_env("RELEASE_LEVEL") || "development"
+  enable_source_code_context: true,
+  root_source_code_path: File.cwd!(),
+  dsn: sentry_dsn,
+  included_environments: [:prod, "staging"],
+  environment_name: System.get_env("RELEASE_LEVEL") || "development"
