@@ -89,7 +89,9 @@ defmodule VisitorTrackingWeb.Router do
       pipe_through :browser
       live_dashboard "/dashboard", metrics: VisitorTrackingWeb.Telemetry
     end
+  end
 
+  if Mix.env() == :dev do
     forward "/sent_emails", Bamboo.SentEmailViewerPlug
   end
 end

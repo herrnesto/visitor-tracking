@@ -108,3 +108,6 @@ config :sentry,
   dsn: sentry_dsn,
   included_environments: [:prod, "staging"],
   environment_name: System.get_env("RELEASE_LEVEL") || "development"
+
+config :visitor_tracking,
+  protocol: "https://"
