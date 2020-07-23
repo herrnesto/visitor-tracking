@@ -12,39 +12,28 @@ defmodule VisitorTracking.Accounts.Profile do
     field :lastname, :string
     field :zip, :string
     field :city, :string
-    field :phone, :string
-    field :phone_verified, :boolean, default: false
+    field :email, :string
+    field :email_verified, :boolean
 
     timestamps()
   end
 
   def changeset(profile, attrs) do
-    attrs = clean_phone_number(attrs)
-
     profile
-    |> cast(attrs, [:user_id, :firstname, :lastname, :zip, :city, :phone])
-    |> validate_required([:user_id, :firstname, :lastname, :zip, :city, :phone])
-    |> validate_length(:phone, is: 12)
+    |> cast(attrs, [:user_id, :firstname, :lastname, :zip, :city])
+    |> validate_required([:user_id, :firstname, :lastname, :zip, :city])
     |> validate_length(:zip, is: 4)
     |> validate_format(
-      :phone,
-      ~r/\A\+\d+\z/,
-      message: "invalid mobile number, must be of format +00000000000"
+      :email,
+    ~r/\A[\w.!\#$%&'*+\/=?^_`{|}~-]+@[\w](?:[\w-]{0,61}[\w])?(?:\.[\w](?:[\w-]{0,61}[\w])?)*\z/i,
+      message: "invalid E-Mail address"
     )
+    |> unique_constraint(:email)
   end
 
-  def phone_verification_changeset(profile, attrs) do
-    profile
-    |> cast(attrs, [:phone_verified])
-    |> validate_required([:phone_verified])
+  def email_verification_changeset(user, attrs) do
+    user
+    |> cast(attrs, [:email_verified])
+    |> validate_required([:email_verified])
   end
-
-  defp clean_phone_number(%{"phone" => phone} = attrs) do
-    phone = String.replace(phone, " ", "")
-
-    attrs
-    |> Map.put("phone", phone)
-  end
-
-  defp clean_phone_number(attrs), do: attrs
 end

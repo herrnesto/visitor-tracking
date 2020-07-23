@@ -7,20 +7,21 @@ defmodule VisitorTracking.Factory do
   def user_factory do
     %Accounts.User{
       uuid: UUID.uuid1(),
-      email: sequence(:email, &"email-#{&1}@example.com"),
       password_hash: Pbkdf2.hash_pwd_salt("testpass"),
-      email_verified: false
+      phone: "+10000000000",
+      phone_verified: false
     }
   end
 
   def profile_factory do
     %Accounts.Profile{
+      user: insert(:user),
       firstname: "Test",
       lastname: "User",
       zip: "15500",
       city: "Athens",
-      phone: "+10000000000",
-      phone_verified: false
+      email: sequence(:email, &"email-#{&1}@example.com"),
+      email_verified: false
     }
   end
 

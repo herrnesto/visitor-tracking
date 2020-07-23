@@ -13,9 +13,10 @@ defmodule VisitorTrackingWeb.ProfileController do
     profile_params = Map.put_new(profile_params, "user_id", conn.assigns.current_user.id)
 
     case Accounts.create_profile(profile_params) do
-      {:ok, _profile} ->
+      {:ok, profile} ->
+
         conn
-        |> redirect(to: "/profiles/phone_verification")
+        |> redirect(to: "/expecting_verification")
 
       {:error, changeset} ->
         conn
@@ -24,23 +25,15 @@ defmodule VisitorTrackingWeb.ProfileController do
     end
   end
 
-  def phone_verification(conn, _) do
-    profile = conn.assigns.current_user.profile
+  def expecting_verification(conn, _) do
+    %{user_id: user_id, email: email} = conn.assigns.current_user.profile
 
-    with {:ok, token} <- Verification.create_sms_code(profile.user_id, profile.phone),
-         {:ok, _} <- Twilio.send_token(%{token: token, target_number: profile.phone}) do
-      render(conn, "phone_verification.html")
-    else
-      {:error, status} ->
-        conn
-        |> put_flash(:error, "SMS Gateway Fehler (#{status})")
-        |> render("phone_verification.html")
+    {:ok, token} = Verification.create_link_token(user_id, email)
 
-      error ->
-        conn
-        |> put_flash(:error, error)
-        |> render("phone_verification.html")
-    end
+    Email.verification_email(email, token)
+    |> Mailer.deliver_now()
+
+    render(conn, "expecting_verification.html")
   end
 
   def verify_phone(conn, %{"code" => code}) do

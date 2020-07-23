@@ -8,8 +8,8 @@ defmodule VisitorTrackingWeb.SessionController do
     render(conn, "new.html")
   end
 
-  def create(conn, %{"session" => %{"email" => email, "password" => password}}) do
-    case Accounts.authenticate_by_email_and_password(email, password) do
+  def create(conn, %{"session" => %{"phone" => phone, "password" => password}}) do
+    case Accounts.authenticate_by_phone_and_password(phone, password) do
       {:ok, user} ->
         conn
         |> Auth.login(user)

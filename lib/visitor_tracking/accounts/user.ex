@@ -10,13 +10,13 @@ defmodule VisitorTracking.Accounts.User do
   alias VisitorTracking.Events.Event
 
   schema "users" do
-    field :email, :string
+    field :uuid, :string
+    field :phone, :string
+    field :phone_verified, :boolean, default: false
     field :password_hash, :string
-    field :email_verified, :boolean
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
     field :role, :string, default: "user"
-    field :uuid, :string
 
     many_to_many(
       :visited_events,
@@ -33,27 +33,29 @@ defmodule VisitorTracking.Accounts.User do
   end
 
   def registration_changeset(user, attrs) do
+    attrs = clean_phone_number(attrs)
+
     user
-    |> cast(attrs, [:email, :password, :password_confirmation, :uuid])
-    |> validate_required([:email, :password, :password_confirmation, :uuid])
+    |> cast(attrs, [:phone, :password, :password_confirmation, :uuid])
+    |> validate_required([:phone, :password, :password_confirmation, :uuid])
+    |> validate_length(:phone, is: 12)
+    |> validate_format(
+      :phone,
+      ~r/\A\+\d+\z/,
+      message: "invalid mobile number, must be of format +00000000000"
+    )
     |> validate_length(:password, min: 8)
     |> validate_confirmation(:password,
       required: true,
       message: "password and confirmation do not match"
     )
-    |> validate_format(
-      :email,
-      ~r/\A[\w.!\#$%&'*+\/=?^_`{|}~-]+@[\w](?:[\w-]{0,61}[\w])?(?:\.[\w](?:[\w-]{0,61}[\w])?)*\z/i,
-      message: "invalid E-Mail address"
-    )
     |> hash_password()
-    |> unique_constraint(:email)
   end
 
-  def email_verification_changeset(user, attrs) do
+  def phone_verification_changeset(user, attrs) do
     user
-    |> cast(attrs, [:email_verified])
-    |> validate_required([:email_verified])
+    |> cast(attrs, [:phone_verified])
+    |> validate_required([:phone_verified])
   end
 
   defp hash_password(%{valid?: true, changes: %{password: pass}} = changeset) do
@@ -61,4 +63,13 @@ defmodule VisitorTracking.Accounts.User do
   end
 
   defp hash_password(changeset), do: changeset
+
+  defp clean_phone_number(%{"phone" => phone} = attrs) do
+    phone = String.replace(phone, " ", "")
+
+    attrs
+    |> Map.put("phone", phone)
+  end
+
+  defp clean_phone_number(attrs), do: attrs
 end

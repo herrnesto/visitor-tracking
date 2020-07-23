@@ -13,28 +13,28 @@
 			    <div class="media">
 			      <div class="media-content">
 			        <p class="title is-4">
-			        	<%= @user.profile.firstname %> <%= @user.profile.lastname %>		
+			        	<%= @user.profile.firstname %> <%= @user.profile.lastname %>
 			        </p>
 			        <p class="subtitle is-6">
-			        	<%= @user.profile.zip %> <%= @user.profile.city %>		
+			        	<%= @user.profile.zip %> <%= @user.profile.city %>
 			        </p>
 			      </div>
 			    </div>
 
 			    <div class="content">
-			      <%= @user.email %>
-			      <%= if @user.email_verified == true do %>
+			      <%= @user.phone %>
+			      <%= if @user.phone_verified == true do %>
 				      <span class="icon has-text-success">
 				      	<i class="fas fa-check"></i>
-				      </span> 
+				      </span>
 			      <% else %>
 				      <span class="icon has-text-danger">
 				      	<i class="fas fa-times"></i>
-				      </span> 
+				      </span>
 			      <% end %>
 			      <br>
-			      <%= @user.profile.phone %>
-			      <%= if @user.profile.phone_verified == true do %>
+			      <%= @user.profile.email %>
+			      <%= if @user.profile.email_verified == true do %>
 				      	<span class="icon has-text-success">
 				      		<i class="fas fa-check"></i>
 				      	</span>

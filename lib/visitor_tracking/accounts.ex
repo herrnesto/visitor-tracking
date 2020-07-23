@@ -22,8 +22,8 @@ defmodule VisitorTracking.Accounts do
     Repo.get_by(User, params)
   end
 
-  def authenticate_by_email_and_password(email, pass) do
-    user = get_user_by(email: email)
+  def authenticate_by_phone_and_password(phone, pass) do
+    user = get_user_by(phone: phone)
 
     cond do
       user && Pbkdf2.verify_pass(pass, user.password_hash) ->
@@ -52,11 +52,11 @@ defmodule VisitorTracking.Accounts do
     |> Repo.insert()
   end
 
-  def verify_email_by_token(token) do
-    with {:ok, visitor_id} <- Verification.verify_link_token(token),
+  def verify_phone_by_token(token) do
+    with {:ok, visitor_id} <- Verification.verify_sms_token(token),
          user <- get_user(visitor_id) do
       user
-      |> User.email_verification_changeset(%{email_verified: true})
+      |> Profile.email_verification_changeset(%{email_verified: true})
       |> Repo.update()
     else
       {:error, reason} ->
@@ -70,8 +70,7 @@ defmodule VisitorTracking.Accounts do
   def verify_phone(visitor_id) do
     visitor_id
     |> get_user()
-    |> Map.get(:profile)
-    |> Profile.phone_verification_changeset(%{phone_verified: true})
+    |> User.phone_verification_changeset(%{phone_verified: true})
     |> Repo.update()
   end
 
