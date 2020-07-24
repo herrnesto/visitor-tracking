@@ -1,1 +1,45 @@
-<h1>event</h1>
+<%= render(VisitorTrackingWeb.LayoutView, "header.html", %{conn: @conn, current_user: @current_user}) %>
+
+<section>
+  <div class="container">
+    <div class="column">
+      <h1 class="title">Deine Veranstaltungen</h1>
+      <p class="buttons">
+        <a class="button is-link is-outlined" href="<%= Routes.event_path(@conn, :new) %>">
+          <span class="icon is-small">
+            <i class="fas fa-plus"></i>
+          </span>
+          <span>Neue Veranstaltung</span>
+        </a>
+      </p>
+    </div>
+  </div>
+	<div class="container">
+	  <div class="column">
+	  <table class="table is-fullwidth">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Veranstaltungsort</th>
+              <th>Beschreibung</th>
+              <th>Status</th>
+              <th>Start</th>
+              <th>Ende</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%= for event <- @events do %>
+                <tr>
+                  <td><a href="<%= Routes.event_path(@conn, :show, event) %>"><%= event.name %></a></td>
+                  <td><%= event.venue %></td>
+                  <td><%= event.description %></td>
+                  <td><%= event.status %></td>
+                  <td><%= event.date_start %></td>
+                  <td><%= event.date_end %></td>
+                </tr>
+            <% end %>
+          </tbody>
+        </table>
+    </div>
+	</div>
+</section>

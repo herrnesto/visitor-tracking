@@ -1,0 +1,76 @@
+<%= render(VisitorTrackingWeb.LayoutView, "header.html", %{conn: @conn, current_user: @current_user}) %>
+
+<section>
+  <div class="container">
+    <div class="column">
+      <h1 class="title">Neue Veranstaltung</h1>
+      <p class="buttons">
+        <a class="button is-link is-outlined" href="<%= Routes.event_path(@conn, :index) %>">
+          <span class="icon is-small">
+            <i class="fas fa-arrow-left"></i>
+          </span>
+          <span>Zurück</span>
+        </a>
+      </p>
+    </div>
+  </div>
+	<div class="container">
+	  <div class="column is-4">
+	    <%= form_for @changeset, "/events", fn f ->	 %>
+
+		    <div class="field">
+		      <div class="control">
+          <label class="label">Name</label>
+            <%= text_input f, :name, class: "input is-medium", autofocus: "true" %>
+		      </div>
+		     	<p class="help is-danger">
+		     		<%= error_tag f, :name %>
+		     	</p>
+		    </div>
+
+		    <div class="field">
+		      <div class="control">
+          <label class="label">Veranstaltungsort</label>
+            <%= text_input f, :venue, class: "input is-medium" %>
+		      </div>
+		     	<p class="help is-danger">
+		     		<%= error_tag f, :venue %>
+		     	</p>
+		    </div>
+
+		    <div class="field">
+		      <div class="control">
+          <label class="label">Beschreibung</label>
+            <%= text_input f, :description, class: "input is-medium" %>
+		      </div>
+		     	<p class="help is-danger">
+		     		<%= error_tag f, :description %>
+		     	</p>
+		    </div>
+
+		    <div class="field">
+		      <div class="control">
+          <label class="label">Start</label>
+            <%= datetime_local_input f, :date_start, class: "input is-medium" %>
+		      </div>
+		     	<p class="help is-danger">
+		     		<%= error_tag f, :date_start %>
+		     	</p>
+		    </div>
+
+		    <div class="field">
+		      <div class="control">
+          <label class="label">Ende</label>
+            <%= datetime_local_input f, :date_end, class: "input is-medium" %>
+		      </div>
+		     	<p class="help is-danger">
+		     		<%= error_tag f, :date_end %>
+		     	</p>
+		    </div>
+
+        <%= submit "Veranstaltung erstellen", class: "button is-block is-primary is-fullwidth is-medium" %>
+
+      <% end %>
+	  </div>
+  </div>
+</section>

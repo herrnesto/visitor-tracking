@@ -1,0 +1,88 @@
+<%= render(VisitorTrackingWeb.LayoutView, "header.html", %{conn: @conn, current_user: @current_user}) %>
+
+<section>
+  <div class="container">
+    <div class="column">
+      <h1 class="title"><%= @event.name %></h1>
+      <p class="subtitle"><%= @event.venue %></p>
+      <p class="buttons">
+        <a class="button is-link is-outlined" href="<%= Routes.event_path(@conn, :index) %>">
+          <span class="icon is-small">
+            <i class="fas fa-arrow-left"></i>
+          </span>
+          <span>Zurück</span>
+        </a>
+        <a class="button is-link is-outlined" href="<%= Routes.event_path(@conn, :edit, @event) %>">
+          <span class="icon is-small">
+            <i class="fas fa-edit"></i>
+          </span>
+          <span>Bearbeiten</span>
+        </a>
+
+        <%= link to: Routes.event_path(@conn, :delete, @event), method: :delete, class: "button is-danger is-outlined", data: [confirm: "Are you sure?"] do %>
+          <span class="icon is-small">
+            <i class="fas fa-times"></i>
+          </span>
+          <span>Löschen</span>
+        <% end %>
+
+        <a class="button is-link is-outlined" href="<%= Routes.event_path(@conn, :edit, @event) %>">
+          <span class="icon is-small">
+            <i class="fas fa-edit"></i>
+          </span>
+          <span>Bearbeiten</span>
+        </a>
+        <a class="button is-link is-outlined" href="<%= Routes.event_path(@conn, :edit, @event) %>">
+          <span class="icon is-small">
+            <i class="fas fa-edit"></i>
+          </span>
+          <span>Bearbeiten</span>
+        </a>
+      </p>
+    </div>
+  </div>
+	<div class="container">
+	  <div class="column">
+	    <div class="content">
+        <ul>
+
+          <li>
+            <strong>Name:</strong>
+            <%= @event.name %>
+          </li>
+
+          <li>
+            <strong>Venue:</strong>
+            <%= @event.venue %>
+          </li>
+
+          <li>
+            <strong>Description:</strong>
+            <%= @event.description %>
+          </li>
+
+          <li>
+            <strong>Status:</strong>
+            <%= @event.status %>
+          </li>
+
+          <li>
+            <strong>Closed:</strong>
+            <%= @event.closed %>
+          </li>
+
+          <li>
+            <strong>Date start:</strong>
+            <%= @event.date_start %>
+          </li>
+
+          <li>
+            <strong>Date end:</strong>
+            <%= @event.date_end %>
+          </li>
+
+        </ul>
+      </div>
+	  </div>
+  </div>
+</section>
