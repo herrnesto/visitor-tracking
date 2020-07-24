@@ -80,10 +80,10 @@ defmodule VisitorTracking.VerificationTest do
 
   describe "get_token_by_email/1" do
     test "returns a token if it exists and valid" do
-      %{user_id: user_id, email: email} = insert(:profile)
-      Verification.create_link_token(user_id, email)
+      %{id: id, email: email} = insert(:user)
+      Verification.create_link_token(id, email)
 
-      %Token{user_id: ^user_id} = Verification.get_token_by_email(email)
+      %Token{user_id: ^id} = Verification.get_token_by_email(email)
     end
   end
 end

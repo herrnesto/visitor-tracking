@@ -6,7 +6,12 @@ defmodule VisitorTracking.AccountsTest do
     phone: "+41000000000",
     password: "anotherpassword",
     password_confirmation: "anotherpassword",
-    uuid: UUID.uuid1()
+    uuid: UUID.uuid1(),
+    firstname: "Test",
+    lastname: "User",
+    city: "Whatever",
+    zip: "1234",
+    email: "test@example.com"
   }
 
   describe "get_user_by/1" do
@@ -84,24 +89,22 @@ defmodule VisitorTracking.AccountsTest do
                Accounts.create_user(%{
                  phone: "+41000000000",
                  password: "testpass",
-                 password_confirmation: "anotherpass"
+                 password_confirmation: "anotherpass",
+                 firstname: "Test",
+                 lastname: "User",
+                 city: "Whatever",
+                 zip: "1234",
+                 email: "test@example.com"
                })
     end
   end
 
   describe "verify_email_by_token/1" do
     test "verifies email of a user if token is valid" do
-      %{id: id, phone: phone, phone_verified: false} = insert(:user)
-      {:ok, token} = Verification.create_sms_code(id, phone)
-      assert {:ok, user} = Accounts.verify_phone(id)
-      assert user.phone_verified == true
-    end
-  end
-
-  describe "change_profile/2" do
-    test "returns a changeset of an empty profile for a user" do
-      %{id: id} = insert(:user)
-      assert %Ecto.Changeset{changes: %{user_id: ^id}} = Accounts.change_profile(id)
+      %{id: id, email: email, email_verified: false} = insert(:user)
+      {:ok, token} = Verification.create_link_token(id, email)
+      assert {:ok, user} = Accounts.verify_email_by_token(token)
+      assert user.email_verified == true
     end
   end
 end

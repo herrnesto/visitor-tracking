@@ -16,7 +16,12 @@ defmodule VisitorTrackingWeb.RegistrationControllerTest do
           user: %{
             phone: "+41000000000",
             password: "testpass",
-            password_confirmation: "testpass"
+            password_confirmation: "testpass",
+            firstname: "Test",
+            lastname: "User",
+            city: "Whatever",
+            zip: "1234",
+            email: "test@example.com"
           }
         })
 

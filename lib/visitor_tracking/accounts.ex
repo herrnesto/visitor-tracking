@@ -3,19 +3,15 @@ defmodule VisitorTracking.Accounts do
   Accounts Context module
   """
 
-  alias VisitorTracking.Accounts.{Profile, User}
+  alias VisitorTracking.Accounts.User
   alias VisitorTracking.{Repo, Verification}
 
   def get_user(id) when is_integer(id) do
-    User
-    |> Repo.get(id)
-    |> Repo.preload(:profile)
+    Repo.get(User, id)
   end
 
   def get_user(uuid) do
-    User
-    |> Repo.get_by(uuid: uuid)
-    |> Repo.preload(:profile)
+    Repo.get_by(User, uuid: uuid)
   end
 
   def get_user_by(params) do
@@ -56,7 +52,7 @@ defmodule VisitorTracking.Accounts do
     with {:ok, visitor_id} <- Verification.verify_link_token(token),
          user <- get_user(visitor_id) do
       user
-      |> Profile.email_verification_changeset(%{email_verified: true})
+      |> User.email_verification_changeset(%{email_verified: true})
       |> Repo.update()
     else
       {:error, reason} ->
@@ -72,16 +68,5 @@ defmodule VisitorTracking.Accounts do
     |> get_user()
     |> User.phone_verification_changeset(%{phone_verified: true})
     |> Repo.update()
-  end
-
-  def change_profile(user_id, params \\ %{}) do
-    params = Map.put_new(params, :user_id, user_id)
-    Profile.changeset(%Profile{}, params)
-  end
-
-  def create_profile(params) do
-    %Profile{}
-    |> Profile.changeset(params)
-    |> Repo.insert()
   end
 end

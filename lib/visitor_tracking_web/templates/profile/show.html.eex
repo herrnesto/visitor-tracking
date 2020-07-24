@@ -13,10 +13,10 @@
 			    <div class="media">
 			      <div class="media-content">
 			        <p class="title is-4">
-			        	<%= @user.profile.firstname %> <%= @user.profile.lastname %>
+			        	<%= @user.firstname %> <%= @user.lastname %>
 			        </p>
 			        <p class="subtitle is-6">
-			        	<%= @user.profile.zip %> <%= @user.profile.city %>
+			        	<%= @user.zip %> <%= @user.city %>
 			        </p>
 			      </div>
 			    </div>
@@ -33,8 +33,8 @@
 				      </span>
 			      <% end %>
 			      <br>
-			      <%= @user.profile.email %>
-			      <%= if @user.profile.email_verified == true do %>
+			      <%= @user.email %>
+			      <%= if @user.email_verified == true do %>
 				      	<span class="icon has-text-success">
 				      		<i class="fas fa-check"></i>
 				      	</span>

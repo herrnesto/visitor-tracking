@@ -41,18 +41,11 @@ defmodule VisitorTrackingWeb.Router do
   scope "/", VisitorTrackingWeb do
     pipe_through [:browser, :authenticate_user, :check_phone_verified]
 
-    get "/profiles/new", ProfileController, :new
-    post "/profiles", ProfileController, :create
-  end
-
-  scope "/", VisitorTrackingWeb do
-    pipe_through [:browser, :authenticate_user, :check_phone_verified, :profile_created]
-
     get "/expecting_verification", ProfileController, :expecting_verification
     get "/v/:token", ProfileController, :verify_email
     get "/events", EventController, :index
     get "/events/:event_id/scan", ScanController, :show
-    get "/profiles/show", ProfileController, :show
+    get "/profile", ProfileController, :show
     get "/profile/qrcode", ProfileController, :show
   end
 

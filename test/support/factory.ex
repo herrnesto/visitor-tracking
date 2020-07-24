@@ -8,14 +8,8 @@ defmodule VisitorTracking.Factory do
     %Accounts.User{
       uuid: UUID.uuid1(),
       password_hash: Pbkdf2.hash_pwd_salt("testpass"),
-      phone: "+10000000000",
-      phone_verified: false
-    }
-  end
-
-  def profile_factory do
-    %Accounts.Profile{
-      user: insert(:user),
+      phone: sequence(:number, &"+10#{&1}00#{&1}00000"),
+      phone_verified: false,
       firstname: "Test",
       lastname: "User",
       zip: "15500",

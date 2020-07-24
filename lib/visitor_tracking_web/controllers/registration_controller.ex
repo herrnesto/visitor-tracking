@@ -1,7 +1,7 @@
 defmodule VisitorTrackingWeb.RegistrationController do
   use VisitorTrackingWeb, :controller
 
-  alias VisitorTracking.{Accounts, Twilio, Verification}
+  alias VisitorTracking.{Accounts, Email, Mailer, Twilio, Verification}
   alias VisitorTrackingWeb.Plugs.Auth
 
   plug :redirect_if_phone_verified
@@ -30,14 +30,14 @@ defmodule VisitorTrackingWeb.RegistrationController do
       {:error, reason} ->
         conn
         |> put_flash(:error, reason)
-        |> redirect(to: "/profiles/phone_verification")
+        |> redirect(to: "/phone_verification")
 
       {:ok, visitor_id} ->
         Accounts.verify_phone(visitor_id)
 
         conn
         |> put_flash(:info, "Mobilnummer bestätigt!")
-        |> redirect(to: Routes.profile_path(conn, :new))
+        |> redirect(to: "/profile")
     end
   end
 
@@ -46,6 +46,12 @@ defmodule VisitorTrackingWeb.RegistrationController do
 
     with {:ok, token} <- Verification.create_sms_code(user.id, user.phone),
          {:ok, _} <- Twilio.send_token(%{token: token, target_number: user.phone}) do
+      {:ok, link} = Verification.create_link_token(user.id, user.email)
+
+      user.email
+      |> Email.verification_email(link)
+      |> Mailer.deliver_now()
+
       render(conn, "phone_verification.html")
     else
       {:error, status} ->
@@ -64,7 +70,7 @@ defmodule VisitorTrackingWeb.RegistrationController do
     case conn.assigns.current_user do
       %{phone_verified: true} ->
         conn
-        |> redirect(to: "/profiles/new")
+        |> redirect(to: "/profile")
         |> halt()
 
       _ ->
