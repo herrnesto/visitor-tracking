@@ -19,25 +19,19 @@
           <span>Bearbeiten</span>
         </a>
 
-        <%= link to: Routes.event_path(@conn, :delete, @event), method: :delete, class: "button is-danger is-outlined", data: [confirm: "Are you sure?"] do %>
+        <%= link to: Routes.event_path(@conn, :delete, @event), method: :delete, class: "button is-danger is-outlined", data: [confirm: "Wirklich löschen?"] do %>
           <span class="icon is-small">
             <i class="fas fa-times"></i>
           </span>
           <span>Löschen</span>
         <% end %>
 
-        <a class="button is-link is-outlined" href="<%= Routes.event_path(@conn, :edit, @event) %>">
+        <%= link to: Routes.scan_path(@conn, :show, @event), method: :get, class: "button is-warning is-outlined", data: [confirm: "Mit dem Scannen starten?"] do %>
           <span class="icon is-small">
-            <i class="fas fa-edit"></i>
+            <i class="fas fa-qrcode"></i>
           </span>
-          <span>Bearbeiten</span>
-        </a>
-        <a class="button is-link is-outlined" href="<%= Routes.event_path(@conn, :edit, @event) %>">
-          <span class="icon is-small">
-            <i class="fas fa-edit"></i>
-          </span>
-          <span>Bearbeiten</span>
-        </a>
+          <span>Scannen</span>
+        <% end %>
       </p>
     </div>
   </div>
