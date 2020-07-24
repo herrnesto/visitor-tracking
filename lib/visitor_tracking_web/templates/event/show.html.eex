@@ -3,8 +3,8 @@
 <section>
   <div class="container">
     <div class="column">
-      <h1 class="title"><%= @event.name %></h1>
-      <p class="subtitle"><%= @event.venue %></p>
+      <h1 class="title">Infos zur Veranstaltung</h1>
+      <p class="subtitle"><%= @event.name %> @ <%= @event.venue %></p>
       <p class="buttons">
         <a class="button is-link is-outlined" href="<%= Routes.event_path(@conn, :index) %>">
           <span class="icon is-small">
