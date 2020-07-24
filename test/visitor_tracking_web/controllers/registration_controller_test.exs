@@ -23,12 +23,4 @@ defmodule VisitorTrackingWeb.RegistrationControllerTest do
       assert redirected_to(conn) == "/phone_verification"
     end
   end
-
-  describe "GET /v/:token" do
-    test "valid token verifies user email", %{conn: conn} do
-      %{token: token} = insert(:email_token)
-      conn = get(conn, "/v/#{token}")
-      assert redirected_to(conn) == "/events"
-    end
-  end
 end

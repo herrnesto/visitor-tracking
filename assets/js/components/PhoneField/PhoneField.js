@@ -18,7 +18,7 @@ class PhoneField extends React.Component {
       <div>
         <PhoneInput
           inputProps={{
-            name: "profile[phone]",
+            name: "user[phone]",
             required: true,
             autoFocus: false,
           }}

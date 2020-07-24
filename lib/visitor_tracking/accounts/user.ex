@@ -38,7 +38,7 @@ defmodule VisitorTracking.Accounts.User do
     user
     |> cast(attrs, [:phone, :password, :password_confirmation, :uuid])
     |> validate_required([:phone, :password, :password_confirmation, :uuid])
-    |> validate_length(:phone, is: 12)
+    |> validate_length(:phone, min: 12, max: 13)
     |> validate_format(
       :phone,
       ~r/\A\+\d+\z/,

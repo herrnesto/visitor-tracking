@@ -8,7 +8,7 @@
 		<div class="column is-4 is-offset-4">
 			<p class="subtitle has-text-centered">
 				Wir haben dir einen Code als SMS geschickt. Tippe ihn ins Textfeld:
-				<%= form_for @conn, "/profiles/phone", fn f ->	 %>
+				<%= form_for @conn, "/phone", fn f ->	 %>
 				<div class="field">
 				  <div class="control">
 						<%= text_input f, :code, class: "input is-medium", autofocus: "true" %>

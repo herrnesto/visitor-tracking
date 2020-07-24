@@ -38,8 +38,8 @@ defmodule VisitorTracking.Factory do
       type: "link",
       token: token,
       email: email,
-      code: "654321",
-      mobile: "+10000000000"
+      code: nil,
+      mobile: nil
     }
   end
 

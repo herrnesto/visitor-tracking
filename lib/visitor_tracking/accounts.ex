@@ -52,8 +52,8 @@ defmodule VisitorTracking.Accounts do
     |> Repo.insert()
   end
 
-  def verify_phone_by_token(token) do
-    with {:ok, visitor_id} <- Verification.verify_sms_token(token),
+  def verify_email_by_token(token) do
+    with {:ok, visitor_id} <- Verification.verify_link_token(token),
          user <- get_user(visitor_id) do
       user
       |> Profile.email_verification_changeset(%{email_verified: true})

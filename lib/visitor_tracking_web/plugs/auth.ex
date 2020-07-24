@@ -61,7 +61,7 @@ defmodule VisitorTrackingWeb.Plugs.Auth do
       conn
     else
       conn
-      |> put_flash(:error, "You must verify your phone to proceed")
+      |> put_flash(:error, "You must verify your email to proceed")
       |> redirect(to: "/expecting_verification")
       |> halt()
     end

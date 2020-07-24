@@ -47,4 +47,13 @@ defmodule VisitorTrackingWeb.ProfileControllerTest do
       assert html_response(conn, 200)
     end
   end
+
+  describe "GET /v/:token" do
+    test "valid token verifies profile email", %{conn: conn} do
+      profile = insert(:profile, user: conn.assigns.current_user)
+      %{token: token} = insert(:email_token, email: profile.email)
+      conn = get(conn, "/v/#{token}")
+      assert redirected_to(conn) == "/events"
+    end
+  end
 end

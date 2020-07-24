@@ -27,7 +27,7 @@ defmodule VisitorTrackingWeb.Router do
     post "/sessions", SessionController, :create
     get "/register", RegistrationController, :new
     post "/users", RegistrationController, :create
-    get "/phone_verification", ProfileController, :phone_verification
+    get "/phone_verification", RegistrationController, :phone_verification
   end
 
   scope "/", VisitorTrackingWeb do
@@ -35,6 +35,7 @@ defmodule VisitorTrackingWeb.Router do
 
     delete "/logout", SessionController, :delete
     get "/new_token", RegistrationController, :new_token
+    post "/phone", RegistrationController, :verify_phone
   end
 
   scope "/", VisitorTrackingWeb do
@@ -47,20 +48,8 @@ defmodule VisitorTrackingWeb.Router do
   scope "/", VisitorTrackingWeb do
     pipe_through [:browser, :authenticate_user, :check_phone_verified, :profile_created]
 
-    post "/phone", ProfileController, :verify_phone
     get "/expecting_verification", ProfileController, :expecting_verification
     get "/v/:token", ProfileController, :verify_email
-  end
-
-  scope "/", VisitorTrackingWeb do
-    pipe_through [
-      :browser,
-      :authenticate_user,
-      :check_phone_verified,
-      :profile_created,
-      :check_email_verified
-    ]
-
     get "/events", EventController, :index
     get "/events/:event_id/scan", ScanController, :show
     get "/profiles/show", ProfileController, :show

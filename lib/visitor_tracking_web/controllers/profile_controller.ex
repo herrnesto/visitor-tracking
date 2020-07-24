@@ -1,7 +1,9 @@
 defmodule VisitorTrackingWeb.ProfileController do
   use VisitorTrackingWeb, :controller
 
-  alias VisitorTracking.{Accounts, Email, Mailer, Twilio, Verification}
+  alias VisitorTracking.{Accounts, Email, Mailer, Verification}
+
+  plug :redirect_if_created, only: [:new]
 
   def new(conn, _) do
     user_id = get_session(conn, :user_id)
@@ -13,8 +15,7 @@ defmodule VisitorTrackingWeb.ProfileController do
     profile_params = Map.put_new(profile_params, "user_id", conn.assigns.current_user.id)
 
     case Accounts.create_profile(profile_params) do
-      {:ok, profile} ->
-
+      {:ok, _profile} ->
         conn
         |> redirect(to: "/expecting_verification")
 
@@ -36,25 +37,42 @@ defmodule VisitorTrackingWeb.ProfileController do
     render(conn, "expecting_verification.html")
   end
 
-  def verify_phone(conn, %{"code" => code}) do
-    user = conn.assigns.current_user
+  def new_token(conn, _) do
+    case conn.assigns.current_user do
+      nil ->
+        redirect(conn, to: "/login")
 
-    case Verification.verify_sms_code(code, user.profile.phone) do
-      {:error, reason} ->
+      %{email_verified: true} ->
         conn
-        |> put_flash(:error, reason)
-        |> redirect(to: "/profiles/phone_verification")
+        |> put_flash(:info, "Bereits bestätigt")
+        |> redirect(to: "/profiles")
 
-      {:ok, visitor_id} ->
-        Accounts.verify_phone(visitor_id)
+      user ->
+        {:ok, token} = Verification.create_link_token(user.id, user.email)
 
+        user.email
+        |> Email.verification_email(token)
+        |> Mailer.deliver_now()
+
+        redirect(conn, to: "/expecting_verification")
+    end
+  end
+
+  def verify_email(conn, %{"token" => token}) do
+    case Accounts.verify_email_by_token(token) do
+      {:ok, user} ->
         user
         |> Email.qrcode_email(generate_qrcode(user.uuid))
         |> Mailer.deliver_now()
 
         conn
-        |> put_flash(:info, "Mobilnummer bestätigt!")
-        |> redirect(to: Routes.profile_path(conn, :show))
+        |> put_flash(:info, "Deine E-Mail-Adresse wurde bestätigt.")
+        |> redirect(to: Routes.profile_path(conn, :new))
+
+      {:error, reason} ->
+        conn
+        |> put_flash(:error, reason)
+        |> redirect(to: "/expecting_verification")
     end
   end
 
@@ -74,5 +92,21 @@ defmodule VisitorTrackingWeb.ProfileController do
       |> Base.encode64()
 
     "data:image/png;base64," <> data
+  end
+
+  defp redirect_if_created(conn, _) do
+    case conn.assigns.current_user do
+      nil ->
+        conn
+        |> redirect(to: "/register")
+
+      %{profile: nil} ->
+        conn
+
+      %{profile: profile} ->
+        conn
+        |> redirect(to: "/profiles/show")
+        |> halt()
+    end
   end
 end
