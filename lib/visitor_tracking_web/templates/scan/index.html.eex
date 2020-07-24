@@ -1,5 +1,4 @@
-<!-- closes the header section -->
-</section>
+<%= render(VisitorTrackingWeb.LayoutView, "header.html", %{conn: @conn, current_user: @current_user}) %>
 
 <div class="container">
 	<div class="columns">
