@@ -6,9 +6,33 @@ defmodule VisitorTracking.EventsTest do
   describe "events" do
     alias VisitorTracking.Events.Event
 
-    @valid_attrs %{closed: true, date_end: "2010-04-17T14:00:00Z", date_start: "2010-04-17T14:00:00Z", description: "some description", name: "some name", status: "some status", venue: "some venue"}
-    @update_attrs %{closed: false, date_end: "2011-05-18T15:01:01Z", date_start: "2011-05-18T15:01:01Z", description: "some updated description", name: "some updated name", status: "some updated status", venue: "some updated venue"}
-    @invalid_attrs %{closed: nil, date_end: nil, date_start: nil, description: nil, name: nil, status: nil, venue: nil}
+    @valid_attrs %{
+      closed: true,
+      date_end: "2010-04-17T14:00:00Z",
+      date_start: "2010-04-17T14:00:00Z",
+      description: "some description",
+      name: "some name",
+      status: "some status",
+      venue: "some venue"
+    }
+    @update_attrs %{
+      closed: false,
+      date_end: "2011-05-18T15:01:01Z",
+      date_start: "2011-05-18T15:01:01Z",
+      description: "some updated description",
+      name: "some updated name",
+      status: "some updated status",
+      venue: "some updated venue"
+    }
+    @invalid_attrs %{
+      closed: nil,
+      date_end: nil,
+      date_start: nil,
+      description: nil,
+      name: nil,
+      status: nil,
+      venue: nil
+    }
 
     def event_fixture(attrs \\ %{}) do
       {:ok, event} =

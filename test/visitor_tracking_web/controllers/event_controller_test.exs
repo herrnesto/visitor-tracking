@@ -3,9 +3,33 @@ defmodule VisitorTrackingWeb.EventControllerTest do
 
   alias VisitorTracking.Events
 
-  @create_attrs %{closed: true, date_end: "2010-04-17T14:00:00Z", date_start: "2010-04-17T14:00:00Z", description: "some description", name: "some name", status: "some status", venue: "some venue"}
-  @update_attrs %{closed: false, date_end: "2011-05-18T15:01:01Z", date_start: "2011-05-18T15:01:01Z", description: "some updated description", name: "some updated name", status: "some updated status", venue: "some updated venue"}
-  @invalid_attrs %{closed: nil, date_end: nil, date_start: nil, description: nil, name: nil, status: nil, venue: nil}
+  @create_attrs %{
+    closed: true,
+    date_end: "2010-04-17T14:00:00Z",
+    date_start: "2010-04-17T14:00:00Z",
+    description: "some description",
+    name: "some name",
+    status: "some status",
+    venue: "some venue"
+  }
+  @update_attrs %{
+    closed: false,
+    date_end: "2011-05-18T15:01:01Z",
+    date_start: "2011-05-18T15:01:01Z",
+    description: "some updated description",
+    name: "some updated name",
+    status: "some updated status",
+    venue: "some updated venue"
+  }
+  @invalid_attrs %{
+    closed: nil,
+    date_end: nil,
+    date_start: nil,
+    description: nil,
+    name: nil,
+    status: nil,
+    venue: nil
+  }
 
   setup %{conn: conn} do
     user = insert(:user, email_verified: true)
@@ -35,7 +59,6 @@ defmodule VisitorTrackingWeb.EventControllerTest do
   end
 
   describe "create event" do
-
     @tag :skip
     test "redirects to show when data is valid", %{conn: conn} do
       conn = post(conn, Routes.event_path(conn, :create), event: @create_attrs)
@@ -87,6 +110,7 @@ defmodule VisitorTrackingWeb.EventControllerTest do
     test "deletes chosen event", %{conn: conn, event: event} do
       conn = delete(conn, Routes.event_path(conn, :delete, event))
       assert redirected_to(conn) == Routes.event_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.event_path(conn, :show, event))
       end

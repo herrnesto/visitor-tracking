@@ -14,6 +14,5 @@ defmodule VisitorTracking.Repo.Migrations.CreateEvents do
 
       timestamps()
     end
-
   end
 end
