@@ -19,7 +19,7 @@ defmodule VisitorTracking.Accounts do
   end
 
   def authenticate_by_phone_and_password(phone, pass) do
-    user = get_user_by(phone: phone)
+    user = get_user_by(phone: String.replace(phone, " ", ""))
 
     cond do
       user && Pbkdf2.verify_pass(pass, user.password_hash) ->
