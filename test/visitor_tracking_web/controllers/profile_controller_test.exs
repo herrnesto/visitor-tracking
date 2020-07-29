@@ -15,9 +15,8 @@ defmodule VisitorTrackingWeb.ProfileControllerTest do
 
   describe "GET profile" do
     setup %{conn: conn} do
-      user = insert(:user, email_verified: true)
-      profile = insert(:profile, user_id: user.id, phone_verified: true)
-      conn = assign(conn, :current_user, %{user | profile: profile})
+      user = insert(:user, email_verified: true, phone_verified: true)
+      conn = assign(conn, :current_user, user)
 
       {:ok, %{conn: conn}}
     end

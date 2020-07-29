@@ -12,7 +12,7 @@ defmodule VisitorTrackingWeb.SessionControllerTest do
 
   test "GET /login", %{conn: conn} do
     conn = get(conn, "/login")
-    assert html_response(conn, 200) =~ "Login"
+    assert html_response(conn, 200) =~ "Anmelden"
     assert html_response(conn, 200) =~ "Mobilnummer"
     assert html_response(conn, 200) =~ "Passwort"
   end
