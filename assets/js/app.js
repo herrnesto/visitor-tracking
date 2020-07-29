@@ -20,6 +20,7 @@ import NProgress from "nprogress"
 import { LiveSocket } from "phoenix_live_view"
 import Scanner from "./components/Scanner/Scanner"
 import PhoneField from "./components/PhoneField/PhoneField"
+import SessionPhoneField from "./components/PhoneField/SessionPhoneField"
 import React from "react"
 import ReactDOM from "react-dom"
 
@@ -49,6 +50,10 @@ if (domContainer) {
 const phoneDomField = document.querySelector('#phone_field')
 if (phoneDomField) {
   ReactDOM.render(<PhoneField />, phoneDomField)
+}
+const sessionPhoneDomField = document.querySelector('#session_phone_field')
+if (sessionPhoneDomField) {
+  ReactDOM.render(<SessionPhoneField />, sessionPhoneDomField)
 }
 
 

@@ -4,7 +4,7 @@ import PhoneInput from "react-phone-input-2";
 //import 'react-phone-input-2/lib/style.css'
 
 
-class PhoneField extends React.Component {
+class SessionPhoneField extends React.Component {
   state = { phone: "" };
 
   handleOnChange = value => {
@@ -18,7 +18,7 @@ class PhoneField extends React.Component {
       <div>
         <PhoneInput
           inputProps={{
-            name: "user[phone]",
+            name: "session[phone]",
             required: true,
             autoFocus: false,
           }}
@@ -36,4 +36,4 @@ class PhoneField extends React.Component {
   }
 }
 
-export default PhoneField
+export default SessionPhoneField

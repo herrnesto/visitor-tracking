@@ -27,8 +27,7 @@ defmodule VisitorTrackingWeb.Router do
     post "/sessions", SessionController, :create
     get "/register", RegistrationController, :new
     post "/users", RegistrationController, :create
-    get "/v/:token", RegistrationController, :verify_email
-    get "/expecting_verification", RegistrationController, :expecting_verification
+    get "/phone_verification", RegistrationController, :phone_verification
   end
 
   scope "/", VisitorTrackingWeb do
@@ -36,34 +35,17 @@ defmodule VisitorTrackingWeb.Router do
 
     delete "/logout", SessionController, :delete
     get "/new_token", RegistrationController, :new_token
+    post "/phone", RegistrationController, :verify_phone
   end
 
   scope "/", VisitorTrackingWeb do
-    pipe_through [:browser, :authenticate_user, :check_email_verified]
+    pipe_through [:browser, :authenticate_user, :check_phone_verified]
 
-    get "/profiles/new", ProfileController, :new
-    post "/profiles", ProfileController, :create
-  end
-
-  scope "/", VisitorTrackingWeb do
-    pipe_through [:browser, :authenticate_user, :check_email_verified, :profile_created]
-
-    get "/profiles/phone_verification", ProfileController, :phone_verification
-    post "/profiles/phone", ProfileController, :verify_phone
-  end
-
-  scope "/", VisitorTrackingWeb do
-    pipe_through [
-      :browser,
-      :authenticate_user,
-      :check_email_verified,
-      :profile_created,
-      :check_phone_verified
-    ]
-
+    get "/expecting_verification", ProfileController, :expecting_verification
+    get "/v/:token", ProfileController, :verify_email
     get "/events", EventController, :index
     get "/events/:event_id/scan", ScanController, :show
-    get "/profiles/show", ProfileController, :show
+    get "/profile", ProfileController, :show
     get "/profile/qrcode", ProfileController, :show
   end
 

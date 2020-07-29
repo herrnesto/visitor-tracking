@@ -3,27 +3,23 @@ defmodule VisitorTracking.Accounts do
   Accounts Context module
   """
 
-  alias VisitorTracking.Accounts.{Profile, User}
+  alias VisitorTracking.Accounts.User
   alias VisitorTracking.{Repo, Verification}
 
   def get_user(id) when is_integer(id) do
-    User
-    |> Repo.get(id)
-    |> Repo.preload(:profile)
+    Repo.get(User, id)
   end
 
   def get_user(uuid) do
-    User
-    |> Repo.get_by(uuid: uuid)
-    |> Repo.preload(:profile)
+    Repo.get_by(User, uuid: uuid)
   end
 
   def get_user_by(params) do
     Repo.get_by(User, params)
   end
 
-  def authenticate_by_email_and_password(email, pass) do
-    user = get_user_by(email: email)
+  def authenticate_by_phone_and_password(phone, pass) do
+    user = get_user_by(phone: String.replace(phone, " ", ""))
 
     cond do
       user && Pbkdf2.verify_pass(pass, user.password_hash) ->
@@ -70,19 +66,7 @@ defmodule VisitorTracking.Accounts do
   def verify_phone(visitor_id) do
     visitor_id
     |> get_user()
-    |> Map.get(:profile)
-    |> Profile.phone_verification_changeset(%{phone_verified: true})
+    |> User.phone_verification_changeset(%{phone_verified: true})
     |> Repo.update()
-  end
-
-  def change_profile(user_id, params \\ %{}) do
-    params = Map.put_new(params, :user_id, user_id)
-    Profile.changeset(%Profile{}, params)
-  end
-
-  def create_profile(params) do
-    %Profile{}
-    |> Profile.changeset(params)
-    |> Repo.insert()
   end
 end

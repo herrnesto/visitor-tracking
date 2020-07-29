@@ -34,35 +34,13 @@ defmodule VisitorTrackingWeb.Plugs.Auth do
     end
   end
 
-  def check_email_verified(conn, _params) do
-    if conn.assigns.current_user.email_verified do
+  def check_phone_verified(conn, _params) do
+    if conn.assigns.current_user.phone_verified do
       conn
     else
       conn
       |> put_flash(:error, "Du musst zuerst deine E-Mail-Adresse bestätigen.")
-      |> redirect(to: "/expecting_verification")
-      |> halt()
-    end
-  end
-
-  def profile_created(conn, _params) do
-    if conn.assigns.current_user.profile do
-      conn
-    else
-      conn
-      # |> put_flash(:error, "You must create a profile to proceed")
-      |> redirect(to: "/profiles/new")
-      |> halt()
-    end
-  end
-
-  def check_phone_verified(conn, _params) do
-    if conn.assigns.current_user.profile.phone_verified do
-      conn
-    else
-      conn
-      |> put_flash(:error, "You must verify your phone to proceed")
-      |> redirect(to: "/profiles/phone_verification")
+      |> redirect(to: "/phone_verification")
       |> halt()
     end
   end

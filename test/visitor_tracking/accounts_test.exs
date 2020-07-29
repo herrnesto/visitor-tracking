@@ -3,20 +3,25 @@ defmodule VisitorTracking.AccountsTest do
   alias VisitorTracking.{Accounts, Verification}
 
   @valid_user_params %{
-    email: "test_email@example.com",
+    phone: "+41000000000",
     password: "anotherpassword",
     password_confirmation: "anotherpassword",
-    uuid: UUID.uuid1()
+    uuid: UUID.uuid1(),
+    firstname: "Test",
+    lastname: "User",
+    city: "Whatever",
+    zip: "1234",
+    email: "test@example.com"
   }
 
   describe "get_user_by/1" do
-    test "returns nil if no user with that email exists" do
-      assert nil == Accounts.get_user_by(email: "test@example.com")
+    test "returns nil if no user with that phone exists" do
+      assert nil == Accounts.get_user_by(phone: "+41000000000")
     end
 
-    test "returns a user that has that email" do
-      %{id: id, email: email} = insert(:user)
-      assert %{id: ^id} = Accounts.get_user_by(email: email)
+    test "returns a user that has that phone" do
+      %{id: id, phone: phone} = insert(:user)
+      assert %{id: ^id} = Accounts.get_user_by(phone: phone)
     end
   end
 
@@ -40,7 +45,7 @@ defmodule VisitorTracking.AccountsTest do
     test "returns a changeset with errors if password and confirmation do not match" do
       assert %Ecto.Changeset{errors: errors} =
                Accounts.change_user(%{
-                 email: "test@example.com",
+                 phone: "+41000000000",
                  password: "anotherpassword",
                  password_confirmation: "differentpass"
                })
@@ -51,7 +56,7 @@ defmodule VisitorTracking.AccountsTest do
     test "returns a changeset with errors if confirmation is missing" do
       assert %Ecto.Changeset{errors: errors} =
                Accounts.change_user(%{
-                 email: "test_email@example.com",
+                 phone: "+41000000000",
                  password: "anotherpassword"
                })
 
@@ -82,9 +87,14 @@ defmodule VisitorTracking.AccountsTest do
     test "returns {:error, changeset} if params are wrong" do
       assert {:error, _} =
                Accounts.create_user(%{
-                 email: "test@example.com",
+                 phone: "+41000000000",
                  password: "testpass",
-                 password_confirmation: "anotherpass"
+                 password_confirmation: "anotherpass",
+                 firstname: "Test",
+                 lastname: "User",
+                 city: "Whatever",
+                 zip: "1234",
+                 email: "test@example.com"
                })
     end
   end
@@ -95,13 +105,6 @@ defmodule VisitorTracking.AccountsTest do
       {:ok, token} = Verification.create_link_token(id, email)
       assert {:ok, user} = Accounts.verify_email_by_token(token)
       assert user.email_verified == true
-    end
-  end
-
-  describe "change_profile/2" do
-    test "returns a changeset of an empty profile for a user" do
-      %{id: id} = insert(:user)
-      assert %Ecto.Changeset{changes: %{user_id: ^id}} = Accounts.change_profile(id)
     end
   end
 end

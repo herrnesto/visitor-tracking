@@ -7,20 +7,15 @@ defmodule VisitorTracking.Factory do
   def user_factory do
     %Accounts.User{
       uuid: UUID.uuid1(),
-      email: sequence(:email, &"email-#{&1}@example.com"),
       password_hash: Pbkdf2.hash_pwd_salt("testpass"),
-      email_verified: false
-    }
-  end
-
-  def profile_factory do
-    %Accounts.Profile{
+      phone: sequence(:number, &"+10#{&1}00#{&1}00000"),
+      phone_verified: false,
       firstname: "Test",
       lastname: "User",
       zip: "15500",
       city: "Athens",
-      phone: "+10000000000",
-      phone_verified: false
+      email: sequence(:email, &"email-#{&1}@example.com"),
+      email_verified: false
     }
   end
 
@@ -37,8 +32,8 @@ defmodule VisitorTracking.Factory do
       type: "link",
       token: token,
       email: email,
-      code: "654321",
-      mobile: "+10000000000"
+      code: nil,
+      mobile: nil
     }
   end
 
