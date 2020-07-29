@@ -12,7 +12,7 @@ defmodule VisitorTrackingWeb.SessionControllerTest do
 
   test "GET /login", %{conn: conn} do
     conn = get(conn, "/login")
-    assert html_response(conn, 200) =~ "Login"
+    assert html_response(conn, 200) =~ "Anmelden"
     assert html_response(conn, 200) =~ "Mobilnummer"
     assert html_response(conn, 200) =~ "Passwort"
   end
@@ -22,7 +22,7 @@ defmodule VisitorTrackingWeb.SessionControllerTest do
       conn = post(conn, "/sessions", %{"session" => %{"phone" => "", "password" => ""}})
 
       assert get_session(conn, :user_id) == nil
-      assert html_response(conn, 200) =~ "Login"
+      assert html_response(conn, 200) =~ "Anmelden"
     end
 
     test "with actual form data renders error if user does not exist", %{conn: conn} do
@@ -32,7 +32,7 @@ defmodule VisitorTrackingWeb.SessionControllerTest do
         })
 
       assert get_session(conn, :user_id) == nil
-      assert html_response(conn, 200) =~ "Login"
+      assert html_response(conn, 200) =~ "Anmelden"
     end
 
     test "with actual form data renders error if user exists but password is wrong", %{conn: conn} do
@@ -44,7 +44,7 @@ defmodule VisitorTrackingWeb.SessionControllerTest do
         })
 
       assert get_session(conn, :user_id) == nil
-      assert html_response(conn, 200) =~ "Login"
+      assert html_response(conn, 200) =~ "Anmelden"
     end
 
     test "with actual form data redirects if user exists and password correct", %{conn: conn} do

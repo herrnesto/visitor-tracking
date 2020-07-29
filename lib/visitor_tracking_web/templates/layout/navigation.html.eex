@@ -13,17 +13,36 @@
     <div id="navMenu" class="navbar-menu">
       <div class="navbar-end">
         <%= if @current_user do %>
+          <%= link "Veranstaltungen", to: Routes.event_path(@conn, :index), class: "navbar-item" %>
           <%= link "Profil", to: Routes.profile_path(@conn, :show), class: "navbar-item" %>
-          <%= link "Logout", to: "/logout",  method: "delete", class: "navbar-item" %>
-        <% else %>
-          <%= link "Registrieren", to: "/register", class: "navbar-item" %>
-          <span class="navbar-item">
-            <a class="button is-info is-inverted" href="<%= Routes.session_path(@conn, :new) %>">
-              <span class="icon">
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              <span class="icon is-small">
                 <i class="fas fa-user"></i>
               </span>
-              <span>Login</span>
+              <span><%= @current_user.firstname %></span>
             </a>
+
+            <div class="navbar-dropdown">
+              <%= link "Abmelden", to: Routes.session_path(@conn, :delete), method: :delete, class: "navbar-item" %>
+            </div>
+          </div>
+        <% else %>
+
+          <span class="navbar-item">
+            <%= link to: Routes.registration_path(@conn, :new), class: "button is-warning" do %>
+              <span>Registrieren</span>
+            <% end %>
+          </span>
+
+          <span class="navbar-item">
+            <%= link to: Routes.session_path(@conn, :new), class: "button is-info is-inverted" do %>
+              <span class="icon is-small">
+                <i class="fas fa-user"></i>
+              </span>
+              <span>Anmelden</span>
+            <% end %>
           </span>
         <% end %>
       </div>
