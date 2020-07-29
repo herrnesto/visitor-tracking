@@ -44,7 +44,7 @@ defmodule VisitorTrackingWeb.Router do
     get "/expecting_verification", ProfileController, :expecting_verification
     get "/v/:token", ProfileController, :verify_email
     resources "/events", EventController
-    get "/events/:event_id/scan", ScanController, :show
+    get "/events/:id/scan", ScanController, :show
     get "/profile", ProfileController, :show
     get "/profile/qrcode", ProfileController, :show
   end

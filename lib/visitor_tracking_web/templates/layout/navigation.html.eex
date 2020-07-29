@@ -21,7 +21,7 @@
               <span class="icon is-small">
                 <i class="fas fa-user"></i>
               </span>
-              <span><%= @current_user.profile.firstname %></span>
+              <span><%= @current_user.firstname %></span>
             </a>
 
             <div class="navbar-dropdown">

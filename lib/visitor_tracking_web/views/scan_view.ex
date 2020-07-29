@@ -3,9 +3,9 @@ defmodule VisitorTrackingWeb.ScanView do
 
   def render("user.json", %{user: user}) do
     %{
-      firstname: user.profile.firstname,
-      lastname: user.profile.lastname,
-      phone_verified: user.profile.phone_verified,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      phone_verified: user.phone_verified,
       email_verified: user.email_verified
     }
   end
@@ -15,9 +15,9 @@ defmodule VisitorTrackingWeb.ScanView do
       status: status,
       event: %{event_id: event.id, event_name: event.name},
       user: %{
-        firstname: user.profile.firstname,
-        lastname: user.profile.lastname,
-        phone_verified: user.profile.phone_verified,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        phone_verified: user.phone_verified,
         email_verified: user.email_verified
       }
     }
