@@ -7,18 +7,18 @@ defmodule VisitorTracking.Twilio.Message do
 
   @api_url "https://api.twilio.com/2010-04-01/Accounts/"
 
-  def send_token(args) do
+  def send(args) do
     with header <- get_header(),
          body <- get_body(args) do
       post(Mix.env(), get_url(), body, header)
     end
   end
 
-  def get_body(%{target_number: target_number, token: token}) do
+  def get_body(%{target_number: target_number, message: message}) do
     from_number = Application.fetch_env!(:visitor_tracking, :twilio_from)
 
     {:form,
-     [To: target_number, From: from_number, Body: "Dein Token zur Verifizerung lautet: #{token}"]}
+     [To: target_number, From: from_number, Body: message]}
   end
 
   def get_header do
