@@ -16,7 +16,10 @@
   </div>
 	<div class="container">
 	  <div class="column">
-	  <table class="table is-fullwidth">
+	    <%= if @events == nil do %>
+	    <p>Du hast bis jetzt noch keine Veranstaltung erstellt.</p>
+	    <% else %>
+	      <table class="table is-fullwidth">
           <thead>
             <tr>
               <th>Name</th>
@@ -40,6 +43,7 @@
             <% end %>
           </tbody>
         </table>
+      <% end %>
     </div>
 	</div>
 </section>

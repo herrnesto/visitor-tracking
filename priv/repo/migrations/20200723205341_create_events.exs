@@ -9,8 +9,8 @@ defmodule VisitorTracking.Repo.Migrations.CreateEvents do
       add :description, :string
       add :status, :string
       add :closed, :boolean, default: false, null: false
-      add :date_start, :utc_datetime
-      add :date_end, :utc_datetime
+      add :date_start, :naive_datetime
+      add :date_end, :naive_datetime
 
       timestamps()
     end

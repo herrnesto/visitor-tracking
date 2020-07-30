@@ -11,8 +11,8 @@ defmodule VisitorTracking.Events.Event do
   schema "events" do
     belongs_to :organiser, User
     field :closed, :boolean, default: false
-    field :date_end, :utc_datetime
-    field :date_start, :utc_datetime
+    field :date_end, :naive_datetime
+    field :date_start, :naive_datetime
     field :description, :string
     field :name, :string
     field :status, :string
@@ -31,8 +31,8 @@ defmodule VisitorTracking.Events.Event do
   @doc false
   def changeset(event, attrs) do
     event
-    |> cast(attrs, [:name, :venue, :description, :status, :closed, :date_start, :date_end])
-    |> validate_required([:name, :venue, :description, :date_start, :date_end])
+    |> cast(attrs, [:organiser_id, :name, :venue, :description, :status, :closed, :date_start, :date_end])
+    |> validate_required([:organiser_id, :name, :venue, :description, :date_start, :date_end])
   end
 
   @doc false

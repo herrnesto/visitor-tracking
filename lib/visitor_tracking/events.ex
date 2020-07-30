@@ -4,6 +4,8 @@ defmodule VisitorTracking.Events do
   """
   alias VisitorTracking.{Accounts, Events.Event, Repo}
 
+  import Ecto.Query
+
   def create(args \\ %{}) do
     %Event{}
     |> Event.changeset(args)
@@ -38,8 +40,8 @@ defmodule VisitorTracking.Events do
       [%Event{}, ...]
 
   """
-  def list_events do
-    Repo.all(Event)
+  def list_events(user_id) do
+    Repo.all(from p in Event, where: p.organiser_id == ^user_id)
   end
 
   @doc """
@@ -56,7 +58,7 @@ defmodule VisitorTracking.Events do
       ** (Ecto.NoResultsError)
 
   """
-  def get_event!(id), do: Repo.get!(Event, id)
+  def get_event!(event_id, user_id), do: Repo.get_by(Event, id: event_id, organiser_id: user_id)
 
   @doc """
   Creates a event.
