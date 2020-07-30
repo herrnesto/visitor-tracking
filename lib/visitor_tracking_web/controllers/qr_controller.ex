@@ -26,7 +26,6 @@ defmodule VisitorTrackingWeb.QrController do
   defp generate_qrcode(uuid) do
     data =
       uuid
-      |> IO.inspect()
       |> EQRCode.encode()
       |> EQRCode.png()
       |> Base.encode64()
