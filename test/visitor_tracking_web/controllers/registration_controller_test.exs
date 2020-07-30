@@ -5,7 +5,6 @@ defmodule VisitorTrackingWeb.RegistrationControllerTest do
     conn = get(conn, "/register")
 
     assert html_response(conn, 200) =~ "Registrieren"
-    assert html_response(conn, 200) =~ "Mobilnummer"
     assert html_response(conn, 200) =~ "Passwort"
   end
 
