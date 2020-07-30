@@ -31,7 +31,16 @@ defmodule VisitorTracking.Events.Event do
   @doc false
   def changeset(event, attrs) do
     event
-    |> cast(attrs, [:organiser_id, :name, :venue, :description, :status, :closed, :date_start, :date_end])
+    |> cast(attrs, [
+      :organiser_id,
+      :name,
+      :venue,
+      :description,
+      :status,
+      :closed,
+      :date_start,
+      :date_end
+    ])
     |> validate_required([:organiser_id, :name, :venue, :description, :date_start, :date_end])
   end
 

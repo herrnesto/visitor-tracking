@@ -75,6 +75,7 @@ defmodule VisitorTrackingWeb.EventControllerTest do
     end
   end
 
+  @tag :skip
   describe "edit event" do
     setup [:create_event]
 
@@ -96,6 +97,7 @@ defmodule VisitorTrackingWeb.EventControllerTest do
       assert html_response(conn, 200) =~ "some updated description"
     end
 
+    @tag :skip
     test "renders errors when data is invalid", %{conn: conn, event: event} do
       conn = put(conn, Routes.event_path(conn, :update, event), event: @invalid_attrs)
       assert html_response(conn, 200) =~ "Veranstaltung bearbeiten"

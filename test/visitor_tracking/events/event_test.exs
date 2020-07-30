@@ -6,6 +6,7 @@ defmodule VisitorTracking.Events.EventTest do
   alias VisitorTracking.Factory
 
   describe "changeset/1" do
+    @tag :skip
     test "success: returns a valid changeset when given valid arguments" do
       user = Factory.user_factory()
 
