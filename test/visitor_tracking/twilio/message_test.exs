@@ -15,6 +15,7 @@ defmodule VisitorTracking.Twilio.MessageTest do
 
   test "get_body" do
     token = "123466"
+    message = "Dein Token zur Verifizerung lautet: #{token}"
     target_number = "+41791112209"
 
     result =
@@ -25,15 +26,15 @@ defmodule VisitorTracking.Twilio.MessageTest do
          Body: "Dein Token zur Verifizerung lautet: #{token}"
        ]}
 
-    assert body = Message.get_body(%{target_number: target_number, token: token})
+    assert body = Message.get_body(%{target_number: target_number, message: message})
     assert body = result
   end
 
   @doc """
   Refactor
   """
-  test "send_token" do
-    args = %{target_number: "+41790000000", token: 123_466}
+  test "send" do
+    args = %{target_number: "+41790000000", message: "Dein Token zur Verifizerung lautet: 123466"}
 
     {:ok, _result} =
       {:ok,
@@ -84,7 +85,7 @@ defmodule VisitorTracking.Twilio.MessageTest do
          status_code: 201
        }}
 
-    assert {:ok, response} = Message.send_token(args)
+    assert {:ok, response} = Message.send(args)
 
     # assert result.body = response.body
   end

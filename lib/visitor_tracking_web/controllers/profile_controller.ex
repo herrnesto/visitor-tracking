@@ -37,11 +37,7 @@ defmodule VisitorTrackingWeb.ProfileController do
 
   def verify_email(conn, %{"token" => token}) do
     case Accounts.verify_email_by_token(token) do
-      {:ok, user} ->
-        user
-        |> Email.qrcode_email(generate_qrcode(user.uuid))
-        |> Mailer.deliver_now()
-
+      {:ok, _user} ->
         conn
         |> put_flash(:info, "Deine E-Mail-Adresse wurde bestätigt.")
         |> redirect(to: "/profile")

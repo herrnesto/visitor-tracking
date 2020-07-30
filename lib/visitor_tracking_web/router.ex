@@ -28,6 +28,7 @@ defmodule VisitorTrackingWeb.Router do
     get "/register", RegistrationController, :new
     post "/users", RegistrationController, :create
     get "/phone_verification", RegistrationController, :phone_verification
+    get "/qr/:uuid", QrController, :show
   end
 
   scope "/", VisitorTrackingWeb do

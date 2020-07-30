@@ -6,7 +6,19 @@ defmodule VisitorTracking.Twilio do
   alias VisitorTracking.Twilio.{Message, Responses}
 
   def send_token(%{token: token, target_number: target_number} = args) do
-    with {:ok, response} <- Message.send_token(%{token: token, target_number: target_number}) do
+    message = "VESITA: Dein Token lautet: #{token}"
+
+    with {:ok, response} <- Message.send(%{message: message, target_number: target_number}) do
+      Responses.log(response, args)
+
+      format_response(response.status_code)
+    end
+  end
+
+  def send_qr(%{uuid: uuid, target_number: target_number} = args) do
+    message = "VESITA: Dein QR-Code kannst du hier abrufen: https://www.vesita.ch/qr/#{uuid}"
+
+    with {:ok, response} <- Message.send(%{message: message, target_number: target_number}) do
       Responses.log(response, args)
 
       format_response(response.status_code)

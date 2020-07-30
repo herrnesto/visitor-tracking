@@ -35,6 +35,8 @@ defmodule VisitorTrackingWeb.RegistrationController do
       {:ok, visitor_id} ->
         Accounts.verify_phone(visitor_id)
 
+        Twilio.send_qr(%{uuid: user.uuid, target_number: user.phone})
+
         conn
         |> put_flash(:info, "Mobilnummer bestätigt!")
         |> redirect(to: "/profile")
