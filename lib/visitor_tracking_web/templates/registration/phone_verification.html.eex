@@ -2,7 +2,7 @@
 <%= render(VisitorTrackingWeb.LayoutView, "header.html", %{conn: @conn, current_user: @current_user}) %>
 
 <section>
-	<%= render(VisitorTrackingWeb.RegistrationView, "steps.html", step: 4) %>
+	<%= render(VisitorTrackingWeb.RegistrationView, "steps.html", step: 2) %>
 
 	<div class="container">
 		<div class="column is-4 is-offset-4">

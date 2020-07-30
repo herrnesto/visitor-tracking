@@ -23,6 +23,7 @@ import PhoneField from "./components/PhoneField/PhoneField"
 import SessionPhoneField from "./components/PhoneField/SessionPhoneField"
 import React from "react"
 import ReactDOM from "react-dom"
+import "./bulma-form-validator"
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, { params: { _csrf_token: csrfToken } })
@@ -54,6 +55,42 @@ if (phoneDomField) {
 const sessionPhoneDomField = document.querySelector('#session_phone_field')
 if (sessionPhoneDomField) {
   ReactDOM.render(<SessionPhoneField />, sessionPhoneDomField)
+}
+
+$(function() {
+  $("#registration-form").BulmaValidator({
+    name: "BulmaValidator",
+    callback: "submitMemberForm"
+  });
+});
+
+function submitMemberForm() {
+  //grecaptcha.ready(function () {
+    //grecaptcha.execute('6LedtPoUAAAAANKERJZ7sIdFypoH-Zygx5YdaU8S', {action: 'submit'}).then(function (token) {
+      var ajaxurl = $(location).attr("href");
+      var data =  {
+        'action': 'send_member_form',
+        '_ajax_nonce': sleepless_globals.nonce,
+        'form_data': $('#member-form').serialize()
+      };
+
+      $.ajax({
+        type : 'post',
+        dataType : 'json',
+        url : sleepless_globals.ajax_url,
+        data : data,
+        success: function( response ) {
+          console.log(response);
+          if( response.status == 201 ) {
+            window.location.href = window.location.origin + "/phone_verification";
+          }
+          else {
+            alert( 'Something went wrong, try again!' );
+          }
+        }
+      })
+    //});
+  //});
 }
 
 
