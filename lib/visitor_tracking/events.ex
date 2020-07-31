@@ -29,7 +29,15 @@ defmodule VisitorTracking.Events do
     |> Repo.update()
   end
 
-  alias VisitorTracking.Events.Event
+  def count_visitors(id) when is_binary(id) do
+    id
+    |> String.to_integer()
+    |> count_visitors()
+  end
+
+  def count_visitors(id) do
+    Repo.one(from e in "events_visitors", where: e.event_id == ^id, select: count(e.event_id))
+  end
 
   @doc """
   Returns the list of events.

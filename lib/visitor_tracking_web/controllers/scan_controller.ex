@@ -9,7 +9,9 @@ defmodule VisitorTrackingWeb.ScanController do
 
   def show(conn, params) do
     event = Events.get_event(Map.get(params, "id"))
-    render(conn, "index.html", event: event)
+    visitors = Events.count_visitors(event.id)
+
+    render(conn, "index.html", %{event: event, visitors: visitors})
   end
 
   def user(conn, params) do

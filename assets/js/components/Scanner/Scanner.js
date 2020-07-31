@@ -21,20 +21,15 @@ const Scanner = ({ eventId }) => {
 
   return (
     <>
-      {state.status !== 'scanned' &&
-        <div>
-          <QrReader
-            delay={1000}
-            onError={handleError}
-            onScan={handleScan}
-            style={{ width: '100%' }}
-          />
-        </div>
-      }
-
-      <div className="box">
+      <div>
         <IfPending state={loadVisitor}>Loading...</IfPending>
-        <IfRejected state={loadVisitor}>Error fetching the visitor for this QR code.</IfRejected>
+        <IfRejected state={loadVisitor}>
+          <article className="message is-danger">
+            <div className="message-body">
+              <strong>Fehler</strong>, ungültiger QR-Code.
+            </div>
+          </article>
+        </IfRejected>
         <IfFulfilled state={loadVisitor}>
           {data =>
             <>
@@ -65,6 +60,17 @@ const Scanner = ({ eventId }) => {
           }
         </IfFulfilled>
       </div>
+
+      {state.status !== 'scanned' &&
+      <div>
+        <QrReader
+          delay={1000}
+          onError={handleError}
+          onScan={handleScan}
+          style={{ width: '100%' }}
+        />
+      </div>
+      }
     </>
   )
 }
