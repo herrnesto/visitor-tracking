@@ -46,13 +46,8 @@
           </li>
 
           <li>
-            <strong>Venue:</strong>
+            <strong>Ort:</strong>
             <%= @event.venue %>
-          </li>
-
-          <li>
-            <strong>Description:</strong>
-            <%= @event.description %>
           </li>
 
           <li>
@@ -73,6 +68,11 @@
           <li>
             <strong>Date end:</strong>
             <%= @event.date_end %>
+          </li>
+
+          <li>
+            <strong>Besucher:</strong>
+            <%= @visitors %>
           </li>
 
         </ul>

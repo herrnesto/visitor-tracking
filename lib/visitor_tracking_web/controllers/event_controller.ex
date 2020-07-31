@@ -30,8 +30,6 @@ defmodule VisitorTrackingWeb.EventController do
   end
 
   def show(conn, %{"id" => id}) do
-    IO.puts(inspect(Events.get_event!(id, conn.assigns.current_user.id)))
-
     case Events.get_event!(id, conn.assigns.current_user.id) do
       nil ->
         conn
@@ -42,7 +40,7 @@ defmodule VisitorTrackingWeb.EventController do
         |> redirect(to: Routes.event_path(conn, :index))
 
       event ->
-        render(conn, "show.html", event: event)
+        render(conn, "show.html", %{event: event, visitors: Events.count_visitors(event)})
     end
   end
 
