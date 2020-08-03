@@ -25,8 +25,9 @@ defmodule VisitorTrackingWeb.Router do
     get "/datenschutz", CmsController, :privacy
     get "/login", SessionController, :new
     post "/sessions", SessionController, :create
-    get "/register", RegistrationController, :new
     post "/users", RegistrationController, :create
+    get "/phone_validation", RegistrationController, :phone_validation
+    post "/register", RegistrationController, :new
     get "/phone_verification", RegistrationController, :phone_verification
     get "/qr/:uuid", QrController, :show
   end

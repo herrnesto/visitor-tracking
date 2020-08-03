@@ -6,9 +6,31 @@ defmodule VisitorTrackingWeb.RegistrationController do
 
   plug :redirect_if_phone_verified
 
-  def new(conn, _) do
-    changeset = Accounts.change_user()
-    render(conn, "new.html", changeset: changeset)
+  def phone_validation(conn, _) do
+    render(conn, "phone_validation.html")
+  end
+
+  def new(conn, %{"phone" => phone}) do
+    with :phone_verified <- Twilio.validate_phone(phone),
+         nil <- Accounts.get_user_by(phone: phone),
+         changeset <- Accounts.change_user() do
+      render(conn, "new.html", changeset: changeset, phone: phone)
+    else
+      %VisitorTracking.Accounts.User{} ->
+        conn
+        |> put_flash(:error, "You have an account already. Please login")
+        |> redirect(to: "/login")
+
+      :wrong_number ->
+        conn
+        |> put_flash(:error, "You have entered a wrong number")
+        |> redirect(to: "/phone_validation")
+
+      _ ->
+        conn
+        |> put_flash(:error, "Unknown error")
+        |> redirect(to: "/phone_validation")
+    end
   end
 
   def create(conn, %{"user" => user_params}) do

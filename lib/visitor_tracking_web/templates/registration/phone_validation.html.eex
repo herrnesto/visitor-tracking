@@ -1,0 +1,4 @@
+<h1>Phone Validation</h1>
+<%= f = form_for @conn, "/register" %>
+<%= text_input f, :phone %>
+<%= submit "Validate" %>

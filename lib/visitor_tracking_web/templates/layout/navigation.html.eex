@@ -31,7 +31,7 @@
         <% else %>
 
           <span class="navbar-item">
-            <%= link to: Routes.registration_path(@conn, :new), class: "button is-warning" do %>
+            <%= link to: "/phone_validation", class: "button is-warning" do %>
               <span>Registrieren</span>
             <% end %>
           </span>

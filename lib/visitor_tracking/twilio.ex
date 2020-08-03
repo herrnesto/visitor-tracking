@@ -3,7 +3,9 @@ defmodule VisitorTracking.Twilio do
   Twilio Context module
   """
 
-  alias VisitorTracking.Twilio.{Message, Responses}
+  @validator Application.get_env(:visitor_tracking, :validator)
+
+  alias __MODULE__.{Message, Responses}
 
   def send_token(%{token: token, target_number: target_number} = args) do
     message = "VESITA: Dein Token lautet: #{token}"
@@ -30,4 +32,14 @@ defmodule VisitorTracking.Twilio do
   def format_response(201), do: {:ok, "sms was sent"}
 
   def format_response(status_code), do: {:error, "status_code: #{status_code}"}
+
+  def format_validation_response(200), do: :phone_verified
+  def format_validation_response(404), do: :wrong_number
+
+  def validate_phone(phone) do
+    {:ok, response} = @validator.validate_phone(phone)
+    Responses.log(response, %{phone: phone})
+
+    format_validation_response(response.status_code)
+  end
 end

@@ -87,6 +87,6 @@ config :visitor_tracking, VisitorTracking.Mailer,
   open_email_in_browser_url: "http://localhost:4000/sent_emails"
 
 config :visitor_tracking,
-  twilio_account_sid: "test",
-  twilio_auth_token: "test",
+  twilio_account_sid: System.get_env("TWILIO_ACCOUNT_SID") || "test",
+  twilio_auth_token: System.get_env("TWILIO_AUTH_TOKEN") || "test",
   twilio_from: "+10000000000"
