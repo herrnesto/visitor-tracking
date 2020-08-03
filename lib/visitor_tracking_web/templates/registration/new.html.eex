@@ -5,6 +5,11 @@
 
 	<div class="container">
 		<div class="column is-4 is-offset-4 has-text-centered">
+
+  		<div id="registration-form"></div>
+
+
+
 			<%= form_for @changeset, "/users", [id: "registration-form"], fn f ->	 %>
 			  <div class="field">
 			    <div id="phone_field" value="<%= @phone %>" disabled></div>

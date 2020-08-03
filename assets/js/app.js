@@ -119,3 +119,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+
+
+import Vue from "vue";
+import RegistrationForm from "./components/RegistrationForm.vue";
+
+new Vue({
+  render: h => h(RegistrationForm)
+}).$mount("#registration-form")
