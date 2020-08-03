@@ -37,6 +37,8 @@ defmodule VisitorTracking.Twilio do
   def format_validation_response(404), do: :wrong_number
 
   def validate_phone(phone) do
+    phone = String.replace(phone, " ", "")
+
     {:ok, response} = @validator.validate_phone(phone)
     Responses.log(response, %{phone: phone})
 

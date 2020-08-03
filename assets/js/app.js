@@ -123,8 +123,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 import Vue from "vue";
-import RegistrationForm from "./components/RegistrationForm.vue";
+import RegistrationForm from "./components/PhoneInput.vue";
+import Buefy from 'buefy'
+Vue.use(Buefy)
 
 new Vue({
   render: h => h(RegistrationForm)
-}).$mount("#registration-form")
+}).$mount("#phone-input")
+
