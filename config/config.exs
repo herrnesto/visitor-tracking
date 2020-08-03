@@ -26,6 +26,8 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+config :visitor_tracking, :validator, VisitorTracking.Twilio.Validator
+
 host = System.get_env("HOST") || "localhost:4000"
 
 config :visitor_tracking,

@@ -24,6 +24,8 @@ config :logger, level: :warn
 
 config :visitor_tracking, VisitorTracking.Mailer, adapter: Bamboo.TestAdapter
 
+config :visitor_tracking, :validator, VisitorTracking.Twilio.InMemoryValidator
+
 # Config pbkdf2 to take only one round for faster testing
 config :pbkdf2_elixir, :rounds, 1
 

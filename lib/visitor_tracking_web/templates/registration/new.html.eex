@@ -7,7 +7,7 @@
 		<div class="column is-4 is-offset-4 has-text-centered">
 			<%= form_for @changeset, "/users", [id: "registration-form"], fn f ->	 %>
 			  <div class="field">
-			    <div id="phone_field"></div>
+			    <div id="phone_field" value="<%= @phone %>" disabled></div>
 			    <p class="help is-danger"><%= error_tag f, :phone %></p>
 			  </div>
 
