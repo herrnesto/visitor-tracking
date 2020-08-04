@@ -18,7 +18,6 @@ defmodule VisitorTrackingWeb.Router do
     plug :accepts, ["json"]
     plug :fetch_session
     plug :protect_from_forgery
-
   end
 
   scope "/", VisitorTrackingWeb do
