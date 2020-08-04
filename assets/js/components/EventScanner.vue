@@ -42,6 +42,9 @@
       }
     },
     created() {
+      var csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
+      axios.defaults.headers['x-csrf-token'] = csrfToken;
+
       axios.post(`https://0.0.0.0:4001/api/scan/user`, {uuid: "804822a4-d33d-11ea-ba26-784f439a034a"})
         .then(response => {
           // JSON responses are automatically parsed.
