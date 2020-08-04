@@ -123,11 +123,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 import Vue from "vue";
-import RegistrationForm from "./components/PhoneInput.vue";
+import PhoneInput from "./components/PhoneInput.vue";
+import EventScanner from "./components/EventScanner.vue";
 import Buefy from 'buefy'
 Vue.use(Buefy)
 
-new Vue({
-  render: h => h(RegistrationForm)
-}).$mount("#phone-input")
+const phone_input_field = document.querySelector('#phone-input')
+if (phone_input_field) {
+  new Vue({
+    render: h => h(PhoneInput)
+  }).$mount("#phone-input")
+}
+
+const event_scanner_field = document.querySelector('#event-scanner')
+if (event_scanner_field) {
+  new Vue({
+    render: h => h(EventScanner)
+  }).$mount("#event-scanner")
+}
+
+
 
