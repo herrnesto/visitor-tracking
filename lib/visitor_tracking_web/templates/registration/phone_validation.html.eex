@@ -1,12 +1,12 @@
 <%= render(VisitorTrackingWeb.LayoutView, "header.html", %{conn: @conn, current_user: @current_user}) %>
 
 <section>
-	<!-- <%= render(VisitorTrackingWeb.RegistrationView, "steps.html", step: 1) %> -->
+	<%= render(VisitorTrackingWeb.RegistrationView, "steps.html", step: 1) %>
 
 	<div class="container">
 		<div class="column is-4 is-offset-4">
 			<p class="subtitle has-text-centered">
-				Nenne uns zuerst deine Mobilnummer:
+				Tippe deine Mobilnummer ein:
 				<%= form_for @conn, "/register", fn f ->	 %>
 				<div class="field">
 				  <div class="control">

@@ -2,7 +2,8 @@
 	<div class="column has-text-centered mb-6">
 		<h1 class="title is-3">
 			<%= if @step == 1 do %>Registriere dich jetzt kostenlos<% end %>
-			<%= if @step == 2 do %>Bestätige deine Mobilnummer<% end %>
+			<%= if @step == 2 do %>Personalien<% end %>
+			<%= if @step == 3 do %>Bestätige deine Mobilnummer<% end %>
 		</h1>
 	</div>
 </div>
@@ -10,9 +11,10 @@
 	<div class="column">
 		<ul class="steps is-medium is-centered has-content-centered is-horizontal">
 
-		  <%= render(VisitorTrackingWeb.RegistrationView, "steps_segment.html", %{step: @step, order: 1, icon: "fa-user-plus", text: "Registrieren"}) %>
-		  <%= render(VisitorTrackingWeb.RegistrationView, "steps_segment.html", %{step: @step, order: 2, icon: "fa-mobile", text: "Mobile bestätigen"}) %>
-	    <%= render(VisitorTrackingWeb.RegistrationView, "steps_segment.html", %{step: @step, order: 3, icon: "fa-check", text: "Fertig!"}) %>
+		  <%= render(VisitorTrackingWeb.RegistrationView, "steps_segment.html", %{step: @step, order: 1, icon: "fa-mobile", text: "Mobilnummer"}) %>
+		  <%= render(VisitorTrackingWeb.RegistrationView, "steps_segment.html", %{step: @step, order: 2, icon: "fa-user-plus", text: "Personalien"}) %>
+		  <%= render(VisitorTrackingWeb.RegistrationView, "steps_segment.html", %{step: @step, order: 3, icon: "fa-mobile", text: "Mobile bestätigen"}) %>
+	    <%= render(VisitorTrackingWeb.RegistrationView, "steps_segment.html", %{step: @step, order: 4, icon: "fa-check", text: "Fertig!"}) %>
 
 		</ul>
 	</div>
