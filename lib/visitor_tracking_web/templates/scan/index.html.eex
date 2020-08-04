@@ -3,13 +3,9 @@
 <div class="container">
 	<div class="columns">
 		<div class="column is-4 is-offset-4 has-text-centered">
-			<h1 class="title is-4"><%= @event.name %></h1>
-			<p class="subtitle is-6">QR-Code Scanner</p>
 			<input type="hidden" id="event_id" value="<%= @event.id %>" />
 			<input type="hidden" id="api_url" value="<%= @api_url %>" />
-
 		  <div id="event-scanner"></div>
-
 		</div>
 	</div>
 </div>

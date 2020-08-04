@@ -1,7 +1,44 @@
 <template>
   <div>
-    <p>Visitors: {{ visitors }}</p>
-    <qrcode-stream @detect="onDetect"></qrcode-stream>
+    <h1 class="title is-4">{{ event.name }}</h1>
+    <p class="subtitle is-6">Besucher: {{ visitors }}</p>
+
+    <div v-if="visitor">
+      <p class="title is-6 mt-6">Name des Gastes:</p>
+      <h2 class="title is-3 mb-6">{{ visitor.firstname }} {{ visitor.lastname }}</h2>
+      <h2 class="title is-5 mt-4">Prüfe den Namen mit der ID</h2>
+
+      <div class="content">
+        <span class="icon has-text-success" v-if="visitor.phone_verified"><i class="fas fa-check"></i></span>
+        <span class="icon has-text-danger" v-else><i class="fas fa-times"></i></span> Mobilnummer
+
+        <br>
+        <span class="icon has-text-success" v-if="visitor.email_verified"><i class="fas fa-check"></i></span>
+        <span class="icon has-text-danger" v-else><i class="fas fa-times"></i></span> E-Mail
+      </div>
+      <div class="field is-grouped is-grouped-centered">
+        <p class="control">
+          <b-button size="is-medium"
+                    icon-left="ban"
+                    type="is-danger"
+                    @click="visitor = false">
+            Ablehnen
+          </b-button>
+          <b-button size="is-medium"
+                    icon-left="check"
+                    type="is-success"
+                    v-bind:loading="buttons.confirm.isLoading"
+                    @click="confirm_visitor">
+            Gast bestätigen
+          </b-button>
+        </p>
+      </div>
+    </div>
+    <div v-else>
+      <qrcode-stream @detect="onDetect" @init="onInit"></qrcode-stream>
+    </div>
+    <b-loading :is-full-page="true" :active.sync="scanner.isLoading" :can-cancel="true"></b-loading>
+    <button @click="check_visitor">klik</button>
   </div>
 </template>
 
@@ -19,12 +56,69 @@
     data() {
       return {
         api_url: null,
-        event: null,
-        visitors: 0
+        event: { name: ""},
+        visitors: 0,
+        visitor: false,
+        uuid: null,
+        scanner: {
+          isLoading: false
+        },
+        buttons: {
+          confirm: {
+            isLoading: false
+          }
+        }
       }
     },
     methods: {
-      async onDetect (promise) {
+      toast_ok(msg) {
+        this.$buefy.toast.open({
+          duration: 5000,
+          message: `OK!`,
+          position: 'is-top',
+          type: 'is-success'
+        })
+      },
+      toast_error(msg) {
+        this.$buefy.toast.open({
+          duration: 5000,
+          message: `Fehler!`,
+          position: 'is-zop',
+          type: 'is-danger'
+        })
+      },
+      check_visitor: function () {
+        axios.post(this.api_url + `/scan/user`, {uuid: this.uuid})
+          .then(response => {
+            if(response.status != "ok"){
+              this.toast_error("Ungültiger QR Code!")
+            } else {
+              this.visitor = response.data
+            }
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+      },
+      confirm_visitor: function () {
+        this.buttons.confirm.isLoading = true
+        axios.post(this.api_url + `/scan/assign_visitor`, {
+            event_id: this.event.id,
+            uuid: this.uuid
+          })
+          .then(response => {
+            this.visitor = false
+            this.buttons.confirm.isLoading = false
+            this.toast_ok("Besucher wurde registiert.")
+          })
+          .catch(e => {
+            this.errors.push(e)
+            this.buttons.confirm.isLoading = false
+            this.toast_error("Fehler beim Registrieren.")
+          })
+
+      },
+      async onDetect(promise) {
         try {
           const {
             imageData,    // raw image data of image/frame
@@ -36,11 +130,37 @@
             // decoded nothing
           } else {
             console.log(content)
+            this.uuid = content
+            this.check_visitor()
           }
         } catch (error) {
           // ...
         }
-      }
+      },
+      async onInit(promise) {
+        this.scanner.isLoading = true
+
+        try {
+          const {capabilities} = await promise
+
+        } catch (error) {
+          if (error.name === 'NotAllowedError') {
+            // user denied camera access permisson
+          } else if (error.name === 'NotFoundError') {
+            // no suitable camera device installed
+          } else if (error.name === 'NotSupportedError') {
+            // page is not served over HTTPS (or localhost)
+          } else if (error.name === 'NotReadableError') {
+            // maybe camera is already in use
+          } else if (error.name === 'OverconstrainedError') {
+            // did you requested the front camera although there is none?
+          } else if (error.name === 'StreamApiNotSupportedError') {
+            // browser seems to be lacking features
+          }
+        } finally {
+          this.scanner.isLoading = false
+        }
+      },
     },
     created() {
       this.api_url = document.getElementById('api_url').value
@@ -48,19 +168,10 @@
       var csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
       axios.defaults.headers['x-csrf-token'] = csrfToken;
 
-      axios.post(this.api_url + `/scan/user`, {uuid: "804822a4-d33d-11ea-ba26-784f439a034a"})
-        .then(response => {
-          // JSON responses are automatically parsed.
-          console.log(response.data)
-        })
-        .catch(e => {
-          this.errors.push(e)
-        })
-
       axios.post(this.api_url + `/scan/event_infos`,{id: 1})
         .then(response => {
           this.visitors = response.data.visitors
-          console.log(response.data)
+          this.event = response.data.event
         })
         .catch(e => {
           this.errors.push(e)
