@@ -13,13 +13,12 @@ defmodule VisitorTrackingWeb.SessionControllerTest do
   test "GET /login", %{conn: conn} do
     conn = get(conn, "/login")
     assert html_response(conn, 200) =~ "Anmelden"
-    assert html_response(conn, 200) =~ "Mobilnummer"
     assert html_response(conn, 200) =~ "Passwort"
   end
 
   describe "POST /sessions" do
     test "with empty form data renders login", %{conn: conn} do
-      conn = post(conn, "/sessions", %{"session" => %{"phone" => "", "password" => ""}})
+      conn = post(conn, "/sessions", %{"phone" => "", "session" => %{"password" => ""}})
 
       assert get_session(conn, :user_id) == nil
       assert html_response(conn, 200) =~ "Anmelden"
@@ -28,7 +27,8 @@ defmodule VisitorTrackingWeb.SessionControllerTest do
     test "with actual form data renders error if user does not exist", %{conn: conn} do
       conn =
         post(conn, "/sessions", %{
-          "session" => %{"phone" => "+41000000000", "password" => "testpass"}
+          "phone" => "+41000000000",
+          "session" => %{"password" => "testpass"}
         })
 
       assert get_session(conn, :user_id) == nil
@@ -40,7 +40,8 @@ defmodule VisitorTrackingWeb.SessionControllerTest do
 
       conn =
         post(conn, "/sessions", %{
-          "session" => %{"phone" => "+41000000000", "password" => "nottestpass"}
+          "phone" => "+41000000000",
+          "session" => %{"password" => "nottestpass"}
         })
 
       assert get_session(conn, :user_id) == nil
@@ -52,7 +53,8 @@ defmodule VisitorTrackingWeb.SessionControllerTest do
 
       conn =
         post(conn, "/sessions", %{
-          "session" => %{"phone" => "+41000000000", "password" => "testpass"}
+          "phone" => "+41000000000",
+          "session" => %{"password" => "testpass"}
         })
 
       assert conn.assigns.current_user == user

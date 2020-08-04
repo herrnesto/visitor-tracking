@@ -1,7 +1,7 @@
 <%= render(VisitorTrackingWeb.LayoutView, "header.html", %{conn: @conn, current_user: @current_user}) %>
 
 <section>
-		<%= render(VisitorTrackingWeb.RegistrationView, "steps.html", step: 1) %>
+		<%= render(VisitorTrackingWeb.RegistrationView, "steps.html", step: 2) %>
 
 	<div class="container">
 		<div class="column is-4 is-offset-4 has-text-centered">
@@ -11,7 +11,6 @@
 		      	<%= text_input f, :phone, value: @phone, class: "input is-medium", disabled: true, placeholder: "Mobilnummer" %>
             <%= hidden_input f, :phone, value: @phone, class: "input is-medium", hidden: true %>
 		      </div>
-          <br/>
 		     	<p class="help is-danger">
 		     		<%= error_tag f, :phone %>
 		     	</p>
