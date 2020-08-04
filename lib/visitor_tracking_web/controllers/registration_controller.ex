@@ -41,7 +41,9 @@ defmodule VisitorTrackingWeb.RegistrationController do
         |> redirect(to: "/phone_verification")
 
       {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        phone = user_params["phone"]
+
+        render(conn, "new.html", changeset: changeset, phone: phone)
     end
   end
 

@@ -27,11 +27,15 @@ defmodule VisitorTrackingWeb.Router do
     get "/datenschutz", CmsController, :privacy
     get "/login", SessionController, :new
     post "/sessions", SessionController, :create
-    post "/users", RegistrationController, :create
     get "/phone_validation", RegistrationController, :phone_validation
-    post "/register", RegistrationController, :new
-    get "/phone_verification", RegistrationController, :phone_verification
     get "/qr/:uuid", QrController, :show
+  end
+
+  scope "/", VisitorTrackingWeb do
+    pipe_through [:browser, :check_registered]
+
+    post "/register", RegistrationController, :new
+    post "/users", RegistrationController, :create
   end
 
   scope "/", VisitorTrackingWeb do
@@ -39,6 +43,7 @@ defmodule VisitorTrackingWeb.Router do
 
     delete "/logout", SessionController, :delete
     get "/new_token", RegistrationController, :new_token
+    get "/phone_verification", RegistrationController, :phone_verification
     post "/phone", RegistrationController, :verify_phone
   end
 
