@@ -17,7 +17,6 @@ config :visitor_tracking, VisitorTracking.Repo,
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
 config :visitor_tracking, VisitorTrackingWeb.Endpoint,
-  http: [port: 4000],
   https: [
     port: 4001,
     cipher_suite: :strong,

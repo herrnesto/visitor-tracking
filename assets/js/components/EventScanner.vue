@@ -18,6 +18,7 @@
     },
     data() {
       return {
+        api_url: null,
         event: null,
         visitors: 0
       }
@@ -42,10 +43,12 @@
       }
     },
     created() {
+      this.api_url = document.getElementById('api_url').value
+
       var csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
       axios.defaults.headers['x-csrf-token'] = csrfToken;
 
-      axios.post(`https://0.0.0.0:4001/api/scan/user`, {uuid: "804822a4-d33d-11ea-ba26-784f439a034a"})
+      axios.post(this.api_url + `/scan/user`, {uuid: "804822a4-d33d-11ea-ba26-784f439a034a"})
         .then(response => {
           // JSON responses are automatically parsed.
           console.log(response.data)
@@ -54,7 +57,7 @@
           this.errors.push(e)
         })
 
-      axios.post(`https://0.0.0.0:4001/api/scan/event_infos`,{id: 1})
+      axios.post(this.api_url + `/scan/event_infos`,{id: 1})
         .then(response => {
           this.visitors = response.data.visitors
           console.log(response.data)
