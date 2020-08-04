@@ -8,7 +8,7 @@
 			<%= form_for @changeset, "/users", [id: "registration-form"], fn f ->	 %>
 		    <div class="field">
 		      <div class="control">
-		      	<%= text_input f, :phone, class: "input is-medium", disabled: true, placeholder: "Mobilnummer" %>
+		      	<%= text_input f, :phone, value: @phone, class: "input is-medium", disabled: true, placeholder: "Mobilnummer" %>
 		      </div>
 		     	<p class="help is-danger">
 		     		<%= error_tag f, :phone %>
