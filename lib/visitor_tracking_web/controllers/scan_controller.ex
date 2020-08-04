@@ -28,4 +28,15 @@ defmodule VisitorTrackingWeb.ScanController do
       render(conn, "assiged_visitor.json", %{status: "ok", event: event, user: user})
     end
   end
+
+  def event_infos(conn, %{"id" => event_id}) do
+    session = get_session(conn)
+    event = Events.get_event!(event_id, Map.get(session, "user_id"))
+
+    render(conn, "event_infos.json", %{
+      status: "ok",
+      event: event,
+      visitors: Events.count_visitors(event.id)
+    })
+  end
 end
