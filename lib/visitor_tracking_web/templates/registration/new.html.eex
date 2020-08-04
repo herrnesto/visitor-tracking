@@ -6,10 +6,14 @@
 	<div class="container">
 		<div class="column is-4 is-offset-4 has-text-centered">
 			<%= form_for @changeset, "/users", [id: "registration-form"], fn f ->	 %>
-			  <div class="field">
-			    <div id="phone_field" value="<%= @phone %>" disabled></div>
-			    <p class="help is-danger"><%= error_tag f, :phone %></p>
-			  </div>
+		    <div class="field">
+		      <div class="control">
+		      	<%= text_input f, :phone, class: "input is-medium", disabled: true, placeholder: "Mobilnummer" %>
+		      </div>
+		     	<p class="help is-danger">
+		     		<%= error_tag f, :phone %>
+		     	</p>
+		    </div>
 
 		    <div class="field">
 		      <div class="control">

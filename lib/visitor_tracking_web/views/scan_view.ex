@@ -22,4 +22,15 @@ defmodule VisitorTrackingWeb.ScanView do
       }
     }
   end
+
+  def render("event_infos.json", %{status: status, event: event, visitors: visitors}) do
+    %{
+      status: status,
+      event: %{
+        name: event.name,
+        venue: event.venue
+      },
+      visitors: visitors
+    }
+  end
 end

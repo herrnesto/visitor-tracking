@@ -16,6 +16,8 @@ defmodule VisitorTrackingWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_session
+    plug :protect_from_forgery
   end
 
   scope "/", VisitorTrackingWeb do
@@ -55,6 +57,7 @@ defmodule VisitorTrackingWeb.Router do
   scope "/api", VisitorTrackingWeb do
     pipe_through :api
 
+    post "/scan/event_infos", ScanController, :event_infos
     post "/scan/user", ScanController, :user
     post "/scan/assign_visitor", ScanController, :assign_visitor
   end

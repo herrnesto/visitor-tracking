@@ -1,4 +1,33 @@
-<h1>Phone Validation</h1>
-<%= f = form_for @conn, "/register" %>
-<%= text_input f, :phone %>
-<%= submit "Validate" %>
+<%= render(VisitorTrackingWeb.LayoutView, "header.html", %{conn: @conn, current_user: @current_user}) %>
+
+<section>
+	<!-- <%= render(VisitorTrackingWeb.RegistrationView, "steps.html", step: 1) %> -->
+
+	<div class="container">
+		<div class="column is-4 is-offset-4">
+			<p class="subtitle has-text-centered">
+				Nenne uns zuerst deine Mobilnummer:
+				<%= form_for @conn, "/register", fn f ->	 %>
+				<div class="field">
+				  <div class="control">
+				    <div id="phone-input"></div>
+
+						<!-- <%= text_input f, :phone, class: "input is-medium", autofocus: "true" %> -->
+						<p class="help is-danger">
+							<%= error_tag f, :phone %>
+						</p>
+			  </div>
+			  <p class="help is-danger">
+			  	<%= error_tag f, :phone %>
+			  </p>
+			</div>
+
+			<div class="field is-grouped is-grouped-centered">
+			  <div class="control">
+			    <%= submit "Prüfen", class: "button is-block is-primary is-fullwidth is-medium" %>
+			  </div>
+			</div>
+			<% end %>
+		</div>
+	</div>
+</section>

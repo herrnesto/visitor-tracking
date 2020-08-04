@@ -9,9 +9,8 @@ defmodule VisitorTrackingWeb.ScanController do
 
   def show(conn, params) do
     event = Events.get_event(Map.get(params, "id"))
-    visitors = Events.count_visitors(event.id)
 
-    render(conn, "index.html", %{event: event, visitors: visitors})
+    render(conn, "index.html", %{event: event, api_url: get_api_url()})
   end
 
   def user(conn, params) do
@@ -27,5 +26,28 @@ defmodule VisitorTrackingWeb.ScanController do
 
       render(conn, "assiged_visitor.json", %{status: "ok", event: event, user: user})
     end
+  end
+
+  def event_infos(conn, %{"id" => event_id}) do
+    session = get_session(conn)
+    event = Events.get_event!(event_id, Map.get(session, "user_id"))
+
+    render(conn, "event_infos.json", %{
+      status: "ok",
+      event: event,
+      visitors: Events.count_visitors(event.id)
+    })
+  end
+
+  defp get_api_url() do
+    get_protocol() <> get_host() <> "/api"
+  end
+
+  defp get_protocol do
+    Application.get_env(:visitor_tracking, :protocol)
+  end
+
+  defp get_host do
+    Application.get_env(:visitor_tracking, :host)
   end
 end

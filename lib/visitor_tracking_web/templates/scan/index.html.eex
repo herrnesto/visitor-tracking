@@ -6,7 +6,10 @@
 			<h1 class="title is-4"><%= @event.name %></h1>
 			<p class="subtitle is-6">QR-Code Scanner</p>
 			<input type="hidden" id="event_id" value="<%= @event.id %>" />
-      <div id="scan"></div>
+			<input type="hidden" id="api_url" value="<%= @api_url %>" />
+
+		  <div id="event-scanner"></div>
+
 		</div>
 	</div>
 </div>
