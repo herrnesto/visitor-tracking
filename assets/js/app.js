@@ -19,8 +19,6 @@ import { Socket } from "phoenix"
 import NProgress from "nprogress"
 import { LiveSocket } from "phoenix_live_view"
 import Scanner from "./components/Scanner/Scanner"
-import PhoneField from "./components/PhoneField/PhoneField"
-import SessionPhoneField from "./components/PhoneField/SessionPhoneField"
 import React from "react"
 import ReactDOM from "react-dom"
 import "./bulma-form-validator"
@@ -45,16 +43,6 @@ const domContainer = document.querySelector("#scan")
 if (domContainer) {
   const eventId = document.getElementById('event_id').value
   ReactDOM.render(<Scanner eventId={eventId} />, domContainer)
-}
-
-// render the phone number input
-const phoneDomField = document.querySelector('#phone_field')
-if (phoneDomField) {
-  ReactDOM.render(<PhoneField />, phoneDomField)
-}
-const sessionPhoneDomField = document.querySelector('#session_phone_field')
-if (sessionPhoneDomField) {
-  ReactDOM.render(<SessionPhoneField />, sessionPhoneDomField)
 }
 
 // $(function() {
