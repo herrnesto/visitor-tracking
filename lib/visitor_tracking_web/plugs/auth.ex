@@ -34,6 +34,17 @@ defmodule VisitorTrackingWeb.Plugs.Auth do
     end
   end
 
+  def check_registered(conn, _params) do
+    if conn.assigns.current_user do
+      conn
+      |> put_flash(:error, "You have already created a profile")
+      |> redirect(to: "/phone_verification")
+      |> halt()
+    else
+      conn
+    end
+  end
+
   def check_phone_verified(conn, _params) do
     if conn.assigns.current_user.phone_verified do
       conn

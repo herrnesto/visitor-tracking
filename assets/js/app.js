@@ -57,12 +57,12 @@ if (sessionPhoneDomField) {
   ReactDOM.render(<SessionPhoneField />, sessionPhoneDomField)
 }
 
-$(function() {
-  $("#registration-form").BulmaValidator({
-    name: "BulmaValidator",
-    callback: "submitMemberForm"
-  });
-});
+// $(function() {
+//   $("#registration-form").BulmaValidator({
+//     name: "BulmaValidator",
+//     callback: "submitMemberForm"
+//   });
+// });
 
 function submitMemberForm() {
   //grecaptcha.ready(function () {
