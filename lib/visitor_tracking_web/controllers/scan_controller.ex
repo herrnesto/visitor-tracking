@@ -14,8 +14,10 @@ defmodule VisitorTrackingWeb.ScanController do
   end
 
   def user(conn, params) do
-    user = Accounts.get_user(Map.get(params, "uuid"))
-    render(conn, "user.json", user: user)
+    case Accounts.get_user(Map.get(params, "uuid")) do
+      nil -> render(conn, "error.json", error: "not_found")
+      user -> render(conn, "user.json", user: user)
+    end
   end
 
   def assign_visitor(conn, params) do
