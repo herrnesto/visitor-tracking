@@ -4,7 +4,6 @@
     <p class="subtitle is-6">Besucher: {{ visitors }}</p>
 
     <div v-if="visitor">
-      <p class="title is-6 mt-6">Name des Gastes:</p>
       <h2 class="title is-3 mb-6">{{ visitor.firstname }} {{ visitor.lastname }}</h2>
       <h2 class="title is-5 mt-4">Prüfe den Namen mit der ID</h2>
 
