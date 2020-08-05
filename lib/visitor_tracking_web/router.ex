@@ -17,7 +17,6 @@ defmodule VisitorTrackingWeb.Router do
   pipeline :api do
     plug CORSPlug,
       origin: [
-        "*",
         "https://visitor-tracking-staging.gigalixirapp.com",
         "https://www.vesita.ch"
       ]
