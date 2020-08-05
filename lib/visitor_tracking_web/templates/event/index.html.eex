@@ -24,10 +24,9 @@
             <tr>
               <th>Name</th>
               <th>Veranstaltungsort</th>
-              <th>Beschreibung</th>
+              <th>Besucher Limite</th>
               <th>Status</th>
               <th>Start</th>
-              <th>Ende</th>
             </tr>
           </thead>
           <tbody>
@@ -35,10 +34,9 @@
                 <tr>
                   <td><a href="<%= Routes.event_path(@conn, :show, event) %>"><%= event.name %></a></td>
                   <td><%= event.venue %></td>
-                  <td><%= event.description %></td>
+                  <td><%= event.visitor_limit %></td>
                   <td><%= event.status %></td>
                   <td><%= event.date_start %></td>
-                  <td><%= event.date_end %></td>
                 </tr>
             <% end %>
           </tbody>

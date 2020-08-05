@@ -64,15 +64,10 @@
             <strong>Date start:</strong>
             <%= @event.date_start %>
           </li>
-
-          <li>
-            <strong>Date end:</strong>
-            <%= @event.date_end %>
-          </li>
-
+          
           <li>
             <strong>Besucher:</strong>
-            <%= @visitors %>
+            <%= @visitors %> von max <%= @event.visitor_limit %>
           </li>
 
         </ul>

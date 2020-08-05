@@ -114,7 +114,9 @@ import Vue from "vue";
 import PhoneInput from "./components/PhoneInput.vue";
 import EventScanner from "./components/EventScanner.vue";
 import Buefy from 'buefy'
-Vue.use(Buefy)
+Vue.use(Buefy, {
+  defaultIconPack: 'fa'
+})
 
 const phone_input_field = document.querySelector('#phone-input')
 if (phone_input_field) {

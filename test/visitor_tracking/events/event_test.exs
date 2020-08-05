@@ -16,9 +16,8 @@ defmodule VisitorTracking.Events.EventTest do
         organiser: user,
         name: "Dancing Corona",
         venue: "City Beach, Hawai",
-        description: "blabla",
-        date_start: datetime,
-        date_end: datetime
+        visitor_limit: 100,
+        date_start: datetime
       }
 
       changeset = Event.changeset(%Event{}, params)

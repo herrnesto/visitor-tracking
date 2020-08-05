@@ -8,9 +8,8 @@ defmodule VisitorTracking.EventsTest do
 
     @valid_attrs %{
       closed: true,
-      date_end: ~N[2011-05-18T15:01:01Z],
       date_start: ~N[2011-05-18T15:01:01Z],
-      description: "some description",
+      visitor_limit: 10,
       name: "some name",
       status: "some status",
       venue: "some venue",
@@ -18,9 +17,8 @@ defmodule VisitorTracking.EventsTest do
     }
     @update_attrs %{
       closed: false,
-      date_end: ~N[2011-05-18T15:01:01Z],
       date_start: ~N[2011-05-18T15:01:01Z],
-      description: "some updated description",
+      visitor_limit: 10,
       name: "some updated name",
       status: "some updated status",
       venue: "some updated venue",
@@ -28,9 +26,8 @@ defmodule VisitorTracking.EventsTest do
     }
     @invalid_attrs %{
       closed: nil,
-      date_end: nil,
       date_start: nil,
-      description: nil,
+      visitor_limit: nil,
       name: nil,
       status: nil,
       venue: nil,
@@ -59,9 +56,8 @@ defmodule VisitorTracking.EventsTest do
     test "create_event/1 with valid data creates a event" do
       assert {:ok, %Event{} = event} = Events.create_event(@valid_attrs)
       assert event.closed == true
-      assert event.date_end == ~N[2011-05-18T15:01:01Z]
       assert event.date_start == ~N[2011-05-18T15:01:01Z]
-      assert event.description == "some description"
+      assert event.visitor_limit == 10
       assert event.name == "some name"
       assert event.status == "some status"
       assert event.venue == "some venue"
@@ -75,9 +71,8 @@ defmodule VisitorTracking.EventsTest do
       event = event_fixture()
       assert {:ok, %Event{} = event} = Events.update_event(event, @update_attrs)
       assert event.closed == false
-      assert event.date_end == ~N[2011-05-18T15:01:01Z]
       assert event.date_start == ~N[2011-05-18T15:01:01Z]
-      assert event.description == "some updated description"
+      assert event.visitor_limit == 10
       assert event.name == "some updated name"
       assert event.status == "some updated status"
       assert event.venue == "some updated venue"

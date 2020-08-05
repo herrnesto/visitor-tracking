@@ -13,9 +13,9 @@
   <%= text_input f, :venue %>
   <%= error_tag f, :venue %>
 
-  <%= label f, :description %>
-  <%= text_input f, :description %>
-  <%= error_tag f, :description %>
+  <%= label f, :visitor_limit %>
+  <%= text_input f, :visitor_limit %>
+  <%= error_tag f, :visitor_limit %>
 
   <%= label f, :status %>
   <%= text_input f, :status %>
@@ -28,10 +28,6 @@
   <%= label f, :date_start %>
   <%= datetime_select f, :date_start %>
   <%= error_tag f, :date_start %>
-
-  <%= label f, :date_end %>
-  <%= datetime_select f, :date_end %>
-  <%= error_tag f, :date_end %>
 
   <div>
     <%= submit "Save" %>
