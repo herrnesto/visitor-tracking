@@ -50,5 +50,10 @@ defmodule VisitorTrackingWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
+
+  plug Corsica,
+    log: true,
+    origins: ["https://www.vesita.ch", "https://vesita-staging.gigalixirapp.com"]
+
   plug VisitorTrackingWeb.Router
 end
