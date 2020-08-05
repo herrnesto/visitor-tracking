@@ -11,12 +11,11 @@ defmodule VisitorTracking.Events.Event do
   schema "events" do
     belongs_to :organiser, User
     field :closed, :boolean, default: false
-    field :date_end, :naive_datetime
     field :date_start, :naive_datetime
-    field :description, :string
     field :name, :string
     field :status, :string
     field :venue, :string
+    field :visitor_limit, :integer
 
     many_to_many(
       :visitors,
@@ -35,13 +34,12 @@ defmodule VisitorTracking.Events.Event do
       :organiser_id,
       :name,
       :venue,
-      :description,
       :status,
       :closed,
       :date_start,
-      :date_end
+      :visitor_limit
     ])
-    |> validate_required([:organiser_id, :name, :venue, :description, :date_start, :date_end])
+    |> validate_required([:organiser_id, :name, :venue, :date_start, :visitor_limit])
   end
 
   @doc false
