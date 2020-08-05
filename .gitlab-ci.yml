@@ -89,5 +89,4 @@ deploy_to_production: # Add this 'deploy' stage description
     - git push -f gigalixir HEAD:refs/heads/master
   when: manual
   only:
-    - master
     - /^release.*$/i
