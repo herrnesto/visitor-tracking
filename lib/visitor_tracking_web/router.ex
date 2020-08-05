@@ -19,8 +19,7 @@ defmodule VisitorTrackingWeb.Router do
       origin: [
         "*",
         "https://visitor-tracking-staging.gigalixirapp.com",
-        "https://www.vesita.ch",
-        "https://192.168.0.206:4001"
+        "https://www.vesita.ch"
       ]
 
     plug :accepts, ["json"]
