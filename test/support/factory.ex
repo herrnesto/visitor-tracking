@@ -2,7 +2,7 @@ defmodule VisitorTracking.Factory do
   @moduledoc false
 
   use ExMachina.Ecto, repo: VisitorTracking.Repo
-  alias VisitorTracking.{Accounts, Verification}
+  alias VisitorTracking.{Accounts, Verification, Events}
 
   def user_factory do
     %Accounts.User{
@@ -45,6 +45,16 @@ defmodule VisitorTracking.Factory do
       email: nil,
       code: "654321",
       mobile: "+10000000000"
+    }
+  end
+
+  def event_factory do
+    %Events.Event{
+      organiser: insert(:user),
+      name: "Test Event",
+      venue: "Test Venue",
+      visitor_limit: 100,
+      date_start: NaiveDateTime.utc_now()
     }
   end
 end
