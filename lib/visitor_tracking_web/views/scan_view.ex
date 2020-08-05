@@ -1,8 +1,16 @@
 defmodule VisitorTrackingWeb.ScanView do
   use VisitorTrackingWeb, :view
 
+  def render("error.json", %{error: error}) do
+    %{
+      status: "error",
+      message: "not_found"
+    }
+  end
+
   def render("user.json", %{user: user}) do
     %{
+      status: "ok",
       firstname: user.firstname,
       lastname: user.lastname,
       phone_verified: user.phone_verified,
@@ -27,6 +35,7 @@ defmodule VisitorTrackingWeb.ScanView do
     %{
       status: status,
       event: %{
+        id: event.id,
         name: event.name,
         venue: event.venue
       },
