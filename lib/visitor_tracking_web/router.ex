@@ -15,6 +15,13 @@ defmodule VisitorTrackingWeb.Router do
   end
 
   pipeline :api do
+    plug CORSPlug,
+      origin: [
+        "https://visitor-tracking-staging.gigalixirapp.com",
+        "https://www.vesita.ch",
+        "https://192.168.0.206:4001"
+      ]
+
     plug :accepts, ["json"]
     plug :fetch_session
     plug :protect_from_forgery

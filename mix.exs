@@ -64,7 +64,7 @@ defmodule VisitorTracking.MixProject do
       {:ex_machina, "~> 2.4", only: :test},
       {:httpoison, "~> 1.6"},
       {:sentry, "~> 7.0"},
-      {:corsica, "~> 1.0"}
+      {:cors_plug, "~> 2.0"}
     ]
   end
 

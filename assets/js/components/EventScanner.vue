@@ -177,6 +177,8 @@
 
       var csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
       axios.defaults.headers['x-csrf-token'] = csrfToken;
+      axios.defaults.headers['Accept'] = 'application/json';
+      axios.defaults.headers['Content-Type'] = 'application/json';
 
       axios.post(this.api_url + `/scan/event_infos`,{id: 1})
         .then(response => {
