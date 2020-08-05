@@ -3,6 +3,10 @@
     <h1 class="title is-4">{{ event.name }}</h1>
     <p class="subtitle is-6">Besucher: {{ visitors }}</p>
 
+    <b-message title="Warnung!" type="is-warning" has-icon aria-close-label="Close message" :active.sync="warning.isActive">
+      {{ warning.msg }}
+    </b-message>
+
     <div v-if="visitor">
       <h2 class="title is-3 mb-6">{{ visitor.firstname }} {{ visitor.lastname }}</h2>
       <h2 class="title is-5 mt-4">Prüfe den Namen mit der ID</h2>
@@ -34,10 +38,12 @@
       </div>
     </div>
     <div v-else>
+      <p class="title is-6 mt-6">Halte die Kamera vor einen QR-Code:</p>
       <qrcode-stream @detect="onDetect" @init="onInit"></qrcode-stream>
     </div>
+
     <b-loading :is-full-page="true" :active.sync="scanner.isLoading" :can-cancel="true"></b-loading>
-    <button @click="check_visitor">klik</button>
+
   </div>
 </template>
 
@@ -66,6 +72,10 @@
           confirm: {
             isLoading: false
           }
+        },
+        warning: {
+          isActive: false,
+          msg: ""
         }
       }
     },
@@ -140,16 +150,22 @@
         } catch (error) {
           if (error.name === 'NotAllowedError') {
             // user denied camera access permisson
+            this.show_warning("Du musst uns die Berechtigung zur Nutzung deiner Kamera geben.")
           } else if (error.name === 'NotFoundError') {
             // no suitable camera device installed
+            this.show_warning("Leider funtkioniert die Kamera deines Smartphones nicht.")
           } else if (error.name === 'NotSupportedError') {
             // page is not served over HTTPS (or localhost)
+            this.show_warning("Die Verbindung funktioniert nur über HTTpS>.")
           } else if (error.name === 'NotReadableError') {
             // maybe camera is already in use
+            this.show_warning("Wir können deine Kamera nicht ansprechen. Wird sie gerade verwendet?")
           } else if (error.name === 'OverconstrainedError') {
             // did you requested the front camera although there is none?
+            this.show_warning("Willst du die Frontkamera verwenden, obwohl du keine hast?")
           } else if (error.name === 'StreamApiNotSupportedError') {
             // browser seems to be lacking features
+            this.show_warning("Dieser Browser ist nicht kompatibel. Versuche es mit der neusten Version von Safari oder Chrome.")
           }
         } finally {
           this.scanner.isLoading = false
