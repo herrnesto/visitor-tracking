@@ -1,7 +1,7 @@
 defmodule VisitorTrackingWeb.QrController do
   use VisitorTrackingWeb, :controller
 
-  alias VisitorTracking.{Accounts}
+  alias VisitorTracking.Accounts
 
   def show(conn, %{"uuid" => uuid}) do
     code =

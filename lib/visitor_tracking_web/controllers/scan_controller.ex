@@ -23,10 +23,9 @@ defmodule VisitorTrackingWeb.ScanController do
   def assign_visitor(conn, params) do
     with user <- Accounts.get_user(Map.get(params, "uuid")),
          event <- Events.get_event(Map.get(params, "event_id")) do
-      event
-      |> Events.assign_visitor(user)
+      Events.assign_visitor(event, user)
 
-      render(conn, "assiged_visitor.json", %{status: "ok", event: event, user: user})
+      render(conn, "assiged_visitor.json", status: "ok", event: event, user: user)
     end
   end
 
@@ -41,7 +40,7 @@ defmodule VisitorTrackingWeb.ScanController do
     })
   end
 
-  defp get_api_url() do
+  defp get_api_url do
     get_protocol() <> get_host() <> "/api"
   end
 
