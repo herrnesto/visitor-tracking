@@ -70,27 +70,23 @@
       }
     },
     methods: {
-      toast_ok(msg) {
-        this.$buefy.toast.open({
-          duration: 5000,
-          message: `OK!`,
-          position: 'is-top',
-          type: 'is-success'
-        })
+      show_warning(msg) {
+        this.warning.isActive = true
+        this.warning.msg = msg
       },
-      toast_error(msg) {
+      toast(type, msg) {
         this.$buefy.toast.open({
           duration: 5000,
-          message: `Fehler!`,
-          position: 'is-zop',
-          type: 'is-danger'
+          message: msg,
+          position: 'is-bottom',
+          type: type
         })
       },
       check_visitor: function () {
         axios.post(this.api_url + `/scan/user`, {uuid: this.uuid})
           .then(response => {
-            if(response.status != "ok"){
-              this.toast_error("Ungültiger QR Code!")
+            if(response.data.status == "error"){
+              this.toast("is-danger", "Ungültiger QR Code!")
             } else {
               this.visitor = response.data
             }
@@ -108,12 +104,12 @@
           .then(response => {
             this.visitor = false
             this.buttons.confirm.isLoading = false
-            this.toast_ok("Besucher wurde registiert.")
+            this.toast("is-success", "Besucher wurde registiert.")
           })
           .catch(e => {
             this.errors.push(e)
             this.buttons.confirm.isLoading = false
-            this.toast_error("Fehler beim Registrieren.")
+            this.toast("is-danger", "Fehler beim Registrieren.")
           })
 
       },
@@ -128,7 +124,6 @@
           if (content === null) {
             // decoded nothing
           } else {
-            console.log(content)
             this.uuid = content
             this.check_visitor()
           }
