@@ -84,11 +84,10 @@ defmodule VisitorTracking.EventsTest do
       assert event == Events.get_event!(event.id, 3)
     end
 
-    @tag :skip
     test "delete_event/1 deletes the event" do
       event = event_fixture()
       assert {:ok, %Event{}} = Events.delete_event(event)
-      assert_raise Ecto.NoResultsError, fn -> Events.get_event!(event.id) end
+      assert nil == Events.get_event(event.id)
     end
 
     test "change_event/1 returns a event changeset" do
