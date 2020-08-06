@@ -45,21 +45,21 @@ defmodule VisitorTrackingWeb.EventControllerTest do
     end
   end
 
-  describe "index" do
+  describe "GET /events" do
     test "lists all events", %{conn: conn} do
       conn = get(conn, Routes.event_path(conn, :index))
       assert html_response(conn, 200) =~ "Deine Veranstaltungen"
     end
   end
 
-  describe "new event" do
+  describe "GET /events/new" do
     test "renders form", %{conn: conn} do
       conn = get(conn, Routes.event_path(conn, :new))
       assert html_response(conn, 200) =~ "Neue Veranstaltung"
     end
   end
 
-  describe "create event" do
+  describe "POST /events" do
     test "redirects to show when data is valid", %{conn: conn} do
       conn = post(conn, Routes.event_path(conn, :create), event: @create_attrs)
 
@@ -72,14 +72,14 @@ defmodule VisitorTrackingWeb.EventControllerTest do
     end
   end
 
-  describe "edit event" do
+  describe "GET /events/:id/edit" do
     test "renders form for editing chosen event", %{conn: conn, event: event} do
       conn = get(conn, Routes.event_path(conn, :edit, event))
       assert html_response(conn, 200) =~ "Veranstaltung bearbeiten"
     end
   end
 
-  describe "update event" do
+  describe "PUT /events/:id" do
     test "redirects when data is valid", %{conn: conn, event: event} do
       conn = put(conn, Routes.event_path(conn, :update, event), event: @update_attrs)
       assert redirected_to(conn) == Routes.event_path(conn, :show, event)
@@ -92,7 +92,7 @@ defmodule VisitorTrackingWeb.EventControllerTest do
     end
   end
 
-  describe "delete event" do
+  describe "DELETE /events/:id" do
     test "deletes chosen event", %{conn: conn, event: event} do
       conn = delete(conn, Routes.event_path(conn, :delete, event))
       assert redirected_to(conn) == Routes.event_path(conn, :index)
