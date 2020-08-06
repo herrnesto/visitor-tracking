@@ -8,4 +8,8 @@ defmodule VisitorTrackingWeb.CmsController do
   def privacy(conn, _) do
     render(conn, "privacy.html", [])
   end
+
+  def howto(conn, _) do
+    render(conn, "howto.html", [])
+  end
 end

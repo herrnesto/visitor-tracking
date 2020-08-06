@@ -1,10 +1,9 @@
 <%= render(VisitorTrackingWeb.LayoutView, "header.html", %{conn: @conn, current_user: @current_user}) %>
 
 <div class="container">
-	<div class="columns">
 		<div class="column is-4 is-offset-4 has-text-centered">
 			<h1 class="title is-4">Anmelden</h1>
-		  <p class="description">Um deinen QR Code zu erhalten musst du dich zuerst anmelden.</p>
+		  <p class="description mb-4">Hast du noch keinen Account? Dann musst du dich zuerst <%= link "registrieren", to: Routes.registration_path(@conn, :phone_validation) %>.<br></p>
 			<%= form_for @conn, Routes.session_path(@conn, :create), [as: :session], fn f -> %>
 
 				<div class="field">
@@ -25,7 +24,7 @@
 		    </div>
 		    <%= submit "Anmelden", class: "button is-block is-primary is-fullwidth is-medium" %>
 		    <br />
-			<% end %>
+		  <% end %>
 		</div>
 	</div>
 </div>

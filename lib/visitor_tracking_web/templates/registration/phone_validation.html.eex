@@ -4,8 +4,8 @@
 	<%= render(VisitorTrackingWeb.RegistrationView, "steps.html", step: 1) %>
 
 	<div class="container">
-		<div class="column is-4 is-offset-4">
-			<p class="subtitle has-text-centered">
+		<div class="column is-4 is-offset-4 has-text-centered">
+			<p class="subtitle">
 				Tippe deine Mobilnummer ein:
 				<%= form_for @conn, "/register", fn f ->	 %>
 				<div class="field">
@@ -27,6 +27,12 @@
 			    <%= submit "Prüfen", class: "button is-block is-primary is-fullwidth is-medium" %>
 			  </div>
 			</div>
+			<br>
+      <small>
+        <em>
+          Du hast bereits einen Account? Hier kannst du dich <%= link "anmelden", to: Routes.session_path(@conn, :new) %>.
+        </em>
+      </small>
 			<% end %>
 		</div>
 	</div>
