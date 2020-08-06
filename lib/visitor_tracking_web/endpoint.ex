@@ -24,7 +24,7 @@ defmodule VisitorTrackingWeb.Endpoint do
     at: "/",
     from: :visitor_tracking,
     gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    only: ~w(css fonts images js favicon robots.txt)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
