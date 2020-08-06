@@ -75,7 +75,9 @@
           </div>
         </div>
 
-		    <h2 class="title has-text-centered mt-6">Für Besucher</h2>
+        <div class="is-divider mt-6"></div>
+
+        <h2 class="title has-text-centered mt-6">Für Besucher</h2>
           <div class="timeline">
             <header class="timeline-header">
               <span class="tag is-medium is-primary">Start</span>

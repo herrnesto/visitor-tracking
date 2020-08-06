@@ -9,6 +9,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "buefy": "^0.8.20",
+    "bulma-divider": "^0.2.0",
     "bulma-timeline": "^3.0.4",
     "nprogress": "^0.2.0",
     "phoenix": "file:../deps/phoenix",

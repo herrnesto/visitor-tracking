@@ -24,6 +24,20 @@ Mit Vesita hast Du die Möglichkeit, innert Sekunden die validierten Kontaktdate
   </div>
 </section>
 
+ <section>
+   <div class="container mb-4">
+     <div class="column is-8 is-offset-2 has-text-centered">
+       <h2 class="title">Einmal registrieren, mehrere Veranstaltungen besuchen.</h2>
+       <p class="subtitle">So einfach funktioniert Vesita.</p>
+       <p>
+         <a href="<%= Routes.cms_path(@conn, :howto) %>"><button class="button is-large is-outlined is-info">Zur Anleitung</button></a>
+       </p>
+      <div class="is-divider mt-6"></div>
+     </div>
+   </div>
+ </section>
+
+
 <section>
   <div class="container mb-4">
     <div class="column has-text-centered">
