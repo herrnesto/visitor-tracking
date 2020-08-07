@@ -23,9 +23,4 @@ defmodule VisitorTrackingWeb.ContactFormControllerTest do
       assert conn.assigns.status =~ "error"
     end
   end
-
-  defp create_contact_form(_) do
-    contact_form = fixture(:contact_form)
-    %{contact_form: contact_form}
-  end
 end

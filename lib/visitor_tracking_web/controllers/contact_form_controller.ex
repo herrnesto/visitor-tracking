@@ -1,8 +1,7 @@
 defmodule VisitorTrackingWeb.ContactFormController do
   use VisitorTrackingWeb, :controller
 
-  alias VisitorTracking.Form
-  alias VisitorTracking.Form.ContactForm
+  alias VisitorTracking.{Email, Form, Form.ContactForm, Mailer}
 
   def new(conn, _params) do
     changeset = Form.change_contact_form(%ContactForm{})
@@ -11,11 +10,15 @@ defmodule VisitorTrackingWeb.ContactFormController do
 
   def create(conn, %{"contact_form" => contact_form_params}) do
     case Form.create_contact_form(contact_form_params) do
-      {:ok, contact_form} ->
+      {:ok, _contact_form} ->
+        contact_form_params
+        |> Email.contact_form_email()
+        |> Mailer.deliver_now()
+
         conn
         |> render("response.json", status: "ok", params: contact_form_params)
 
-      {:error, %Ecto.Changeset{} = changeset} ->
+      {:error, %Ecto.Changeset{} = _changeset} ->
         conn
         |> render("response.json", status: "error", params: contact_form_params)
     end

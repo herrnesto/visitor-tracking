@@ -11,7 +11,7 @@
     </div>
 
     <div v-else>
-      <h1 class="title">Schreibe uns irgendwas!</h1>
+      <h1 class="title">Wir freuen uns über einen Gruss von dir!</h1>
 
       <div class="mb-5" v-if="isError">
         <b-notification
