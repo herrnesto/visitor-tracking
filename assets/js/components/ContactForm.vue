@@ -1,22 +1,23 @@
 <template>
   <section>
-    <div class="column" v-if="isSuccess">
+    <div v-if="isSuccess">
       <div class="content is-medium">
         <h1 class="title">Hallo {{ name }}! Danke für deine Nachricht!</h1>
         <p>Unsere Mailbox kann es kaum erwarten deine Nachrichten zu erhalten. Also schreibe uns wann immer du möchtest!</p>
         <p>Cheers!</p>
       </div>
     </div>
-    <div class="column" v-else>
+    <div v-else>
       <h1 class="title">Schreibe uns irgendwas!</h1>
 
-      <b-notification
-          type="is-warning"
-          has-icon
-          role="alert"
-          v-if="isError">
-        Ein unbekannter Fehler ist aufgetreten. Du erreichst uns unter hello@vesita.ch
-      </b-notification>
+      <div class="mb-5" v-if="isError">
+        <b-notification
+            type="is-warning"
+            has-icon
+            role="alert">
+          Ein unbekannter Fehler ist aufgetreten. Du erreichst uns unter hello@vesita.ch
+        </b-notification>
+      </div>
 
       <form action="">
         <b-field>
@@ -80,7 +81,7 @@ export default {
       create_path: "",
       isSending: false,
       isSuccess: false,
-      isError: true,
+      isError: false,
       name: "",
       email: "",
       message: "",
@@ -93,6 +94,7 @@ export default {
       axios.post(this.api_url + this.create_path, {contact_form: {name: this.name, email: this.email, message: this.message }})
           .then(response => {
             if(response.data.status == "error"){
+              this.isError = true
             } else {
               this.isSuccess = true
             }

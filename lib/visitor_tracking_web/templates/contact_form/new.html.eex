@@ -2,12 +2,10 @@
 
 <section>
   <div class="container">
-    <div class="columns">
-      <div class="column is-4 is-offset-4 has-text-centered">
-        <div id="contact-form"></div>
-        <input type="hidden" id="create_path" value="<%= Routes.contact_form_path(@conn, :create) %>" />
-        <input type="hidden" id="api_url" value="<%= @api_url %>" />
-      </div>
+    <div class="column is-4 is-offset-4 has-text-centered">
+      <div id="contact-form"></div>
+      <input type="hidden" id="create_path" value="<%= Routes.contact_form_path(@conn, :create) %>" />
+      <input type="hidden" id="api_url" value="<%= @api_url %>" />
     </div>
   </div>
 </section>
