@@ -1,0 +1,11 @@
+<%= render(VisitorTrackingWeb.LayoutView, "header.html", %{conn: @conn, current_user: @current_user}) %>
+
+<section>
+  <div class="container">
+    <div class="column is-4 is-offset-4 has-text-centered">
+      <div id="contact-form"></div>
+      <input type="hidden" id="create_path" value="<%= Routes.contact_form_path(@conn, :create) %>" />
+      <input type="hidden" id="api_url" value="<%= @api_url %>" />
+    </div>
+  </div>
+</section>

@@ -18,10 +18,6 @@ import "phoenix_html"
 import { Socket } from "phoenix"
 import NProgress from "nprogress"
 import { LiveSocket } from "phoenix_live_view"
-import Scanner from "./components/Scanner/Scanner"
-import React from "react"
-import ReactDOM from "react-dom"
-import "./bulma-form-validator"
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, { params: { _csrf_token: csrfToken } })
@@ -113,7 +109,10 @@ document.addEventListener('DOMContentLoaded', () => {
 import Vue from "vue";
 import PhoneInput from "./components/PhoneInput.vue";
 import EventScanner from "./components/EventScanner.vue";
+import ContactForm from "./components/ContactForm.vue";
 import Buefy from 'buefy'
+import "./vee-validate";
+
 Vue.use(Buefy, {
   defaultIconPack: 'fa'
 })
@@ -130,6 +129,15 @@ if (event_scanner_field) {
   new Vue({
     render: h => h(EventScanner)
   }).$mount("#event-scanner")
+}
+
+
+
+const contact_form = document.querySelector('#contact-form')
+if (contact_form) {
+  new Vue({
+    render: h => h(ContactForm)
+  }).$mount("#contact-form")
 }
 
 

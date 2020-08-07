@@ -21,7 +21,17 @@ defmodule VisitorTracking.Email do
     |> render(:qrcode)
   end
 
-  defp base_email do
+  def contact_form_email(%{"name" => name, "email" => email, "message" => message}) do
+    base_email()
+    |> to("hello@vesita.ch")
+    |> subject("Nachricht von: " <> name)
+    |> assign(:name, name)
+    |> assign(:email, email)
+    |> assign(:message, message)
+    |> render(:contact_form)
+  end
+
+  defp base_email() do
     new_email()
     |> from("Vesita<hello@vesita.ch>")
     |> put_header("Reply-To", "hello@vesita.ch")
