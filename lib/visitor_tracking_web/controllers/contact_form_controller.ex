@@ -15,12 +15,10 @@ defmodule VisitorTrackingWeb.ContactFormController do
         |> Email.contact_form_email()
         |> Mailer.deliver_now()
 
-        conn
-        |> render("response.json", status: "ok", params: contact_form_params)
+        render(conn, "response.json", status: "ok", params: contact_form_params)
 
       {:error, %Ecto.Changeset{} = _changeset} ->
-        conn
-        |> render("response.json", status: "error", params: contact_form_params)
+        render(conn, "response.json", status: "error", params: contact_form_params)
     end
   end
 
