@@ -6,6 +6,7 @@
 
     <div class="footer-links mt-3">
         <%= link "Datenschutz", to: Routes.cms_path(@conn, :privacy), class: "button is-text" %>
+        <%= link "Kontakt", to: Routes.contact_form_path(@conn, :new), class: "button is-text" %>
     </div>
 
     <p>Developed with <i class="fas fa-heart"></i></p>

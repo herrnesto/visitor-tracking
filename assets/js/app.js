@@ -113,7 +113,9 @@ document.addEventListener('DOMContentLoaded', () => {
 import Vue from "vue";
 import PhoneInput from "./components/PhoneInput.vue";
 import EventScanner from "./components/EventScanner.vue";
+import ContactForm from "./components/ContactForm.vue";
 import Buefy from 'buefy'
+
 Vue.use(Buefy, {
   defaultIconPack: 'fa'
 })
@@ -130,6 +132,15 @@ if (event_scanner_field) {
   new Vue({
     render: h => h(EventScanner)
   }).$mount("#event-scanner")
+}
+
+
+
+const contact_form = document.querySelector('#contact-form')
+if (contact_form) {
+  new Vue({
+    render: h => h(ContactForm)
+  }).$mount("#contact-form")
 }
 
 

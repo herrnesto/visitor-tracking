@@ -17,13 +17,12 @@ defmodule VisitorTrackingWeb.Router do
   pipeline :api do
     plug CORSPlug,
       origin: [
+        "https://0.0.0.0:4001",
         "https://visitor-tracking-staging.gigalixirapp.com",
         "https://www.vesita.ch"
       ]
 
     plug :accepts, ["json"]
-    plug :fetch_session
-    plug :protect_from_forgery
   end
 
   scope "/", VisitorTrackingWeb do
@@ -36,6 +35,7 @@ defmodule VisitorTrackingWeb.Router do
     post "/sessions", SessionController, :create
     get "/phone_validation", RegistrationController, :phone_validation
     get "/qr/:uuid", QrController, :show
+    get "/kontakt", ContactFormController, :new
   end
 
   scope "/", VisitorTrackingWeb do
@@ -72,6 +72,7 @@ defmodule VisitorTrackingWeb.Router do
     post "/scan/event_infos", ScanController, :event_infos
     post "/scan/user", ScanController, :user
     post "/scan/assign_visitor", ScanController, :assign_visitor
+    post "/contact_forms/create", ContactFormController, :create
   end
 
   # Enables LiveDashboard only for development
