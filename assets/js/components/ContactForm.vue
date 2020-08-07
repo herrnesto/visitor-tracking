@@ -1,12 +1,15 @@
 <template>
   <section>
+
     <div v-if="isSuccess">
       <div class="content is-medium">
         <h1 class="title">Hallo {{ name }}! Danke für deine Nachricht!</h1>
-        <p>Unsere Mailbox kann es kaum erwarten deine Nachrichten zu erhalten. Also schreibe uns wann immer du möchtest!</p>
+        <p>Unsere Mailbox kann es kaum erwarten deine Nachrichten zu erhalten. Also schreibe uns wann immer du
+          möchtest!</p>
         <p>Cheers!</p>
       </div>
     </div>
+
     <div v-else>
       <h1 class="title">Schreibe uns irgendwas!</h1>
 
@@ -19,61 +22,61 @@
         </b-notification>
       </div>
 
-      <form action="">
-        <b-field>
-          <b-input placeholder="Name"
-                   type="text"
-                   min="10"
-                   max="50"
-                   size="is-medium"
-                   required
-                   v-model="name">
-          </b-input>
-        </b-field>
 
-        <b-field>
-          <b-input placeholder="Email"
-                   type="email"
-                   size="is-medium"
-                   required
-                   v-model="email">
+      <ValidationObserver ref="observer" v-slot="{ handleSubmit }">
+        <!-- the "handleSubmit" function on the slot-scope executes the callback if validation was successfull -->
+        <ValidationProvider rules="required|email" name="Email" v-slot="{ errors, valid }">
+          <b-field
+              label="Deine E-Mail-Adresse"
+              :type="{ 'is-danger': errors[0], 'is-success': valid }"
+              :message="errors">
+            <b-input type="email" v-model="email" size="is-medium"></b-input>
+          </b-field>
+        </ValidationProvider>
 
-          </b-input>
-        </b-field>
+        <ValidationProvider rules="required|alpha_spaces|max:50" name="name" v-slot="{ errors, valid }">
+          <b-field
+              label="Name"
+              :type="{ 'is-danger': errors[0], 'is-success': valid }"
+              :message="errors">
+            <b-input type="text" v-model="name" size="is-medium"></b-input>
+          </b-field>
+        </ValidationProvider>
 
-        <b-field>
-          <b-input type="textarea"
-                   minlength="10"
-                   maxlength="1000"
-                   placeholder="Nachricht"
-                   size="is-medium"
-                   required
-                   v-model="message">
-          </b-input>
-        </b-field>
+        <ValidationProvider rules="required|min:15|max:1000" name="message" v-slot="{ errors, valid }">
+          <b-field
+              label="Nachricht"
+              :type="{ 'is-danger': errors[0], 'is-success': valid }"
+              :message="errors">
+            <b-input type="textarea" v-model="message" size="is-medium"></b-input>
+          </b-field>
+        </ValidationProvider>
 
-        <div class="field is-grouped is-grouped-centered">
-          <div class="control">
-            <b-button size="is-medium"
-                      native-type="submit"
-                      type="is-primary"
-                      v-bind:loading="isSending"
-                      @click="send_message">Nachricht senden
-            </b-button>
-          </div>
-        </div>
-      </form>
+        <button class="button is-primary is-medium mt-5" @click="handleSubmit(send_message)">
+          <span class="icon is-small">
+            <i class="fas fa-paper-plane"></i>
+          </span>
+          <span>Submit</span>
+        </button>
+
+      </ValidationObserver>
+
     </div>
   </section>
 </template>
 
+
 <script>
-import { VueTelInput } from 'vue-tel-input'
+import {ValidationObserver, ValidationProvider} from "vee-validate";
+import {VueTelInput} from 'vue-tel-input'
 import axios from 'axios';
 
 export default {
+  name: "ContactForm",
   components: {
-    VueTelInput
+    VueTelInput,
+    ValidationProvider,
+    ValidationObserver
   },
   data() {
     return {
@@ -89,11 +92,17 @@ export default {
     }
   },
   methods: {
-    send_message () {
+    send_message() {
       this.isSending = true
-      axios.post(this.api_url + this.create_path, {contact_form: {name: this.name, email: this.email, message: this.message }})
+      axios.post(this.api_url + this.create_path, {
+        contact_form: {
+          name: this.name,
+          email: this.email,
+          message: this.message
+        }
+      })
           .then(response => {
-            if(response.data.status == "error"){
+            if (response.data.status == "error") {
               this.isError = true
             } else {
               this.isSuccess = true

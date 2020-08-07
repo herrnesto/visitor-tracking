@@ -111,6 +111,7 @@ import PhoneInput from "./components/PhoneInput.vue";
 import EventScanner from "./components/EventScanner.vue";
 import ContactForm from "./components/ContactForm.vue";
 import Buefy from 'buefy'
+import "./vee-validate";
 
 Vue.use(Buefy, {
   defaultIconPack: 'fa'
