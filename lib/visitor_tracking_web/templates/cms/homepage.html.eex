@@ -9,7 +9,7 @@
           COVID19 Schutzkonzept einfach umgesetzt.
         </h1>
         <h2 class="subtitle colored is-5 mb-6">
-Mit Vesita hast Du die Möglichkeit, innert Sekunden die validierten Kontaktdaten deiner Gäste zu sammeln. Die Daten des Kunden sind zu 100% verifiziert. Im Notfall kannst du sie direkt dem BAG weiterleiten, ohne dass du dich mit Listen oder Downloads herumschlagen musst.</h2>
+Mit Vesita hast Du die Möglichkeit, innert Sekunden die validierten Kontaktdaten deiner Gäste zu sammeln. Die Daten des Kunden sind zu 100% verifiziert. Im Notfall kannst du sie direkt den kantonsärztlichen Diensten weiterleiten, ohne dass du dich mit Listen oder Downloads herumschlagen musst.</h2>
         <p>
           <a href="<%= Routes.registration_path(@conn, :phone_validation) %>"><button class="button is-large is-inverted is-outlined is-primary">Jetzt Registrieren</button></a>
         </p>
