@@ -1,4 +1,8 @@
 defmodule VisitorTracking.Form.ContactForm do
+  @moduledoc """
+  The contact form module.
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
 
