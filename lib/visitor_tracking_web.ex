@@ -28,7 +28,8 @@ defmodule VisitorTrackingWeb do
         only: [
           authenticate_user: 2,
           check_phone_verified: 2,
-          check_registered: 2
+          check_registered: 2,
+          check_if_event_organiser: 2
         ]
 
       alias VisitorTrackingWeb.Router.Helpers, as: Routes
@@ -79,7 +80,8 @@ defmodule VisitorTrackingWeb do
         only: [
           authenticate_user: 2,
           check_phone_verified: 2,
-          check_registered: 2
+          check_registered: 2,
+          check_if_event_organiser: 2
         ]
     end
   end

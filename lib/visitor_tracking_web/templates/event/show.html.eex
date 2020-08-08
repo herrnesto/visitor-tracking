@@ -32,6 +32,15 @@
           </span>
           <span>Scannen</span>
         <% end %>
+
+        <%= if event_organiser?(@conn, @event) do %>
+          <%= link to: "/events/#{@event.id}/scanners", class: "button is-primary is-outlined" do %>
+            <span class="icon is-small">
+              <i class="fas fa-qrcode"></i>
+            </span>
+            <span>Scanners</span>
+          <% end %>
+        <% end %>
       </p>
     </div>
   </div>
@@ -64,7 +73,7 @@
             <strong>Date start:</strong>
             <%= @event.date_start %>
           </li>
-          
+
           <li>
             <strong>Besucher:</strong>
             <%= @visitors %> von max <%= @event.visitor_limit %>

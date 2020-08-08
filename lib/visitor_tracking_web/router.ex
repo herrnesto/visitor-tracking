@@ -65,6 +65,12 @@ defmodule VisitorTrackingWeb.Router do
     get "/profile/qrcode", ProfileController, :show
   end
 
+  scope "/events/:event_id/scanners", VisitorTrackingWeb do
+    pipe_through [:browser, :authenticate_user, :check_phone_verified, :check_if_event_organiser]
+
+    resources "/", ScannerController
+  end
+
   # Other scopes may use custom stacks.
   scope "/api", VisitorTrackingWeb do
     pipe_through :api

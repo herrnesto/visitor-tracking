@@ -5,7 +5,7 @@ defmodule VisitorTrackingWeb.QrController do
 
   def show(conn, %{"uuid" => uuid}) do
     code =
-      Accounts.get_user(uuid)
+      Accounts.get_user_by(uuid: uuid)
       |> generate_qrcode()
 
     render(conn, "show.html", %{qrcode: code})

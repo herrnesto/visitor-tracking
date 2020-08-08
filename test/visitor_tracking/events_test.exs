@@ -1,8 +1,7 @@
 defmodule VisitorTracking.EventsTest do
   use VisitorTracking.DataCase
 
-  alias VisitorTracking.Events
-  alias VisitorTracking.Events.Event
+  alias VisitorTracking.{Events, Events.Event, Events.Visitor}
 
   @valid_attrs %{
     closed: true,
@@ -32,23 +31,15 @@ defmodule VisitorTracking.EventsTest do
     organiser_id: nil
   }
 
-  def event_fixture(attrs \\ %{}) do
-    {:ok, event} =
-      attrs
-      |> Enum.into(@valid_attrs)
-      |> Events.create_event()
-
-    event
-  end
-
-  test "list_events/0 returns all events" do
-    event = event_fixture()
-    assert Events.list_events(3) == [event]
+  test "list_events/1 returns all events for an organiser" do
+    user = insert(:user)
+    %{id: event_id, organiser_id: organiser_id} = insert(:event, organiser: user)
+    assert [%Events.Event{id: ^event_id}] = Events.list_events(organiser_id)
   end
 
   test "get_event!/1 returns the event with given id" do
-    event = event_fixture()
-    assert Events.get_event!(event.id, 3) == event
+    %{id: event_id, organiser_id: organiser_id} = insert(:event)
+    assert %Events.Event{id: ^event_id} = Events.get_event!(event_id, organiser_id)
   end
 
   describe "create_event/1" do
@@ -69,7 +60,7 @@ defmodule VisitorTracking.EventsTest do
 
   describe "update_event/2" do
     test "update_event/2 with valid data updates the event" do
-      event = event_fixture()
+      event = insert(:event)
       assert {:ok, %Event{} = event} = Events.update_event(event, @update_attrs)
       assert event.closed == false
       assert event.date_start == ~N[2011-05-18T15:01:01Z]
@@ -80,20 +71,77 @@ defmodule VisitorTracking.EventsTest do
     end
 
     test "update_event/2 with invalid data returns error changeset" do
-      event = event_fixture()
+      event = insert(:event)
       assert {:error, %Ecto.Changeset{}} = Events.update_event(event, @invalid_attrs)
-      assert event == Events.get_event!(event.id, 3)
     end
   end
 
   test "delete_event/1 deletes the event" do
-    event = event_fixture()
+    event = insert(:event)
     assert {:ok, %Event{}} = Events.delete_event(event)
     assert nil == Events.get_event(event.id)
   end
 
   test "change_event/1 returns a event changeset" do
-    event = event_fixture()
+    event = insert(:event)
     assert %Ecto.Changeset{} = Events.change_event(event)
+  end
+
+  describe "list_scanners/1" do
+    test "returns an empty list if no scanners exist for an event" do
+      event = insert(:event)
+      assert [] == Events.list_scanners(event.id)
+    end
+  end
+
+  describe "add_scanner/2" do
+    test "returns an error if the user does not exist" do
+      event = insert(:event)
+      assert {:error, "User does not exist"} == Events.add_scanner(event.id, "+41000000000")
+    end
+
+    test "returns an {:ok, scanner} if the user exists" do
+      event = insert(:event)
+      %{phone: phone} = insert(:user)
+      assert {:ok, _} = Events.add_scanner(event.id, phone)
+    end
+  end
+
+  test "get_event_with_prelaods/1 returns an event with the organiser preloaded" do
+    user = insert(:user, phone_verified: true, email_verified: true)
+    event = insert(:event, organiser: user)
+    assert %{organiser: %{email: _}} = Events.get_event_with_preloads(event.id)
+  end
+
+  test "assign_organiser/2 assigns an organiser to an event" do
+    user = insert(:user, phone_verified: true, email_verified: true)
+    event = insert(:event, organiser: nil)
+    assert {:ok, %Events.Event{}} = Events.assign_organiser(event, user)
+  end
+
+  describe "assign_visitor/2" do
+    test "assigns a visitor to an event" do
+      %{id: event_id} = event = insert(:event)
+      %{id: user_id} = user = insert(:user)
+
+      assert {:ok, %Visitor{user_id: ^user_id, event_id: ^event_id}} =
+               Events.assign_visitor(event, user)
+    end
+
+    test "returns an error if visitor is already assigned" do
+      event = insert(:event)
+      user = insert(:user)
+      Events.assign_visitor(event, user)
+
+      assert {:error,
+              %Ecto.Changeset{
+                valid?: false,
+                errors: [
+                  event_id:
+                    {"ALREADY_EXISTS",
+                     [constraint: :unique, constraint_name: "events_visitors_pkey"]}
+                ]
+              }} = Events.assign_visitor(event, user)
+    end
   end
 end

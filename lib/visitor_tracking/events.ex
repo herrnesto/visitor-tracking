@@ -2,18 +2,18 @@ defmodule VisitorTracking.Events do
   @moduledoc """
   Events Context module
   """
-  alias VisitorTracking.{Accounts, Events.Event, Repo}
+  alias VisitorTracking.{Accounts, Events.Event, Events.Scanner, Events.Visitor, Repo}
 
   import Ecto.Query
 
-  def create(args \\ %{}) do
-    %Event{}
-    |> Event.changeset(args)
-    |> Repo.insert()
-  end
-
   def get_event(id) do
     Repo.get(Event, id)
+  end
+
+  def get_event_with_preloads(id) do
+    Event
+    |> Repo.get(id)
+    |> Repo.preload([:organiser])
   end
 
   def assign_organiser(event, user) do
@@ -23,10 +23,9 @@ defmodule VisitorTracking.Events do
   end
 
   def assign_visitor(event, %Accounts.User{} = user) do
-    event
-    |> Repo.preload(:visitors)
-    |> Event.changeset_visitor(user)
-    |> Repo.update()
+    %Visitor{}
+    |> Visitor.changeset(%{event_id: event.id, user_id: user.id})
+    |> Repo.insert()
   end
 
   def count_visitors(id) when is_binary(id) do
@@ -131,5 +130,25 @@ defmodule VisitorTracking.Events do
   """
   def change_event(%Event{} = event, attrs \\ %{}) do
     Event.changeset(event, attrs)
+  end
+
+  def list_scanners(event_id) do
+    (s in Scanner)
+    |> from()
+    |> where([s], s.event_id == ^event_id)
+    |> Repo.all()
+    |> Repo.preload([:event, :user])
+  end
+
+  def add_scanner(event_id, phone) do
+    case Accounts.get_user_by(phone: phone) do
+      %Accounts.User{id: user_id} ->
+        changeset = Scanner.changeset(%Scanner{}, %{user_id: user_id, event_id: event_id})
+        scanner = Repo.insert(changeset)
+        {:ok, scanner}
+
+      nil ->
+        {:error, "User does not exist"}
+    end
   end
 end

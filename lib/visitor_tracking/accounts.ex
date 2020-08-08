@@ -6,12 +6,8 @@ defmodule VisitorTracking.Accounts do
   alias VisitorTracking.Accounts.User
   alias VisitorTracking.{Repo, Verification}
 
-  def get_user(id) when is_integer(id) do
+  def get_user(id) do
     Repo.get(User, id)
-  end
-
-  def get_user(uuid) do
-    Repo.get_by(User, uuid: uuid)
   end
 
   def get_user_by(params) do

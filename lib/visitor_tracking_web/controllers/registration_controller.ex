@@ -16,7 +16,7 @@ defmodule VisitorTrackingWeb.RegistrationController do
          changeset <- Accounts.change_user() do
       render(conn, "new.html", changeset: changeset, phone: phone)
     else
-      %VisitorTracking.Accounts.User{} ->
+      %Accounts.User{} ->
         conn
         |> put_flash(:error, "You have an account already. Please login")
         |> redirect(to: "/login")

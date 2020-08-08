@@ -1,0 +1,20 @@
+<h1>Scanners</h1>
+<%= link "New Scanner", to: "/events/#{@event_id}/scanners/new" %>
+<%= if @scanners == [] do %>
+  <p>No scanner users have been assigned</p>
+<% else %>
+  <table>
+    <thead>
+    <tr>
+      <th>Phone</th>
+    </tr>
+    </thead>
+    <tbody>
+      <%= for scanner <- @scanners do %>
+      <tr>
+        <td><%= scanner.user.phone %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
