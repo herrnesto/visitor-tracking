@@ -31,7 +31,7 @@ defmodule VisitorTracking.Email do
     |> render(:contact_form)
   end
 
-  defp base_email() do
+  defp base_email do
     new_email()
     |> from("Vesita<hello@vesita.ch>")
     |> put_header("Reply-To", "hello@vesita.ch")
