@@ -43,6 +43,12 @@ defmodule VisitorTrackingWeb.EventControllerTest do
       conn = get(conn, "/events/#{event.id}")
       assert html_response(conn, 200) =~ "Infos zur Veranstaltung"
     end
+
+    test "redirects to events if current user is not the organiser", %{conn: conn} do
+      event = insert(:event)
+      conn = get(conn, "/events/#{event.id}")
+      assert redirected_to(conn) =~ "/events"
+    end
   end
 
   describe "GET /events" do
