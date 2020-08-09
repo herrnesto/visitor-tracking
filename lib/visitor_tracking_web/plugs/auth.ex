@@ -6,6 +6,8 @@ defmodule VisitorTrackingWeb.Plugs.Auth do
   import Plug.Conn
   import Phoenix.Controller
 
+  alias VisitorTracking.Events
+
   def init(opts), do: opts
 
   def call(conn, _) do
@@ -53,6 +55,19 @@ defmodule VisitorTrackingWeb.Plugs.Auth do
       |> put_flash(:error, "Du musst zuerst deine E-Mail-Adresse bestätigen.")
       |> redirect(to: "/phone_verification")
       |> halt()
+    end
+  end
+
+  def check_if_event_organiser(%{params: %{"event_id" => event_id}} = conn, _params) do
+    case Events.get_event!(event_id, conn.assigns.current_user.id) do
+      nil ->
+        conn
+        |> put_flash(:error, "You must be the organiser of an event to modify it")
+        |> redirect(to: "/events/#{event_id}")
+        |> halt()
+
+      %Events.Event{} ->
+        conn
     end
   end
 

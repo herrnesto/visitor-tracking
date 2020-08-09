@@ -11,9 +11,8 @@ defmodule VisitorTracking.Events.Visitor do
 
   @primary_key false
   schema "events_visitors" do
-    belongs_to :event_id, Event, primary_key: true
-    belongs_to :user_id, User, primary_key: true
-    timestamps()
+    belongs_to :event, Event, primary_key: true
+    belongs_to :user, User, primary_key: true
   end
 
   @required_fields ~w(event_id user_id)a
@@ -23,8 +22,8 @@ defmodule VisitorTracking.Events.Visitor do
     |> validate_required(@required_fields)
     |> foreign_key_constraint(:event_id)
     |> foreign_key_constraint(:user_id)
-    |> unique_constraint([:event, :user],
-      name: :event_id_user_id_unique_index,
+    |> unique_constraint([:event_id, :user_id],
+      name: :events_visitors_pkey,
       message: "ALREADY_EXISTS"
     )
   end

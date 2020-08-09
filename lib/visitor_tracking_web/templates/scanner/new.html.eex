@@ -1,0 +1,5 @@
+<%= f = form_for @conn, @action %>
+<p><%= if @error, do: @error, else: ""%></p>
+<%= label f, "Phone" %>
+<%= text_input f, :phone %>
+<%= submit "Add Scanner" %>

@@ -108,8 +108,7 @@ defmodule VisitorTracking.Accounts.User do
   defp clean_phone_number(%{"phone" => phone} = attrs) do
     phone = String.replace(phone, " ", "")
 
-    attrs
-    |> Map.put("phone", phone)
+    Map.put(attrs, "phone", phone)
   end
 
   defp clean_phone_number(attrs), do: attrs

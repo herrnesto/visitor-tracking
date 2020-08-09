@@ -2,7 +2,7 @@ defmodule VisitorTracking.Factory do
   @moduledoc false
 
   use ExMachina.Ecto, repo: VisitorTracking.Repo
-  alias VisitorTracking.{Accounts, Verification, Events}
+  alias VisitorTracking.{Accounts, Events, Verification}
 
   def user_factory do
     %Accounts.User{
@@ -55,6 +55,14 @@ defmodule VisitorTracking.Factory do
       venue: "Test Venue",
       visitor_limit: 100,
       date_start: NaiveDateTime.utc_now()
+    }
+  end
+
+  def scanner_factory do
+    %Events.Scanner{
+      event: insert(:event),
+      user: insert(:user),
+      enabled: true
     }
   end
 end

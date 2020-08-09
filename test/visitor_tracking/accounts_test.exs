@@ -107,4 +107,12 @@ defmodule VisitorTracking.AccountsTest do
       assert user.email_verified == true
     end
   end
+
+  describe "verify_phone/1" do
+    test "verifies a user's phone" do
+      user = insert(:user)
+      assert user.phone_verified == false
+      assert {:ok, %{phone_verified: true}} = Accounts.verify_phone(user.id)
+    end
+  end
 end
