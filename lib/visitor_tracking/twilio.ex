@@ -17,6 +17,8 @@ defmodule VisitorTracking.Twilio do
     end
   end
 
+  def send_token(_), do: {:error, "missing params"}
+
   def send_qr(%{uuid: uuid, target_number: target_number} = args) do
     message = "VESITA: Dein QR-Code kannst du hier abrufen: https://www.vesita.ch/qr/#{uuid}"
 
@@ -26,8 +28,6 @@ defmodule VisitorTracking.Twilio do
       format_response(response.status_code)
     end
   end
-
-  def send_token(_), do: {:error, "missing params"}
 
   def format_response(201), do: {:ok, "sms was sent"}
 

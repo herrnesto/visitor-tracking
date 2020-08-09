@@ -1,7 +1,7 @@
 defmodule VisitorTrackingWeb.ScanView do
   use VisitorTrackingWeb, :view
 
-  def render("error.json", %{error: error}) do
+  def render("error.json", %{error: _}) do
     %{
       status: "error",
       message: "not_found"
