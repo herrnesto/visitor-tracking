@@ -1,0 +1,9 @@
+{
+  "skip_files": [
+    "test/support",
+    "lib/visitor_tracking/application.ex",
+    "lib/visitor_tracking_web.ex",
+    "lib/visitor_tracking_web/telemetry.ex"
+  ]
+}
+
