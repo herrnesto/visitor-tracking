@@ -9,11 +9,13 @@ defmodule VisitorTrackingWeb.ScannerController do
   end
 
   def new(conn, %{"event_id" => event_id}) do
-    action = "/events/#{event_id}/scanners"
+    action = Routes.scanner_path(conn, :create, event_id)
     render(conn, "new.html", action: action, error: nil)
   end
 
   def create(conn, %{"event_id" => event_id, "phone" => phone}) do
+    phone = String.replace(phone, " ", "")
+
     case Events.add_scanner(event_id, phone) do
       {:ok, _scanner} ->
         conn

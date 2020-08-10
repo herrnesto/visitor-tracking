@@ -1,5 +1,35 @@
-<%= f = form_for @conn, @action %>
-<p><%= if @error, do: @error, else: ""%></p>
-<%= label f, "Phone" %>
-<%= text_input f, :phone %>
-<%= submit "Add Scanner" %>
+<%= render(VisitorTrackingWeb.LayoutView, "header.html", %{conn: @conn, current_user: @current_user}) %>
+
+<section>
+  <div class="container">
+    <div class="column is-4 is-offset-4 has-text-centered">
+      <p class="subtitle">Tippe die Mobilnummer des Scanners ein:</p>
+      <%= form_for @conn, @action, fn f ->	 %>
+      <div class="field">
+        <div class="control">
+          <div id="phone-input"></div>
+        </div>
+        <p class="help is-danger">
+          <%= error_tag f, :phone %>
+        </p>
+      </div>
+      <p class="help is-danger">
+        <%= error_tag f, :phone %>
+      </p>
+
+      <div class="field is-grouped is-grouped-centered">
+        <div class="control">
+          <%= submit "Scanner hinzufügen", class: "button is-block is-primary is-fullwidth is-medium" %>
+        </div>
+      </div>
+      <br>
+      <small>
+        <em>
+          Der Scanner muss bereits einen Account besitzen.
+        </em>
+      </small>
+      <% end %>
+    </div>
+
+  </div>
+</section>

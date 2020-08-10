@@ -1,20 +1,41 @@
-<h1>Scanners</h1>
-<%= link "New Scanner", to: "/events/#{@event_id}/scanners/new" %>
-<%= if @scanners == [] do %>
-  <p>No scanner users have been assigned</p>
-<% else %>
-  <table>
-    <thead>
-    <tr>
-      <th>Phone</th>
-    </tr>
-    </thead>
-    <tbody>
-      <%= for scanner <- @scanners do %>
-      <tr>
-        <td><%= scanner.user.phone %></td>
-      </tr>
+<%= render(VisitorTrackingWeb.LayoutView, "header.html", %{conn: @conn, current_user: @current_user}) %>
+
+<section>
+  <div class="container">
+    <div class="column">
+      <h1 class="title">Scanners</h1>
+      <p class="buttons">
+        <a class="button is-link is-outlined" href="<%= Routes.scanner_path(@conn, :new, @event_id) %>">
+          <span class="icon is-small">
+            <i class="fas fa-plus"></i>
+          </span>
+          <span>Neuen Scanner hinzufügen</span>
+        </a>
+      </p>
+    </div>
+  </div>
+  <div class="container">
+    <div class="column">
+      <%= if @scanners == [] do %>
+        <p>No scanner users have been assigned</p>
+      <% else %>
+        <table class="table is-fullwidth">
+          <thead>
+          <tr>
+            <th>Vorname</th>
+            <th>Telefonnummer</th>
+          </tr>
+          </thead>
+          <tbody>
+          <%= for scanner <- @scanners do %>
+          <tr>
+            <td><%= scanner.user.firstname %></td>
+            <td><%= scanner.user.phone %></td>
+          </tr>
+          <% end %>
+          </tbody>
+        </table>
       <% end %>
-    </tbody>
-  </table>
-<% end %>
+    </div>
+	</div>
+</section>
