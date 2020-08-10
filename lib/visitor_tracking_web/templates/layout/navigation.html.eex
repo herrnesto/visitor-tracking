@@ -18,7 +18,7 @@
           <%= link "Veranstaltungen", to: Routes.event_path(@conn, :index), class: "navbar-item" %>
           <%= link "Profil", to: Routes.profile_path(@conn, :show), class: "navbar-item" %>
 
-          <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-item has-dropdown is-active">
             <a class="navbar-link">
               <span class="icon is-small">
                 <i class="fas fa-user"></i>
