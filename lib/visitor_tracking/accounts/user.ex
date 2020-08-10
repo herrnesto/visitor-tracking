@@ -76,7 +76,6 @@ defmodule VisitorTracking.Accounts.User do
       ~r/\A[\w.!\#$%&'*+\/=?^_`{|}~-]+@[\w](?:[\w-]{0,61}[\w])?(?:\.[\w](?:[\w-]{0,61}[\w])?)*\z/i,
       message: "invalid E-Mail address"
     )
-    |> unique_constraint(:email)
     |> unique_constraint(:phone)
     |> unique_constraint(:uuid)
     |> validate_length(:password, min: 8)
