@@ -94,14 +94,11 @@ if (event_scanner_field) {
   }).$mount("#event-scanner")
 }
 
-
-
 const contact_form = document.querySelector('#contact-form')
 if (contact_form) {
   new Vue({
     render: h => h(ContactForm)
   }).$mount("#contact-form")
 }
-
 
 
