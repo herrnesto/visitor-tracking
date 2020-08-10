@@ -4,16 +4,13 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>"COVID19 konformes Besucher Tracking | Vesita</title>
+    <title>COVID19 konformes Besucher Tracking | Vesita</title>
     <%= csrf_meta_tag() %>
     <%= live_title_tag assigns[:page_title] || "VisitorTracking", suffix: " · Phoenix Framework" %>
     <link phx-track-static rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
     <script src="https://kit.fontawesome.com/15181efa86.js" crossorigin="anonymous"></script>
-    <script
-      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-      integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
-      crossorigin="anonymous"></script>
+
     <!-- Hitsteps TRACKING CODE - Manual 2020-08-06 - DO NOT CHANGE -->
     <script type="text/javascript">(function(){var hstc=document.createElement('script'); hstc.src='https://log.hitsteps.com/track.php?code=0a564a4c375d68a25926ac5fff3b435e';hstc.async=true;var htssc = document.getElementsByTagName('script')[0];htssc.parentNode.insertBefore(hstc, htssc);})();
     </script><noscript><a href="http://www.hitsteps.com/"><img src="//log.hitsteps.com/track.php?mode=img&amp;code=0a564a4c375d68a25926ac5fff3b435e" alt="blog tracking" width="1" height="1" />blog statistics</a></noscript>

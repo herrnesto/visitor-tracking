@@ -41,43 +41,6 @@ if (domContainer) {
   ReactDOM.render(<Scanner eventId={eventId} />, domContainer)
 }
 
-// $(function() {
-//   $("#registration-form").BulmaValidator({
-//     name: "BulmaValidator",
-//     callback: "submitMemberForm"
-//   });
-// });
-
-function submitMemberForm() {
-  //grecaptcha.ready(function () {
-    //grecaptcha.execute('6LedtPoUAAAAANKERJZ7sIdFypoH-Zygx5YdaU8S', {action: 'submit'}).then(function (token) {
-      var ajaxurl = $(location).attr("href");
-      var data =  {
-        'action': 'send_member_form',
-        '_ajax_nonce': sleepless_globals.nonce,
-        'form_data': $('#member-form').serialize()
-      };
-
-      $.ajax({
-        type : 'post',
-        dataType : 'json',
-        url : sleepless_globals.ajax_url,
-        data : data,
-        success: function( response ) {
-          console.log(response);
-          if( response.status == 201 ) {
-            window.location.href = window.location.origin + "/phone_verification";
-          }
-          else {
-            alert( 'Something went wrong, try again!' );
-          }
-        }
-      })
-    //});
-  //});
-}
-
-
 // responsive menu JS
 document.addEventListener('DOMContentLoaded', () => {
 
