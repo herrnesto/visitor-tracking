@@ -36,7 +36,7 @@ defmodule VisitorTrackingWeb.ScannerControllerTest do
   describe "GET /events/:id/scanners/new" do
     test "shows a form to add a new user by phone", %{conn: conn, event: event} do
       conn = get(conn, "/events/#{event.id}/scanners/new")
-      assert html_response(conn, 200) =~ "Phone"
+      assert html_response(conn, 200) =~ "Mobilnummer"
     end
 
     test "redirects if the current user is not the event organiser", %{conn: conn} do
@@ -53,7 +53,7 @@ defmodule VisitorTrackingWeb.ScannerControllerTest do
     } do
       conn = post(conn, "/events/#{event.id}/scanners", %{"phone" => "+41000000000"})
 
-      assert html_response(conn, 200) =~ "Phone"
+      assert html_response(conn, 200) =~ "Mobilnummer"
       assert html_response(conn, 200) =~ "User does not exist"
     end
 
