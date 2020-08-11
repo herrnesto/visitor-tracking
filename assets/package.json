@@ -11,7 +11,7 @@
     "buefy": "^0.8.20",
     "bulma-divider": "^0.2.0",
     "bulma-pricingtable": "^0.2.0",
-    "bulma-steps": "^2.2.1",
+    "bulma-steps-component": "^0.5.3",
     "bulma-timeline": "^3.0.4",
     "nprogress": "^0.2.0",
     "phoenix": "file:../deps/phoenix",
