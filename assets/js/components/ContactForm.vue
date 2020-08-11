@@ -52,15 +52,16 @@
           </b-field>
         </ValidationProvider>
 
-        <button class="button is-primary is-medium mt-5" @click="handleSubmit(send_message)">
-          <span class="icon is-small">
-            <i class="fas fa-paper-plane"></i>
-          </span>
-          <span>Submit</span>
-        </button>
-
+        <b-button size="is-medium"
+                  class="mt-5"
+                  icon-left="paper-plane"
+                  type="is-primary"
+                  v-bind:loading="isSending"
+                  @click="handleSubmit(executeRecaptcha)">
+          Abschicken
+        </b-button>
       </ValidationObserver>
-
+      <recaptcha ref="recaptcha" @verify="send_message"></recaptcha>
     </div>
   </section>
 </template>
@@ -70,13 +71,15 @@
 import {ValidationObserver, ValidationProvider} from "vee-validate";
 import {VueTelInput} from 'vue-tel-input'
 import axios from 'axios';
+import Recaptcha from './Recaptcha.vue'
 
 export default {
   name: "ContactForm",
   components: {
     VueTelInput,
     ValidationProvider,
-    ValidationObserver
+    ValidationObserver,
+    Recaptcha
   },
   data() {
     return {
@@ -93,7 +96,6 @@ export default {
   },
   methods: {
     send_message() {
-      this.isSending = true
       axios.post(this.api_url + this.create_path, {
         contact_form: {
           name: this.name,
@@ -101,19 +103,22 @@ export default {
           message: this.message
         }
       })
-          .then(response => {
-            if (response.data.status == "error") {
-              this.isError = true
-            } else {
-              this.isSuccess = true
-            }
-            this.isSending = false
-          })
-          .catch(e => {
-            this.errors.push(e)
-            this.isSending = false
-          })
+      .then(response => {
+        if (response.data.status == "error") {
+          this.isError = true
+        } else {
+          this.isSuccess = true
+        }
+        this.isSending = false
+      })
+      .catch(e => {
+        this.errors.push(e)
+        this.isSending = false
+      })
     },
+    executeRecaptcha () {
+      this.$refs.recaptcha.execute()
+    }
   },
   created() {
     this.api_url = document.getElementById('api_url').value

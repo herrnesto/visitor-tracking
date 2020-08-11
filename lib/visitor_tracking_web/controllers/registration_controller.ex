@@ -11,6 +11,8 @@ defmodule VisitorTrackingWeb.RegistrationController do
   end
 
   def new(conn, %{"phone" => phone}) do
+    phone = String.replace(phone, " ", "")
+
     with :phone_verified <- Twilio.validate_phone(phone),
          nil <- Accounts.get_user_by(phone: phone),
          changeset <- Accounts.change_user() do
@@ -18,17 +20,17 @@ defmodule VisitorTrackingWeb.RegistrationController do
     else
       %Accounts.User{} ->
         conn
-        |> put_flash(:error, "You have an account already. Please login")
+        |> put_flash(:error, "Du hast bereits einen Account. Bitte melde dich an!")
         |> redirect(to: "/login")
 
       :wrong_number ->
         conn
-        |> put_flash(:error, "You have entered a wrong number")
+        |> put_flash(:error, "Du hast eine ungültige Nummer eingegeben.")
         |> redirect(to: "/phone_validation")
 
       _ ->
         conn
-        |> put_flash(:error, "Unknown error")
+        |> put_flash(:error, "Unbekannter Fehler")
         |> redirect(to: "/phone_validation")
     end
   end

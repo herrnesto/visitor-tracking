@@ -18,6 +18,16 @@
 
 @import "../node_modules/buefy/src/scss/buefy";
 
+/* Bulma hacks */
+.navbar-item.is-active {
+  .navbar-link {
+    color: #4a4a4a !important;
+  }
+  .navbar-item {
+    color: #4a4a4a !important;
+  }
+}
+
 /* LiveView specific classes for your customizations */
 .invalid-feedback {
   color: #a94442;
