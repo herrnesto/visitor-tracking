@@ -10,6 +10,7 @@
     "axios": "^0.19.2",
     "buefy": "^0.8.20",
     "bulma-divider": "^0.2.0",
+    "bulma-pricingtable": "^0.2.0",
     "bulma-steps": "^2.2.1",
     "bulma-timeline": "^3.0.4",
     "nprogress": "^0.2.0",
