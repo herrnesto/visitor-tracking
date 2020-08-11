@@ -30,6 +30,7 @@ defmodule VisitorTrackingWeb.Router do
 
     get "/", CmsController, :homepage
     get "/datenschutz", CmsController, :privacy
+    get "/preise", CmsController, :prices
     get "/so-einfach-funktioniert-vesita", CmsController, :howto
     get "/login", SessionController, :new
     post "/sessions", SessionController, :create

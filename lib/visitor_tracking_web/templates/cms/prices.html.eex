@@ -1,0 +1,42 @@
+<%= render(VisitorTrackingWeb.LayoutView, "header.html", %{conn: @conn, current_user: @current_user}) %>
+
+<section>
+  <div class="container mb-4">
+    <div class="column is-offset-3 is-6">
+			<div class="content is-medium has-text-centered">
+		    <h1 class="title">So wenig kostet Vesita!</h1>
+        <p>Unser Ziel ist es, dass sich jeder Veranstalter Vesita leisten kann. Du bezahlst nur was du brauchst.</p>
+        <p>
+            Keine Abogebühren <span class="is-success"><i class="fa fa-check is-primary"></i></span>
+        </p>
+        <p>
+          Keine Lizenzkosten <span class="is-success"><i class="fa fa-check is-primary"></i></span>
+        </p>
+        <p>
+            Keine Mindestkosten <span class="is-success"><i class="fa fa-check is-primary"></i></span>
+        </p>
+
+        <div class="pricing-table">
+          <div class="pricing-plan is-active">
+            <div class="plan-price"><span class="plan-price-amount"><span class="plan-price-currency">CHF</span>1</span>/Besucher</div>
+            <div class="plan-items">
+              <div class="plan-item">0 - 100 Besucher</div>
+            </div>
+          </div>
+          <div class="pricing-plan is-active">
+            <div class="plan-price"><span class="plan-price-amount"><span class="plan-price-currency">CHF</span>0.90</span>/Besucher</div>
+            <div class="plan-items">
+              <div class="plan-item">101 - 200 Besucher</div>
+            </div>
+          </div>
+          <div class="pricing-plan is-active">
+            <div class="plan-price"><span class="plan-price-amount"><span class="plan-price-currency">CHF</span>0.80</span>/Besucher</div>
+            <div class="plan-items">
+              <div class="plan-item">ab 201 Besucher</div>
+            </div>
+          </div>
+        </div>
+		  </div>
+    </div>
+  </div>
+</section>

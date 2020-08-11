@@ -12,4 +12,8 @@ defmodule VisitorTrackingWeb.CmsController do
   def howto(conn, _) do
     render(conn, "howto.html", [])
   end
+
+  def prices(conn, _) do
+    render(conn, "prices.html", [])
+  end
 end
