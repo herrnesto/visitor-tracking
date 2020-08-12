@@ -6,41 +6,8 @@
 	<div class="container">
 		<div class="column is-4 is-offset-4 has-text-centered">
 			<%= form_for @changeset, "/users", [id: "registration-form"], fn f ->	 %>
-        <p class="title is-4">Mobilnummner</p>
-        <p class="subtitle is-6">Prüfe deine Mobilnummer.</p>
-        <div class="field has-addons">
-          <div class="control is-expanded">
-		      	<%= text_input f, :phone, value: @phone, class: "input is-medium", disabled: true, placeholder: "Mobilnummer" %>
-            <%= hidden_input f, :phone, value: @phone, class: "input is-medium", hidden: true %>
-		      </div>
-          <div class="control">
-            <%= link "ändern", to: Routes.registration_path(@conn, :phone_validation), class: "button is-medium is-info" %>
-          </div>
-		     	<p class="help is-danger">
-		     		<%= error_tag f, :phone %>
-		     	</p>
-		    </div>
 
-        <p class="title is-4 mt-6">Passwort</p>
-        <p class="subtitle is-6">Wähle ein Passwort um jederzeit die Kontrolle über deine Personalien zu haben.</p>
-		    <div class="field">
-          <div class="control">
-		      	<%= password_input f, :password, class: "input is-medium", placeholder: "Passwort" %>
-		      </div>
-		     	<p class="help is-danger">
-		     		<%= error_tag f, :password %>
-		     	</p>
-		    </div>
-		    <div class="field">
-		      <div class="control">
-		      	<%= password_input f, :password_confirmation, class: "input is-medium", placeholder: "Passwort bestätigen" %>
-		      </div>
-		     	<p class="help is-danger">
-		     		<%= error_tag f, :password_confirmation %>
-		     	</p>
-		    </div>
-
-        <p class="title is-4 mt-6">Personalien</p>
+        <p class="title is-4">Personalien</p>
         <div class="field">
           <div class="control">
             <%= text_input f, :firstname, class: "input is-medium", placeholder: "Vorname" %>
@@ -77,6 +44,27 @@
 		     	  <%= error_tag f, :email %>
 		      </p>
 		    </div>
+
+        <p class="title is-4 mt-5">Passwort</p>
+        <p class="subtitle is-6">Wähle ein Passwort um jederzeit die Kontrolle über deine Personalien zu haben.</p>
+        <div class="field">
+          <div class="control">
+            <%= password_input f, :password, class: "input is-medium", placeholder: "Passwort" %>
+          </div>
+          <p class="help is-danger">
+            <%= error_tag f, :password %>
+          </p>
+        </div>
+        <div class="field">
+          <div class="control">
+            <%= password_input f, :password_confirmation, class: "input is-medium", placeholder: "Passwort bestätigen" %>
+          </div>
+          <p class="help is-danger">
+            <%= error_tag f, :password_confirmation %>
+          </p>
+        </div>
+
+        <%= hidden_input f, :phone, value: @phone, class: "input is-medium", hidden: true %>
 
 		    <%= submit "Kostenlos Registrieren", class: "button is-block is-primary is-fullwidth is-medium" %>
 		    <br />
