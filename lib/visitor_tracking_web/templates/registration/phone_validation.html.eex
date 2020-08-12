@@ -23,7 +23,7 @@
 
         <div class="field is-grouped is-grouped-centered">
           <div class="control">
-            <%= submit "Prüfen", class: "button is-block is-primary is-fullwidth is-medium" %>
+            <%= submit "Weiter", class: "button is-block is-primary is-fullwidth is-medium" %>
           </div>
         </div>
         <br>

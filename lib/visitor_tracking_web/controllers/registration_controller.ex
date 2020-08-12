@@ -11,27 +11,8 @@ defmodule VisitorTrackingWeb.RegistrationController do
   end
 
   def phone_confirmation(conn, %{"phone" => phone}) do
-    phone = String.replace(phone, " ", "")
-
-    with :phone_verified <- Twilio.validate_phone(phone),
-         nil <- Accounts.get_user_by(phone: phone),
-         changeset <- Accounts.change_user() do
+    with changeset <- Accounts.change_user() do
       render(conn, "phone_confirm.html", changeset: changeset, phone: phone)
-    else
-      %Accounts.User{} ->
-        conn
-        |> put_flash(:error, "Du hast bereits einen Account. Bitte melde dich an!")
-        |> redirect(to: "/login")
-
-      :wrong_number ->
-        conn
-        |> put_flash(:error, "Du hast eine ungültige Nummer eingegeben.")
-        |> redirect(to: "/phone_validation")
-
-      _ ->
-        conn
-        |> put_flash(:error, "Unbekannter Fehler")
-        |> redirect(to: "/phone_validation")
     end
   end
 

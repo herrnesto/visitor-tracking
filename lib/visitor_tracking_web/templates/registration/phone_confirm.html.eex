@@ -19,7 +19,7 @@
 
           </div>
           <div class="control">
-            <%= submit "Bestätigen", class: "button is-block is-success is-medium" %>
+            <%= submit "Bestätigen", class: "button is-block is-primary is-medium" %>
           </div>
         </div>
         <br>
