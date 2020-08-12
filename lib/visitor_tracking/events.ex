@@ -80,9 +80,14 @@ defmodule VisitorTracking.Events do
 
   """
   def create_event(attrs \\ %{}) do
-    %Event{}
-    |> Event.changeset(attrs)
-    |> Repo.insert()
+    with {:ok, rule} <- Rules.new() do
+
+      attrs = Map.put(attrs, "status", rule.state)
+
+      %Event{}
+      |> Event.changeset(attrs)
+      |> Repo.insert()
+    end
   end
 
   @doc """
