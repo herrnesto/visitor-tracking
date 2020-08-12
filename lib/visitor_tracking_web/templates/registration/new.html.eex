@@ -6,11 +6,14 @@
 	<div class="container">
 		<div class="column is-4 is-offset-4 has-text-centered">
 			<%= form_for @changeset, "/users", [id: "registration-form"], fn f ->	 %>
-		    <div class="field">
+		    <div class="field has-addons">
 		      <div class="control">
 		      	<%= text_input f, :phone, value: @phone, class: "input is-medium", disabled: true, placeholder: "Mobilnummer" %>
             <%= hidden_input f, :phone, value: @phone, class: "input is-medium", hidden: true %>
 		      </div>
+          <p class="control">
+            <%= link "ändern", to: Routes.registration_path(@conn, :phone_validation), class: "button is-medium" %>
+          </p>
 		     	<p class="help is-danger">
 		     		<%= error_tag f, :phone %>
 		     	</p>
