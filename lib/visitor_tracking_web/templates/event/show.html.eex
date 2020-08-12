@@ -12,33 +12,62 @@
           </span>
           <span>Zurück</span>
         </a>
-        <a class="button is-link is-outlined" href="<%= Routes.event_path(@conn, :edit, @event) %>">
-          <span class="icon is-small">
-            <i class="fas fa-edit"></i>
-          </span>
-          <span>Bearbeiten</span>
-        </a>
 
-        <%= link to: Routes.event_path(@conn, :delete, @event), method: :delete, class: "button is-danger is-outlined", data: [confirm: "Wirklich löschen?"] do %>
-          <span class="icon is-small">
-            <i class="fas fa-times"></i>
-          </span>
-          <span>Löschen</span>
-        <% end %>
+        <%= if @event.status == "created" do %>
+          <a class="button is-link is-outlined" href="<%= Routes.event_path(@conn, :edit, @event) %>">
+            <span class="icon is-small">
+              <i class="fas fa-edit"></i>
+            </span>
+            <span>Bearbeiten</span>
+          </a>
 
-        <%= link to: Routes.scan_path(@conn, :show, @event), method: :get, class: "button is-warning is-outlined", data: [confirm: "Mit dem Scannen starten?"] do %>
-          <span class="icon is-small">
-            <i class="fas fa-qrcode"></i>
-          </span>
-          <span>Scannen</span>
+          <%= link to: Routes.event_path(@conn, :delete, @event), method: :delete, class: "button is-danger is-outlined", data: [confirm: "Wirklich löschen?"] do %>
+            <span class="icon is-small">
+              <i class="fas fa-times"></i>
+            </span>
+            <span>Löschen</span>
+          <% end %>
         <% end %>
 
         <%= if event_organiser?(@conn, @event) do %>
-          <%= link to: "/events/#{@event.id}/scanners", class: "button is-primary is-outlined" do %>
+
+          <%= if @event.status == "open" do %>
+            <%= link to: Routes.event_path(@conn, :close_event, @event), class: "button is-danger is-outlined", data: [confirm: "Event wirklich schliesse? Es können keine Besucher mehr reingelassen werden."] do %>
             <span class="icon is-small">
+                  <i class="fas fa-times"></i>
+                </span>
+            <span>Event schliessen</span>
+            <% end %>
+          <% end %>
+
+          <%= if @event.status != "closed" do %>
+            <%= link to: "/events/#{@event.id}/scanners", class: "button is-primary is-outlined" do %>
+              <span class="icon is-small">
+                        <i class="fas fa-user"></i>
+                      </span>
+              <span>Scanners</span>
+            <% end %>
+          <% end %>
+        <% end %>
+
+        <%= if @event.status == "open" do %>
+          <%= link to: Routes.scan_path(@conn, :show, @event), method: :get, class: "button is-warning is-outlined", data: [confirm: "Mit dem Scannen starten?"] do %>
+          <span class="icon is-small">
               <i class="fas fa-qrcode"></i>
             </span>
-            <span>Scanners</span>
+          <span>Scannen</span>
+          <% end %>
+        <% end %>
+
+      </p>
+      <p>
+        <%= if @event.status == "created" do %>
+          <h2 class="title is-4">Starte den Event</h2>
+          <%= link to: Routes.event_path(@conn, :event_start, @event), class: "button is-info is-outlined" do %>
+          <span class="icon is-small">
+                <i class="fas fa-times"></i>
+              </span>
+          <span>Event starten</span>
           <% end %>
         <% end %>
       </p>
@@ -48,29 +77,13 @@
 	  <div class="column">
 	    <div class="content">
         <ul>
-
-          <li>
-            <strong>Name:</strong>
-            <%= @event.name %>
-          </li>
-
-          <li>
-            <strong>Ort:</strong>
-            <%= @event.venue %>
-          </li>
-
           <li>
             <strong>Status:</strong>
             <%= @event.status %>
           </li>
 
           <li>
-            <strong>Closed:</strong>
-            <%= @event.closed %>
-          </li>
-
-          <li>
-            <strong>Date start:</strong>
+            <strong>Beginn:</strong>
             <%= @event.date_start %>
           </li>
 
