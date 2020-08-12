@@ -2,7 +2,7 @@
 	<div class="column has-text-centered mb-6">
 		<h1 class="title is-3">
 			<%= if @step == 1 do %>Registriere dich jetzt kostenlos<% end %>
-			<%= if @step == 2 do %>Personalien<% end %>
+			<%= if @step == 2 do %>Erstelle einen Account<% end %>
 			<%= if @step == 3 do %>Bestätige deine Mobilnummer<% end %>
 		</h1>
 	</div>

@@ -34,8 +34,7 @@
 
 <h2>SMS und E-Mail Gateway</h2>
 <p>Wir übermitteln lediglich die E-Mail-Adresse und den Vornamen per E-Mail. Als Gateway nutzen wir <a href="https://sendgrid.com/" target="_blank">SendGrid</a> von Twilio</p>
-<p>Da SMS prinzipiell ein unsicheres Kommunikationsmittel ist, verzichten wir auf das übermitteln von personifizierten Daten. SMS werden nur für das übermittel der Verifizierungstokens und eventuell für eine Bestätigung verwendet. Für die Übermittlung der SMS verwenden wir wiederum Twilio.</p>
-<p>Da SMS prinzipiell ein unsicheres Kommunikationsmittel ist, verzichten wir auf das übermitteln von personifizierten Daten. SMS werden nur für das übermittel der Verifizierungstokens und eventuell für eine Bestätigung verwendet. Für die Übermittlung der SMS verwenden wir Twilio</p>
+<p>Da SMS prinzipiell ein unsicheres Kommunikationsmittel ist, verzichten wir auf das übermitteln von personifizierten Daten. SMS werden nur für das übermitteln der Verifizierungstokens und für die Bestätigung der Registrierung verwendet. Für die Übermittlung der SMS verwenden wir wiederum Twilio.</p>
 <p>
 	Informationen über Twilio / SendGrid
 <ul>
