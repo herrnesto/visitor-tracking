@@ -13,7 +13,7 @@ defmodule VisitorTracking.Events do
   def get_event_with_preloads(id) do
     Event
     |> Repo.get(id)
-    |> Repo.preload([:organiser])
+    |> Repo.preload([:organiser, :scanners])
   end
 
   def assign_organiser(event, user) do

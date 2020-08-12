@@ -25,7 +25,7 @@ defmodule VisitorTrackingWeb.ScannerControllerTest do
       phone = "+41000000000"
 
       user = insert(:user, phone: phone, email_verified: true, phone_verified: true)
-      insert(:scanner, event: event, user: user)
+      insert(:scanner, event_id: event.id, user_id: user.id)
 
       conn = get(conn, "/events/#{event.id}/scanners")
 

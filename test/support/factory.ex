@@ -59,9 +59,12 @@ defmodule VisitorTracking.Factory do
   end
 
   def scanner_factory do
+    %{id: event_id} = insert(:event)
+    %{id: user_id} = insert(:user, email_verified: true, phone_verified: true)
+
     %Events.Scanner{
-      event: insert(:event),
-      user: insert(:user),
+      event_id: event_id,
+      user_id: user_id,
       enabled: true
     }
   end

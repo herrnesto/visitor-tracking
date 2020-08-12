@@ -17,6 +17,8 @@ defmodule VisitorTracking.Events.Event do
     field :venue, :string
     field :visitor_limit, :integer
 
+    many_to_many :scanners, User, join_through: "event_scanners"
+
     many_to_many(
       :visitors,
       User,
