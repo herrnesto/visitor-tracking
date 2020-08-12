@@ -1,5 +1,5 @@
 defmodule VisitorTracking.EventsTest do
-  use VisitorTracking.DataCase
+  use VisitorTracking.DataCase, async: true
 
   alias VisitorTracking.{Events, Events.Event, Events.Visitor}
 
@@ -107,10 +107,16 @@ defmodule VisitorTracking.EventsTest do
     end
   end
 
-  test "get_event_with_prelaods/1 returns an event with the organiser preloaded" do
+  test "get_event_with_preloads/1 returns an event with the organiser and scanners preloaded" do
     user = insert(:user, phone_verified: true, email_verified: true)
     event = insert(:event, organiser: user)
-    assert %{organiser: %{email: _}} = Events.get_event_with_preloads(event.id)
+    insert(:scanner, event_id: event.id)
+    insert(:scanner, event_id: event.id)
+
+    assert %{organiser: %{email: _}, scanners: scanners} =
+             Events.get_event_with_preloads(event.id)
+
+    assert length(scanners) == 2
   end
 
   test "assign_organiser/2 assigns an organiser to an event" do

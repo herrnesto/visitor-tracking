@@ -18,5 +18,7 @@ defmodule VisitorTracking.Events.Scanner do
     scanner
     |> cast(attrs, [:event_id, :user_id])
     |> validate_required([:event_id, :user_id])
+    |> foreign_key_constraint(:event_id)
+    |> foreign_key_constraint(:user_id)
   end
 end
