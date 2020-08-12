@@ -1,8 +1,7 @@
 defmodule VisitorTrackingWeb.EventController do
   use VisitorTrackingWeb, :controller
 
-  alias VisitorTracking.Events
-  alias VisitorTracking.Events.Event
+  alias VisitorTracking.{Events, Events.Event, Events.Rules}
 
   def index(conn, _params) do
     events = Events.list_events(conn.assigns.current_user.id)
@@ -71,5 +70,38 @@ defmodule VisitorTrackingWeb.EventController do
     conn
     |> put_flash(:info, "Veranstaltung wurde gelöscht.")
     |> redirect(to: Routes.event_path(conn, :index))
+  end
+
+  def event_start(conn, %{"id" => id}) do
+    event = Events.get_event!(id, conn.assigns.current_user.id)
+    with {:ok, rule} <- Rules.check(Rules.from_event(event), :start_event) do
+      Events.update_event(event, %{"status" => rule.state})
+
+      conn
+      |> put_flash(:info, "Status verändert.")
+      |> redirect(to: Routes.event_path(conn, :show, id))
+    else
+      :error ->
+        conn
+        |> put_flash(:error, "Not allowed.")
+        |> redirect(to: Routes.event_path(conn, :show, id))
+    end
+  end
+
+  def close_event(conn, %{"id" => id}) do
+    event = Events.get_event!(id, conn.assigns.current_user.id)
+
+    with {:ok, rule} <- Rules.check(Rules.from_event(event), :close_event) do
+      Events.update_event(event, %{"status" => rule.state})
+
+      conn
+      |> put_flash(:info, "Status verändert.")
+      |> redirect(to: Routes.event_path(conn, :show, id))
+    else
+      :error ->
+        conn
+        |> put_flash(:error, "Not allowed.")
+        |> redirect(to: Routes.event_path(conn, :show, id))
+    end
   end
 end
