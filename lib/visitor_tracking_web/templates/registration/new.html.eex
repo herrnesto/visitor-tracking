@@ -11,9 +11,9 @@
 		      	<%= text_input f, :phone, value: @phone, class: "input is-medium", disabled: true, placeholder: "Mobilnummer" %>
             <%= hidden_input f, :phone, value: @phone, class: "input is-medium", hidden: true %>
 		      </div>
-          <p class="control">
-            <%= link "ändern", to: Routes.registration_path(@conn, :phone_validation), class: "button is-medium" %>
-          </p>
+          <div class="control">
+            <%= link "ändern", to: Routes.registration_path(@conn, :phone_validation), class: "button is-medium is-info" %>
+          </div>
 		     	<p class="help is-danger">
 		     		<%= error_tag f, :phone %>
 		     	</p>
