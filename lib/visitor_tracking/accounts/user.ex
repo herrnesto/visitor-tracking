@@ -53,17 +53,20 @@ defmodule VisitorTracking.Accounts.User do
       :city,
       :email
     ])
-    |> validate_required([
-      :phone,
-      :password,
-      :password_confirmation,
-      :uuid,
-      :firstname,
-      :lastname,
-      :zip,
-      :city,
-      :email
-    ], message: "Pflichtfeld")
+    |> validate_required(
+      [
+        :phone,
+        :password,
+        :password_confirmation,
+        :uuid,
+        :firstname,
+        :lastname,
+        :zip,
+        :city,
+        :email
+      ],
+      message: "Pflichtfeld"
+    )
     |> validate_length(:phone, min: 12, max: 13)
     |> validate_format(
       :phone,
