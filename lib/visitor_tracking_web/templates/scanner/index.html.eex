@@ -5,6 +5,12 @@
     <div class="column">
       <h1 class="title">Scanners</h1>
       <p class="buttons">
+        <a class="button is-link is-outlined" href="<%= Routes.event_path(@conn, :show, @event_id) %>">
+          <span class="icon is-small">
+            <i class="fas fa-arrow-left"></i>
+          </span>
+          <span>Zurück</span>
+        </a>
         <a class="button is-link is-outlined" href="<%= Routes.scanner_path(@conn, :new, @event_id) %>">
           <span class="icon is-small">
             <i class="fas fa-plus"></i>
