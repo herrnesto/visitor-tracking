@@ -2,7 +2,14 @@ defmodule VisitorTracking.Events do
   @moduledoc """
   Events Context module
   """
-  alias VisitorTracking.{Accounts, Events.Event, Events.Scanner, Events.Visitor, Repo}
+  alias VisitorTracking.{
+    Accounts,
+    Events.Event,
+    Events.Scanner,
+    Events.Visitor,
+    Events.Rules,
+    Repo
+  }
 
   import Ecto.Query
 
