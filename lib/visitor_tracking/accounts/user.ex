@@ -53,17 +53,20 @@ defmodule VisitorTracking.Accounts.User do
       :city,
       :email
     ])
-    |> validate_required([
-      :phone,
-      :password,
-      :password_confirmation,
-      :uuid,
-      :firstname,
-      :lastname,
-      :zip,
-      :city,
-      :email
-    ])
+    |> validate_required(
+      [
+        :phone,
+        :password,
+        :password_confirmation,
+        :uuid,
+        :firstname,
+        :lastname,
+        :zip,
+        :city,
+        :email
+      ],
+      message: "Pflichtfeld"
+    )
     |> validate_length(:phone, min: 12, max: 13)
     |> validate_format(
       :phone,
@@ -89,13 +92,13 @@ defmodule VisitorTracking.Accounts.User do
   def phone_verification_changeset(user, attrs) do
     user
     |> cast(attrs, [:phone_verified])
-    |> validate_required([:phone_verified])
+    |> validate_required([:phone_verified], message: "Pflichtfeld")
   end
 
   def email_verification_changeset(user, attrs) do
     user
     |> cast(attrs, [:email_verified])
-    |> validate_required([:email_verified])
+    |> validate_required([:email_verified], message: "Pflichtfeld")
   end
 
   defp hash_password(%{valid?: true, changes: %{password: pass}} = changeset) do
