@@ -28,6 +28,19 @@ defmodule VisitorTrackingWeb.ScanControllerTest do
       assert html_response(conn, 200) =~ "event_id"
       assert html_response(conn, 200) =~ "event-scanner"
     end
+
+    test "redirects to /events/:id if event is not open" do
+      user = insert(:user, email_verified: true, phone_verified: true)
+      event = insert(:event, organiser: user)
+      insert(:scanner, event_id: event.id, user_id: user.id)
+
+      conn =
+        build_conn()
+        |> assign(:current_user, user)
+        |> get("/events/#{event.id}/scan")
+
+      assert redirected_to(conn) =~ "/events/#{event.id}"
+    end
   end
 
   describe "POST /api" do
