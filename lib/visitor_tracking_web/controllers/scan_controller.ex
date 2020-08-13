@@ -38,7 +38,8 @@ defmodule VisitorTrackingWeb.ScanController do
   end
 
   def event_infos(conn, %{"id" => event_id}) do
-    event = Events.get_event!(event_id, conn.assigns.current_user.id)
+    session = get_session(conn)
+    event = Events.get_event!(event_id, Map.get(session, "user_id"))
 
     render(conn, "event_infos.json", %{
       status: "ok",
