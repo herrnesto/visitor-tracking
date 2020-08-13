@@ -8,15 +8,30 @@ defmodule VisitorTrackingWeb.ScanController do
   end
 
   def show(conn, %{"id" => id}) do
-    %{scanners: scanners} = event = Events.get_event_with_preloads(id)
+    with event <- Events.get_event_with_preloads(id),
+         true <- conn.assigns.current_user in event.scanners,
+         %{status: "open"} <- event do
+      render(conn, "index.html", %{event: event, api_url: get_api_url()})
+    else
+      nil ->
+        IO.puts("empty event")
 
-    case conn.assigns.current_user in scanners do
-      true ->
-        render(conn, "index.html", %{event: event, api_url: get_api_url()})
+        conn
+        |> put_flash(:error, "Event not found or archived")
+        |> redirect(to: "/events")
 
       false ->
+        IO.puts("user not in scanners")
+
         conn
         |> put_flash(:error, "You are not a scanner for this event")
+        |> redirect(to: "/events/#{id}")
+
+      %{status: _} ->
+        IO.puts("Event not open")
+
+        conn
+        |> put_flash(:error, "The event is not open, you are not able to scan")
         |> redirect(to: "/events/#{id}")
     end
   end
