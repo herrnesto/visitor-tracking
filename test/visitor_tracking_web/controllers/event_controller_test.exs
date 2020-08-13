@@ -7,7 +7,7 @@ defmodule VisitorTrackingWeb.EventControllerTest do
     closed: true,
     date_start: "2010-04-17T14:00:00Z",
     name: "some name",
-    status: "some status",
+    status: "created",
     venue: "some venue",
     visitor_limit: 100
   }
