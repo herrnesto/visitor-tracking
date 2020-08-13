@@ -3,7 +3,7 @@ defmodule VisitorTrackingWeb.ScanControllerTest do
 
   setup %{conn: conn} do
     user = insert(:user, email_verified: true, phone_verified: true)
-    conn = assign(conn, :current_user, user)
+    conn = conn |> Plug.Test.init_test_session(user_id: user.id)
     event = insert(:event, organiser: user)
 
     {:ok, %{conn: conn, event: event}}
@@ -27,6 +27,20 @@ defmodule VisitorTrackingWeb.ScanControllerTest do
 
       assert html_response(conn, 200) =~ "event_id"
       assert html_response(conn, 200) =~ "event-scanner"
+    end
+  end
+
+  describe "POST /api" do
+    test "event infos", %{conn: conn, event: event} do
+      conn = post(conn, "/api/scan/event_infos", %{"id" => event.id})
+
+      test_data = %{
+        "event" => %{"id" => event.id, "name" => "Test Event", "venue" => "Test Venue"},
+        "status" => "ok",
+        "visitors" => 0
+      }
+
+      assert json_response(conn, 200) == test_data
     end
   end
 end
