@@ -92,6 +92,16 @@
           type: type
         })
       },
+      request_event_data() {
+        axios.post(this.api_url + `/scan/event_infos`,{id: 1})
+            .then(response => {
+              this.visitors = response.data.visitors
+              this.event = response.data.event
+            })
+            .catch(e => {
+              this.errors.push(e)
+            })
+      },
       check_visitor: function () {
         axios.post(this.api_url + `/scan/user`, {uuid: this.uuid})
           .then(response => {
@@ -172,6 +182,13 @@
         }
       },
     },
+    mounted() {
+      this.$nextTick(function () {
+        window.setInterval(() => {
+          this.request_event_data()
+        },5000);
+      })
+    },
     created() {
       this.api_url = document.getElementById('api_url').value
 
@@ -180,14 +197,7 @@
       axios.defaults.headers['Accept'] = 'application/json';
       axios.defaults.headers['Content-Type'] = 'application/json';
 
-      axios.post(this.api_url + `/scan/event_infos`,{id: 1})
-        .then(response => {
-          this.visitors = response.data.visitors
-          this.event = response.data.event
-        })
-        .catch(e => {
-          this.errors.push(e)
-        })
+      this.request_event_data()
     }
   }
 </script>
