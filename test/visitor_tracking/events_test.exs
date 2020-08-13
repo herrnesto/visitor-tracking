@@ -4,31 +4,31 @@ defmodule VisitorTracking.EventsTest do
   alias VisitorTracking.{Events, Events.Event, Events.Visitor}
 
   @valid_attrs %{
-    closed: true,
-    date_start: ~N[2011-05-18T15:01:01Z],
-    visitor_limit: 10,
-    name: "some name",
-    status: "some status",
-    venue: "some venue",
-    organiser_id: 3
+    "closed" => "true",
+    "date_start" => ~N[2011-05-18T15:01:01Z],
+    "visitor_limit" => 10,
+    "name" => "some name",
+    "status" => "created",
+    "venue" => "some venue",
+    "organiser_id" => "3"
   }
   @update_attrs %{
-    closed: false,
-    date_start: ~N[2011-05-18T15:01:01Z],
-    visitor_limit: 10,
-    name: "some updated name",
-    status: "some updated status",
-    venue: "some updated venue",
-    organiser_id: 3
+    "closed" => "false",
+    "date_start" => ~N[2011-05-18T15:01:01Z],
+    "visitor_limit" => 10,
+    "name" => "some updated name",
+    "status" => "some updated status",
+    "venue" => "some updated venue",
+    "organiser_id" => "3"
   }
   @invalid_attrs %{
-    closed: nil,
-    date_start: nil,
-    visitor_limit: nil,
-    name: nil,
-    status: nil,
-    venue: nil,
-    organiser_id: nil
+    "closed" => nil,
+    "date_start" => nil,
+    "visitor_limit" => nil,
+    "name" => nil,
+    "status" => nil,
+    "venue" => nil,
+    "organiser_id" => nil
   }
 
   test "list_events/1 returns all events for an organiser" do
@@ -49,7 +49,7 @@ defmodule VisitorTracking.EventsTest do
       assert event.date_start == ~N[2011-05-18T15:01:01Z]
       assert event.visitor_limit == 10
       assert event.name == "some name"
-      assert event.status == "some status"
+      assert event.status == "created"
       assert event.venue == "some venue"
     end
 
