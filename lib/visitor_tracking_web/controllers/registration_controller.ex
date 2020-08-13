@@ -11,9 +11,8 @@ defmodule VisitorTrackingWeb.RegistrationController do
   end
 
   def phone_confirmation(conn, %{"phone" => phone}) do
-    with changeset <- Accounts.change_user() do
-      render(conn, "phone_confirm.html", changeset: changeset, phone: phone)
-    end
+    changeset = Accounts.change_user()
+    render(conn, "phone_confirm.html", changeset: changeset, phone: phone)
   end
 
   def new(conn, %{"phone" => phone}) do
