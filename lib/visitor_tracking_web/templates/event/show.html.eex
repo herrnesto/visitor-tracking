@@ -71,6 +71,10 @@
           <% end %>
         <% end %>
       </p>
+      <p>
+        <h2 class="title is-4">Status</h2>
+        <%= render(VisitorTrackingWeb.EventView, "steps.html", status: @event.status) %>
+      </p>
     </div>
   </div>
 	<div class="container">

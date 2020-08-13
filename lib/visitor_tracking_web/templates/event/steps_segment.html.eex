@@ -1,0 +1,6 @@
+<li class="steps-segment <%= if @status == @order do %>is-active<% end %>">
+  <span class="steps-marker"></span>
+  <div class="steps-content">
+    <p class="heading"><%= @text %></p>
+  </div>
+</li>
