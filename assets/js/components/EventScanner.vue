@@ -61,6 +61,7 @@
     data() {
       return {
         api_url: null,
+        event_id: null,
         event: { name: ""},
         visitors: 0,
         visitor: false,
@@ -93,7 +94,7 @@
         })
       },
       request_event_data() {
-        axios.post(this.api_url + `/scan/event_infos`,{id: 1})
+        axios.post(this.api_url + `/scan/event_infos`,{id: this.event_id})
             .then(response => {
               this.visitors = response.data.visitors
               this.event = response.data.event
@@ -191,6 +192,7 @@
     },
     created() {
       this.api_url = document.getElementById('api_url').value
+      this.event_id = document.getElementById('event_id').value
 
       var csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
       axios.defaults.headers['x-csrf-token'] = csrfToken;
