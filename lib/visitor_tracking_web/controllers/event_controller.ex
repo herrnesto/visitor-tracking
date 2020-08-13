@@ -73,10 +73,9 @@ defmodule VisitorTrackingWeb.EventController do
   end
 
   def event_start(conn, %{"id" => id}) do
-    event = Events.get_event!(id, conn.assigns.current_user.id)
-    with {:ok, rule} <- Rules.check(Rules.from_event(event), :start_event) do
-      Events.update_event(event, %{"status" => rule.state})
-
+    with event <- Events.get_event!(id, conn.assigns.current_user.id),
+         {:ok, rule} <- Rules.check(Rules.from_event(event), :start_event),
+         {:ok, _event} <- Events.update_event(event, %{"status" => rule.state}) do
       conn
       |> put_flash(:info, "Status verändert.")
       |> redirect(to: Routes.event_path(conn, :show, id))
@@ -89,11 +88,9 @@ defmodule VisitorTrackingWeb.EventController do
   end
 
   def close_event(conn, %{"id" => id}) do
-    event = Events.get_event!(id, conn.assigns.current_user.id)
-
-    with {:ok, rule} <- Rules.check(Rules.from_event(event), :close_event) do
-      Events.update_event(event, %{"status" => rule.state})
-
+    with event <- Events.get_event!(id, conn.assigns.current_user.id),
+         {:ok, rule} <- Rules.check(Rules.from_event(event), :close_event),
+         {:ok, _event} <- Events.update_event(event, %{"status" => rule.state}) do
       conn
       |> put_flash(:info, "Status verändert.")
       |> redirect(to: Routes.event_path(conn, :show, id))
