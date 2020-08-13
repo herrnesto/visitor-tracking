@@ -35,6 +35,7 @@ defmodule VisitorTrackingWeb.Router do
     get "/login", SessionController, :new
     post "/sessions", SessionController, :create
     get "/phone_validation", RegistrationController, :phone_validation
+    post "/phone_confirmation", RegistrationController, :phone_confirmation
     get "/qr/:uuid", QrController, :show
     get "/kontakt", ContactFormController, :new
   end

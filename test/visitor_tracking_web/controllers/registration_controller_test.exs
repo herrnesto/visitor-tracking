@@ -37,4 +37,20 @@ defmodule VisitorTrackingWeb.RegistrationControllerTest do
       assert redirected_to(conn) == "/phone_verification"
     end
   end
+
+  describe "POST /phone_confirmation" do
+    test "when passed a valid phone shows a registration form", %{conn: conn} do
+      conn = post(conn, "/phone_confirmation", %{"phone" => "+41000000000"})
+
+      assert html_response(conn, 200) =~ "Ändern"
+      assert html_response(conn, 200) =~ "Bestätigen"
+    end
+  end
+
+  describe "GET /phone_validation" do
+    test "Show input field with button", %{conn: conn} do
+      html_floki = get(conn, "/phone_validation") |> html_response(200) |> Floki.parse_document!()
+      assert [{"div", [{"id", "phone-input"}], []}] = Floki.find(html_floki, "div#phone-input")
+    end
+  end
 end

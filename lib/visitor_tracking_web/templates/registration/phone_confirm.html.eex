@@ -1,0 +1,29 @@
+<%= render(VisitorTrackingWeb.LayoutView, "header.html", %{conn: @conn, current_user: @current_user}) %>
+
+<section>
+	<%= render(VisitorTrackingWeb.RegistrationView, "steps.html", step: 1) %>
+
+	<div class="container">
+		<div class="column is-4 is-offset-4 has-text-centered">
+			<h2 class="title is-5">Bestätige deine Mobilnummer</h2>
+			<p class="title is-3"><%= @phone %></p>
+      <%= form_for @conn, "/register", fn f ->	 %>
+        <div class="field">
+          <div class="control">
+            <%= hidden_input f, :phone, class: "input is-medium", autofocus: "true" %>
+          </div>
+        </div>
+        <div class="field is-grouped is-grouped-centered">
+          <div class="control">
+            <%= link "Ändern", to: Routes.registration_path(@conn, :phone_validation), class: "button is-medium is-danger" %>
+
+          </div>
+          <div class="control">
+            <%= submit "Bestätigen", class: "button is-block is-primary is-medium" %>
+          </div>
+        </div>
+        <br>
+      <% end %>
+    </div>
+  </div>
+</section>

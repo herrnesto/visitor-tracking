@@ -6,7 +6,7 @@
 	<div class="container">
 		<div class="column is-4 is-offset-4 has-text-centered">
 			<p class="subtitle">Tippe deine Mobilnummer ein:</p>
-      <%= form_for @conn, "/register", fn f ->	 %>
+      <%= form_for @conn, "/phone_confirmation", fn f ->	 %>
         <div class="field">
           <div class="control">
             <div id="phone-input"></div>
@@ -23,7 +23,7 @@
 
         <div class="field is-grouped is-grouped-centered">
           <div class="control">
-            <%= submit "Prüfen", class: "button is-block is-primary is-fullwidth is-medium" %>
+            <%= submit "Weiter", class: "button is-block is-primary is-fullwidth is-medium" %>
           </div>
         </div>
         <br>

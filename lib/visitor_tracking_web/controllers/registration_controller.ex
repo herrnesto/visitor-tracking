@@ -10,6 +10,11 @@ defmodule VisitorTrackingWeb.RegistrationController do
     render(conn, "phone_validation.html")
   end
 
+  def phone_confirmation(conn, %{"phone" => phone}) do
+    changeset = Accounts.change_user()
+    render(conn, "phone_confirm.html", changeset: changeset, phone: phone)
+  end
+
   def new(conn, %{"phone" => phone}) do
     phone = String.replace(phone, " ", "")
 
