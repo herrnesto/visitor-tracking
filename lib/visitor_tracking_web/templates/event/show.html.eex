@@ -37,7 +37,7 @@
         <%= if event_organiser?(@conn, @event) do %>
 
           <%= if @event.status != "closed" do %>
-            <%= link to: "/events/#{@event.id}/scanners", class: "button is-primary is-outlined" do %>
+            <%= link to: "/events/#{@event.id}/scanners/new", class: "button is-primary is-outlined" do %>
               <span class="icon is-small">
                         <i class="fas fa-user-plus"></i>
                       </span>
@@ -83,6 +83,7 @@
       </p>
       <p class="buttons">
     </div>
-
   </div>
 </section>
+
+<%= render(VisitorTrackingWeb.ScannerView, "index.html", %{ conn: @conn, current_user: @current_user, event_id: @event.id, scanners: @scanners}) %>

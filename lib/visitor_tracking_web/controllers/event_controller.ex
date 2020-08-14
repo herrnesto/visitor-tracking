@@ -39,7 +39,11 @@ defmodule VisitorTrackingWeb.EventController do
         |> redirect(to: Routes.event_path(conn, :index))
 
       event ->
-        render(conn, "show.html", %{event: event, visitors: Events.count_visitors(event.id)})
+        render(conn, "show.html", %{
+          event: event,
+          visitors: Events.count_visitors(event.id),
+          scanners: Events.list_scanners(id)
+        })
     end
   end
 
