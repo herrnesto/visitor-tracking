@@ -1,11 +1,25 @@
 defmodule VisitorTrackingWeb.SessionController do
   use VisitorTrackingWeb, :controller
 
+  use PhoenixMetaTags.TagController
+
   alias VisitorTracking.Accounts
   alias VisitorTrackingWeb.Plugs.Auth
 
   def new(conn, _) do
-    render(conn, "new.html")
+    conn
+    |> put_meta_tags(%{
+      title: "Anmelden | Vesita",
+      description: "Melde dich an und erhalte Zugang zu deinen Kontaktdaten.",
+      url: "https://www.vesita.ch",
+      image:
+        "https://" <>
+          Application.get_env(:visitor_tracking, :host) <> "/images/vesita-logo-full-klein.png",
+      "og:image":
+        "https://" <>
+          Application.get_env(:visitor_tracking, :host) <> "/images/vesita-logo-full-klein.png"
+    })
+    |> render("new.html")
   end
 
   def create(conn, %{"phone" => phone, "session" => %{"password" => password}}) do
