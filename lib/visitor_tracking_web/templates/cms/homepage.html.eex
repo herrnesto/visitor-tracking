@@ -5,11 +5,8 @@
   <div class="hero-body">
     <div class="columns">
       <div class="column has-text-centered is-6 is-offset-3">
-        <h1 class="title mb-6">Vesita, die einfache, innovative und kostengünstige Lösung zur Erfassung der Besucherdaten an ihren Veranstaltungen.
+        <h1 class="title mb-6">Die einfache, innovative und kostengünstige Lösung zur Erfassung der Besucherdaten an deinen Veranstaltungen.
         </h1>
-        <h2 class="subtitle colored is-5 mb-6">
-Mit Vesita hast Du die Möglichkeit, innert Sekunden die validierten Kontaktdaten deiner Gäste zu sammeln. Die Daten des Kunden sind zu 100% verifiziert. Im Notfall kannst du sie direkt den kantonsärztlichen Diensten weiterleiten, ohne dass du dich mit Listen oder Downloads herumschlagen musst.</h2>
-        <p>
           <a href="<%= Routes.registration_path(@conn, :phone_validation) %>"><button class="button is-large is-inverted is-outlined is-primary">Jetzt Registrieren</button></a>
         </p>
       </div>
