@@ -1,0 +1,12 @@
+<div class="container mb-6">
+	<div class="column">
+		<ul class="steps is-medium is-centered has-content-centered">
+
+		  <%= render(VisitorTrackingWeb.EventView, "steps_segment.html", %{status: @status, order: "created", text: "Erstellt"}) %>
+		  <%= render(VisitorTrackingWeb.EventView, "steps_segment.html", %{status: @status, order: "open", text: "Laufend"}) %>
+		  <%= render(VisitorTrackingWeb.EventView, "steps_segment.html", %{status: @status, order: "closed", text: "Geschlossen"}) %>
+	    <%= render(VisitorTrackingWeb.EventView, "steps_segment.html", %{status: @status, order: "archived", text: "Archiviert"}) %>
+
+		</ul>
+	</div>
+</div>

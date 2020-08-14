@@ -61,7 +61,7 @@ defmodule VisitorTrackingWeb.ScannerControllerTest do
       phone = "+41000000000"
       insert(:user, phone: phone, phone_verified: true, email_verified: true)
       conn = post(conn, "/events/#{event.id}/scanners", %{"phone" => phone})
-      assert redirected_to(conn) =~ "/events/#{event.id}/scanners"
+      assert redirected_to(conn) =~ "/events/#{event.id}"
     end
 
     test "redirects if the current user is not the event organiser", %{conn: conn} do

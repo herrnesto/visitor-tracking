@@ -94,7 +94,7 @@
         })
       },
       request_event_data() {
-        axios.post(this.api_url + `/scan/event_infos`,{id: this.event_id})
+        axios.post(this.api_url + `/scan/event_infos`,{event_id: this.event_id})
             .then(response => {
               this.visitors = response.data.visitors
               this.event = response.data.event

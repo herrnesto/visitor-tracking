@@ -3,84 +3,87 @@
 <section>
   <div class="container">
     <div class="column">
-      <h1 class="title">Infos zur Veranstaltung</h1>
-      <p class="subtitle"><%= @event.name %> @ <%= @event.venue %></p>
+      <h1 class="title"><%= @event.name %> <span class="tag is-primary"><%= @event.status %></span></h1>
+      <p class="subtitle"><%= @event.date_start %> @ <%= @event.venue %></p>
+      <div class="tags has-addons">
+        <span class="tag <%= if @event.status == "created" do %>is-primary<% end %>">Erstellt</span>
+        <span class="tag <%= if @event.status == "open" do %>is-success<% end %>">Gestartet</span>
+        <span class="tag <%= if @event.status == "closed" do %>is-warning<% end %>">Geschlossen</span>
+        <span class="tag <%= if @event.status == "archived" do %>is-danger<% end %>">Archiviert</span>
+      </div>
+      <h2 class="title is-5">Besucher übersicht</h2>
+      <p><%= @visitors %> von max <%= @event.visitor_limit %></p>
+      <progress class="progress is-info" value="<%= @visitors %>" max="<%= @event.visitor_limit %>"><%= 100 / @event.visitor_limit * @visitors %>%</progress>
+
+      <h2 class="title is-5">Aktionen</h2>
+      <p class="buttons">
+
+      <%= if @event.status == "created" do %>
+          <a class="button is-link is-outlined" href="<%= Routes.event_path(@conn, :edit, @event) %>">
+            <span class="icon is-small">
+              <i class="fas fa-edit"></i>
+            </span>
+            <span>Veranstaltung Bearbeiten</span>
+          </a>
+
+          <%= link to: Routes.event_path(@conn, :delete, @event), method: :delete, class: "button is-danger is-outlined", data: [confirm: "Wirklich löschen?"] do %>
+            <span class="icon is-small">
+              <i class="fas fa-times"></i>
+            </span>
+            <span>Veranstaltung Löschen</span>
+          <% end %>
+        <% end %>
+
+        <%= if event_organiser?(@conn, @event) do %>
+
+          <%= if @event.status != "closed" do %>
+            <%= link to: "/events/#{@event.id}/scanners/new", class: "button is-primary is-outlined" do %>
+              <span class="icon is-small">
+                        <i class="fas fa-user-plus"></i>
+                      </span>
+              <span>Scanner hinzufügen</span>
+            <% end %>
+          <% end %>
+        <% end %>
+
+        <%= if @event.status == "open" do %>
+        <%= link to: Routes.event_path(@conn, :close_event, @event), class: "button is-danger is-outlined", data: [confirm: "Event wirklich schliesse? Es können keine Besucher mehr reingelassen werden."] do %>
+        <span class="icon is-small">
+                  <i class="fas fa-times"></i>
+                </span>
+        <span>Event schliessen</span>
+        <% end %>
+          <% end %>
+
+        <%= if @event.status == "open" do %>
+          <%= link to: Routes.scan_path(@conn, :show, @event), method: :get, class: "button is-link is-outlined", data: [confirm: "Mit dem Scannen starten?"] do %>
+          <span class="icon is-small">
+              <i class="fas fa-qrcode"></i>
+            </span>
+          <span>Scanner starten</span>
+          <% end %>
+        <% end %>
+
+        <%= if @event.status == "created" do %>
+          <%= link to: Routes.event_path(@conn, :event_start, @event), class: "button is-info is-outlined" do %>
+          <span class="icon is-small">
+                <i class="fas fa-times"></i>
+              </span>
+          <span>Event starten</span>
+      <% end %>
+        <% end %>
+    </p>
       <p class="buttons">
         <a class="button is-link is-outlined" href="<%= Routes.event_path(@conn, :index) %>">
           <span class="icon is-small">
             <i class="fas fa-arrow-left"></i>
           </span>
-          <span>Zurück</span>
+          <span>Zurück zur Übersicht</span>
         </a>
-        <a class="button is-link is-outlined" href="<%= Routes.event_path(@conn, :edit, @event) %>">
-          <span class="icon is-small">
-            <i class="fas fa-edit"></i>
-          </span>
-          <span>Bearbeiten</span>
-        </a>
-
-        <%= link to: Routes.event_path(@conn, :delete, @event), method: :delete, class: "button is-danger is-outlined", data: [confirm: "Wirklich löschen?"] do %>
-          <span class="icon is-small">
-            <i class="fas fa-times"></i>
-          </span>
-          <span>Löschen</span>
-        <% end %>
-
-        <%= link to: Routes.scan_path(@conn, :show, @event), method: :get, class: "button is-warning is-outlined", data: [confirm: "Mit dem Scannen starten?"] do %>
-          <span class="icon is-small">
-            <i class="fas fa-qrcode"></i>
-          </span>
-          <span>Scannen</span>
-        <% end %>
-
-        <%= if event_organiser?(@conn, @event) do %>
-          <%= link to: "/events/#{@event.id}/scanners", class: "button is-primary is-outlined" do %>
-            <span class="icon is-small">
-              <i class="fas fa-qrcode"></i>
-            </span>
-            <span>Scanners</span>
-          <% end %>
-        <% end %>
       </p>
+      <p class="buttons">
     </div>
   </div>
-	<div class="container">
-	  <div class="column">
-	    <div class="content">
-        <ul>
-
-          <li>
-            <strong>Name:</strong>
-            <%= @event.name %>
-          </li>
-
-          <li>
-            <strong>Ort:</strong>
-            <%= @event.venue %>
-          </li>
-
-          <li>
-            <strong>Status:</strong>
-            <%= @event.status %>
-          </li>
-
-          <li>
-            <strong>Closed:</strong>
-            <%= @event.closed %>
-          </li>
-
-          <li>
-            <strong>Date start:</strong>
-            <%= @event.date_start %>
-          </li>
-
-          <li>
-            <strong>Besucher:</strong>
-            <%= @visitors %> von max <%= @event.visitor_limit %>
-          </li>
-
-        </ul>
-      </div>
-	  </div>
-  </div>
 </section>
+
+<%= render(VisitorTrackingWeb.ScannerView, "index.html", %{ conn: @conn, current_user: @current_user, event_id: @event.id, scanners: @scanners}) %>

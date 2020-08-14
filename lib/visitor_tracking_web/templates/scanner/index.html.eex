@@ -1,17 +1,7 @@
-<%= render(VisitorTrackingWeb.LayoutView, "header.html", %{conn: @conn, current_user: @current_user}) %>
-
 <section>
   <div class="container">
     <div class="column">
-      <h1 class="title">Scanners</h1>
-      <p class="buttons">
-        <a class="button is-link is-outlined" href="<%= Routes.scanner_path(@conn, :new, @event_id) %>">
-          <span class="icon is-small">
-            <i class="fas fa-plus"></i>
-          </span>
-          <span>Neuen Scanner hinzufügen</span>
-        </a>
-      </p>
+      <h1 class="title is-3">Scanners</h1>
     </div>
   </div>
   <div class="container">

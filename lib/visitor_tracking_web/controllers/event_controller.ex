@@ -1,11 +1,10 @@
 defmodule VisitorTrackingWeb.EventController do
   use VisitorTrackingWeb, :controller
 
-  alias VisitorTracking.Events
-  alias VisitorTracking.Events.Event
+  alias VisitorTracking.{Events, Events.Event, Events.Rules, Accounts}
 
   def index(conn, _params) do
-    events = Events.list_events(conn.assigns.current_user.id)
+    %{event_scanner: events} = Accounts.get_all_events_from_scanner(conn.assigns.current_user.id)
     render(conn, "index.html", events: events)
   end
 
@@ -30,7 +29,7 @@ defmodule VisitorTrackingWeb.EventController do
   end
 
   def show(conn, %{"id" => id}) do
-    case Events.get_event!(id, conn.assigns.current_user.id) do
+    case Events.get_event(id) do
       nil ->
         conn
         |> put_flash(
@@ -40,7 +39,11 @@ defmodule VisitorTrackingWeb.EventController do
         |> redirect(to: Routes.event_path(conn, :index))
 
       event ->
-        render(conn, "show.html", %{event: event, visitors: Events.count_visitors(event.id)})
+        render(conn, "show.html", %{
+          event: event,
+          visitors: Events.count_visitors(event.id),
+          scanners: Events.list_scanners(id)
+        })
     end
   end
 
@@ -71,5 +74,35 @@ defmodule VisitorTrackingWeb.EventController do
     conn
     |> put_flash(:info, "Veranstaltung wurde gelöscht.")
     |> redirect(to: Routes.event_path(conn, :index))
+  end
+
+  def event_start(conn, %{"id" => id}) do
+    with event <- Events.get_event!(id, conn.assigns.current_user.id),
+         {:ok, rule} <- Rules.check(Rules.from_event(event), :start_event),
+         {:ok, _event} <- Events.update_event(event, %{"status" => rule.state}) do
+      conn
+      |> put_flash(:info, "Status verändert.")
+      |> redirect(to: Routes.event_path(conn, :show, id))
+    else
+      :error ->
+        conn
+        |> put_flash(:error, "Not allowed.")
+        |> redirect(to: Routes.event_path(conn, :show, id))
+    end
+  end
+
+  def close_event(conn, %{"id" => id}) do
+    with event <- Events.get_event!(id, conn.assigns.current_user.id),
+         {:ok, rule} <- Rules.check(Rules.from_event(event), :close_event),
+         {:ok, _event} <- Events.update_event(event, %{"status" => rule.state}) do
+      conn
+      |> put_flash(:info, "Status verändert.")
+      |> redirect(to: Routes.event_path(conn, :show, id))
+    else
+      :error ->
+        conn
+        |> put_flash(:error, "Not allowed.")
+        |> redirect(to: Routes.event_path(conn, :show, id))
+    end
   end
 end

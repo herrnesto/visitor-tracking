@@ -2,7 +2,14 @@ defmodule VisitorTracking.Events do
   @moduledoc """
   Events Context module
   """
-  alias VisitorTracking.{Accounts, Events.Event, Events.Scanner, Events.Visitor, Repo}
+  alias VisitorTracking.{
+    Accounts,
+    Events.Event,
+    Events.Scanner,
+    Events.Visitor,
+    Events.Rules,
+    Repo
+  }
 
   import Ecto.Query
 
@@ -79,10 +86,24 @@ defmodule VisitorTracking.Events do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_event(attrs \\ %{}) do
-    %Event{}
-    |> Event.changeset(attrs)
-    |> Repo.insert()
+  def create_event(%{"organiser_id" => organiser_id} = attrs \\ %{}) do
+    {:ok, rule} = Rules.new()
+    attrs = Map.put(attrs, "status", rule.state)
+
+    result =
+      %Event{}
+      |> Event.changeset(attrs)
+      |> Repo.insert()
+
+    case result do
+      {:ok, event} ->
+        %{phone: phone} = Accounts.get_user(organiser_id)
+        add_scanner(event.id, phone)
+        result
+
+      _ ->
+        result
+    end
   end
 
   @doc """
