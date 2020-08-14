@@ -86,13 +86,24 @@ defmodule VisitorTracking.Events do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_event(attrs \\ %{}) do
+  def create_event(%{"organiser_id" => organiser_id} = attrs \\ %{}) do
     {:ok, rule} = Rules.new()
     attrs = Map.put(attrs, "status", rule.state)
 
-    %Event{}
-    |> Event.changeset(attrs)
-    |> Repo.insert()
+    result =
+      %Event{}
+      |> Event.changeset(attrs)
+      |> Repo.insert()
+
+    case result do
+      {:ok, event} ->
+        %{phone: phone} = Accounts.get_user(organiser_id)
+        add_scanner(event.id, phone)
+        result
+
+      _ ->
+        result
+    end
   end
 
   @doc """

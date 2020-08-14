@@ -3,6 +3,14 @@ defmodule VisitorTracking.EventsTest do
 
   alias VisitorTracking.{Events, Events.Event, Events.Visitor}
 
+  setup do
+    user = insert(:user, email_verified: true, phone_verified: true)
+    event = insert(:event)
+    insert(:scanner, event_id: event.id, user_id: user.id)
+
+    {:ok, %{event: event, user: user}}
+  end
+
   @valid_attrs %{
     "closed" => "true",
     "date_start" => ~N[2011-05-18T15:01:01Z],
@@ -43,9 +51,12 @@ defmodule VisitorTracking.EventsTest do
   end
 
   describe "create_event/1" do
-    test "with valid data creates a event" do
-      assert {:ok, %Event{} = event} = Events.create_event(@valid_attrs)
-      assert event.closed == true
+    test "with valid data creates a event", %{user: user} do
+      user = insert(:user, email_verified: true, phone_verified: true)
+      data = Map.put(@valid_attrs, "organiser_id", user.id)
+
+      assert {:ok, event} = Events.create_event(data)
+
       assert event.date_start == ~N[2011-05-18T15:01:01Z]
       assert event.visitor_limit == 10
       assert event.name == "some name"
@@ -55,6 +66,16 @@ defmodule VisitorTracking.EventsTest do
 
     test "with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = Events.create_event(@invalid_attrs)
+    end
+
+    test "add organiser as scanner" do
+      user = insert(:user, email_verified: true, phone_verified: true)
+
+      assert {:ok, event} = Events.create_event(Map.put(@valid_attrs, "organiser_id", user.id))
+
+      %{scanners: scanners} = Events.get_event_with_preloads(event.id)
+      result = Enum.any?(scanners, fn %{id: id} -> id == user.id end)
+      assert true = result
     end
   end
 
