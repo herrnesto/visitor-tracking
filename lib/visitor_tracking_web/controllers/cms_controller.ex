@@ -56,7 +56,8 @@ defmodule VisitorTrackingWeb.CmsController do
     conn
     |> put_meta_tags(%{
       title: "Viele Vorteile für wenig Geld | Vesita",
-      description: "Jeder Veranstaler soll sich Vesita leisten können. Keine Lizenz- oder Grundgebühren.",
+      description:
+        "Jeder Veranstaler soll sich Vesita leisten können. Keine Lizenz- oder Grundgebühren.",
       url: "https://www.vesita.ch",
       image:
         "https://" <>
