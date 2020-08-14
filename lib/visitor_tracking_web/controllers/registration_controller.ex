@@ -1,13 +1,27 @@
 defmodule VisitorTrackingWeb.RegistrationController do
   use VisitorTrackingWeb, :controller
 
+  use PhoenixMetaTags.TagController
+
   alias VisitorTracking.{Accounts, Email, Mailer, Twilio, Verification}
   alias VisitorTrackingWeb.Plugs.Auth
 
   plug :redirect_if_phone_verified
 
   def phone_validation(conn, _) do
-    render(conn, "phone_validation.html")
+    conn
+    |> put_meta_tags(%{
+      title: "Registiere dich jetzt! | Vesita",
+      description: "Registriere dich und verifiziere deine Kontaktdaten.",
+      url: "https://www.vesita.ch",
+      image:
+        "https://" <>
+          Application.get_env(:visitor_tracking, :host) <> "/images/vesita-logo-full-klein.png",
+      "og:image":
+        "https://" <>
+          Application.get_env(:visitor_tracking, :host) <> "/images/vesita-logo-full-klein.png"
+    })
+    |> render("phone_validation.html")
   end
 
   def phone_confirmation(conn, %{"phone" => phone}) do

@@ -1,11 +1,27 @@
 defmodule VisitorTrackingWeb.ContactFormController do
   use VisitorTrackingWeb, :controller
 
+  use PhoenixMetaTags.TagController
+
   alias VisitorTracking.{Email, Form, Form.ContactForm, Mailer}
 
   def new(conn, _params) do
     changeset = Form.change_contact_form(%ContactForm{})
-    render(conn, "new.html", changeset: changeset, api_url: get_api_url())
+
+    conn
+    |> put_meta_tags(%{
+      title: "Schreibe uns eine Nachricht! | Vesita",
+      description:
+        "Melde dich bei uns wenn du eine Frage hast oder hinterlasse uns einen Gruss :-)",
+      url: "https://www.vesita.ch",
+      image:
+        "https://" <>
+          Application.get_env(:visitor_tracking, :host) <> "/images/vesita-logo-full-klein.png",
+      "og:image":
+        "https://" <>
+          Application.get_env(:visitor_tracking, :host) <> "/images/vesita-logo-full-klein.png"
+    })
+    |> render("new.html", changeset: changeset, api_url: get_api_url())
   end
 
   def create(conn, %{"contact_form" => contact_form_params}) do
