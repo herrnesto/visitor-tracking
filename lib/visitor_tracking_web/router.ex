@@ -67,7 +67,7 @@ defmodule VisitorTrackingWeb.Router do
     resources "/events", EventController
     get "/events/:id/start_event", EventController, :event_start
     get "/events/:id/close_event", EventController, :close_event
-    get "/events/:id/scan", ScanController, :show
+    get "/events/:event_id/scan", ScanController, :show
     get "/profile", ProfileController, :show
     get "/profile/qrcode", ProfileController, :show
   end
