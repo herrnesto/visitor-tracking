@@ -12,10 +12,11 @@
         <p>
           Keine Lizenzkosten <span class="is-success"><i class="fa fa-check is-primary"></i></span>
         </p>
+        <p></p>
         <p>
             Keine Mindestkosten <span class="is-success"><i class="fa fa-check is-primary"></i></span>
         </p>
-
+        <p>Veranstaltest du regelmässig Events? Wir machen dir ein Angebot. Nimm mit uns <a href="/kontakt">Kontakt</a> auf!</p>
         <div class="pricing-table">
           <div class="pricing-plan is-active">
             <div class="plan-price"><span class="plan-price-amount"><span class="plan-price-currency">CHF</span>1</span>/Besucher</div>
