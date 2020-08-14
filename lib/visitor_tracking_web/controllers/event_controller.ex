@@ -1,16 +1,16 @@
 defmodule VisitorTrackingWeb.EventController do
   use VisitorTrackingWeb, :controller
 
-  alias VisitorTracking.{Events, Events.Event, Events.Rules}
+  alias VisitorTracking.{Events, Events.Event, Events.Rules, Accounts}
 
   def index(conn, _params) do
-    events = Events.list_events(conn.assigns.current_user.id)
+    %{event_scanner: events} = Accounts.get_all_events_from_scanner(conn.assigns.current_user.id)
     render(conn, "index.html", events: events)
   end
 
   def new(conn, _params) do
     changeset = Events.change_event(%Event{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html"c, changeset: changeset)
   end
 
   def create(conn, %{"event" => event_params}) do
@@ -29,7 +29,7 @@ defmodule VisitorTrackingWeb.EventController do
   end
 
   def show(conn, %{"id" => id}) do
-    case Events.get_event!(id, conn.assigns.current_user.id) do
+    case Events.get_event(id) do
       nil ->
         conn
         |> put_flash(

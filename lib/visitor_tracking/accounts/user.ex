@@ -31,6 +31,13 @@ defmodule VisitorTracking.Accounts.User do
       on_replace: :delete
     )
 
+    many_to_many(
+      :event_scanner,
+      VisitorTracking.Events.Event,
+      join_through: "event_scanners",
+      on_replace: :delete
+    )
+
     has_many :organised_events, Event, foreign_key: :organiser_id
 
     has_one :profile, VisitorTracking.Accounts.Profile

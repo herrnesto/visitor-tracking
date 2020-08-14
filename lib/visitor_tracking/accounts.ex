@@ -65,4 +65,10 @@ defmodule VisitorTracking.Accounts do
     |> User.phone_verification_changeset(%{phone_verified: true})
     |> Repo.update()
   end
+
+  def get_all_events_from_scanner(id) do
+    User
+    |> Repo.get(id)
+    |> Repo.preload([:event_scanner])
+  end
 end
