@@ -20,7 +20,7 @@ defmodule VisitorTrackingWeb.ScannerController do
       {:ok, _scanner} ->
         conn
         |> put_flash(:info, "Scanner has been added")
-        |> redirect(to: "/events/#{event_id}/scanners")
+        |> redirect(to: "/events/#{event_id}")
 
       {:error, reason} ->
         action = "/events/#{event_id}/scanners"
