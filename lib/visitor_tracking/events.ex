@@ -55,7 +55,6 @@ defmodule VisitorTracking.Events do
 
   """
   def list_events(user_id) do
-
     Repo.all(from p in Event, where: p.organiser_id == ^user_id)
   end
 

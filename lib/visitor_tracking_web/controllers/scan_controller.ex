@@ -3,33 +3,18 @@ defmodule VisitorTrackingWeb.ScanController do
 
   alias VisitorTracking.{Accounts, Events}
 
+  plug :check_if_scanner when action in [:show, :assign_visitor, :event_infos]
+
   def index(conn, _params) do
     render(conn, "index.html")
   end
 
-  def show(conn, %{"id" => id}) do
-    with event <- Events.get_event_with_preloads(id),
-         true <- conn.assigns.current_user in event.scanners,
-         %{status: "open"} <- event do
-      render(conn, "index.html", %{event: event, api_url: get_api_url()})
-    else
-      nil ->
-        IO.puts("empty event")
-
-        conn
-        |> put_flash(:error, "Event not found or archived")
-        |> redirect(to: "/events")
-
-      false ->
-        IO.puts("user not in scanners")
-
-        conn
-        |> put_flash(:error, "You are not a scanner for this event")
-        |> redirect(to: "/events/#{id}")
+  def show(conn, %{"event_id" => id}) do
+    case Events.get_event(id) do
+      event = %{status: "open"} ->
+        render(conn, "index.html", %{event: event, api_url: get_api_url()})
 
       %{status: _} ->
-        IO.puts("Event not open")
-
         conn
         |> put_flash(:error, "The event is not open, you are not able to scan")
         |> redirect(to: "/events/#{id}")
@@ -52,9 +37,8 @@ defmodule VisitorTrackingWeb.ScanController do
     end
   end
 
-  def event_infos(conn, %{"id" => event_id}) do
-    session = get_session(conn)
-    event = Events.get_event!(event_id, Map.get(session, "user_id"))
+  def event_infos(conn, %{"event_id" => event_id}) do
+    event = Events.get_event(event_id)
 
     render(conn, "event_infos.json", %{
       status: "ok",
@@ -73,5 +57,36 @@ defmodule VisitorTrackingWeb.ScanController do
 
   defp get_host do
     Application.get_env(:visitor_tracking, :host)
+  end
+
+  defp check_if_scanner(%{params: %{"event_id" => event_id}} = conn, _params) do
+    with %{scanners: scanners} <- Events.get_event_with_preloads(event_id),
+         user_id <- get_session(conn, :user_id),
+         true <- check_user_in_scanners(scanners, user_id) do
+      conn
+    else
+      _ ->
+        conn
+        # |> put_flash(:error, "You don't have access to the event")
+        |> redirect(to: "/events")
+        |> halt()
+    end
+  end
+
+  defp check_if_organiser(%{params: %{"event_id" => event_id}} = conn, _params) do
+    case Events.get_event!(event_id, get_session(conn, :user_id)) do
+      nil ->
+        conn
+        # |> put_flash(:error, "You don't have access to the event")
+        |> redirect(to: "/events")
+        |> halt()
+
+      _ ->
+        conn
+    end
+  end
+
+  defp check_user_in_scanners(scanners, user_id) do
+    Enum.any?(scanners, fn %{id: id} -> id == user_id end)
   end
 end

@@ -10,7 +10,7 @@ defmodule VisitorTrackingWeb.EventController do
 
   def new(conn, _params) do
     changeset = Events.change_event(%Event{})
-    render(conn, "new.html"c, changeset: changeset)
+    render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"event" => event_params}) do

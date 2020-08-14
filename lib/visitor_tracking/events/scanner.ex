@@ -1,6 +1,6 @@
 defmodule VisitorTracking.Events.Scanner do
   @moduledoc """
-  Scanner Schema Module for event_sfcanners table
+  Scanner Schema Module for event_scanners table
   """
 
   use Ecto.Schema
