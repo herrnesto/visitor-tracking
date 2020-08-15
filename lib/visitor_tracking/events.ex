@@ -5,9 +5,9 @@ defmodule VisitorTracking.Events do
   alias VisitorTracking.{
     Accounts,
     Events.Event,
+    Events.Rules,
     Events.Scanner,
     Events.Visitor,
-    Events.Rules,
     Repo
   }
 

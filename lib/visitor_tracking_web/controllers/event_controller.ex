@@ -1,7 +1,7 @@
 defmodule VisitorTrackingWeb.EventController do
   use VisitorTrackingWeb, :controller
 
-  alias VisitorTracking.{Events, Events.Event, Events.Rules, Accounts}
+  alias VisitorTracking.{Accounts, Events, Events.Event, Events.Rules}
 
   plug :check_if_organiser_or_scanner when action in [:show]
 

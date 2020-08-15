@@ -7,7 +7,7 @@ defmodule VisitorTracking.Events.Rules do
 
   defstruct state: "created"
 
-  def new(), do: {:ok, %Rules{}}
+  def new, do: {:ok, %Rules{}}
 
   def from_event(nil), do: %Rules{state: "error"}
   def from_event(event), do: %Rules{state: event.status}
