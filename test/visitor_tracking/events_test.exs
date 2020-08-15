@@ -148,7 +148,7 @@ defmodule VisitorTracking.EventsTest do
 
   describe "assign_visitor/2" do
     test "assigns a visitor to an event" do
-      %{id: event_id} = event = insert(:event)
+      %{id: event_id} = event = insert(:event, status: "open")
       %{id: user_id} = user = insert(:user)
 
       assert {:ok, %Visitor{user_id: ^user_id, event_id: ^event_id}} =
@@ -156,7 +156,7 @@ defmodule VisitorTracking.EventsTest do
     end
 
     test "returns an error if visitor is already assigned" do
-      event = insert(:event)
+      event = insert(:event, status: "open")
       user = insert(:user)
       Events.assign_visitor(event, user)
 
@@ -170,6 +170,13 @@ defmodule VisitorTracking.EventsTest do
                 ]
               }} = Events.assign_visitor(event, user)
     end
+
+    test "returns an error if the event is closed" do
+      event = insert(:event, status: "closed")
+      user = insert(:user)
+
+      assert {:error, :event_closed} = Events.assign_visitor(event, user)
+    end
   end
 
   describe "count_visitors/1" do
@@ -179,7 +186,7 @@ defmodule VisitorTracking.EventsTest do
     end
 
     test "returns a number when the id is an integer" do
-      event = insert(:event)
+      event = insert(:event, status: "open")
       user = insert(:user)
       Events.assign_visitor(event, user)
 
@@ -187,7 +194,7 @@ defmodule VisitorTracking.EventsTest do
     end
 
     test "returns a number when the id is a string" do
-      event = insert(:event)
+      event = insert(:event, status: "open")
       user = insert(:user)
       Events.assign_visitor(event, user)
 

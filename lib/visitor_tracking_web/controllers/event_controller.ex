@@ -3,6 +3,11 @@ defmodule VisitorTrackingWeb.EventController do
 
   alias VisitorTracking.{Events, Events.Event, Events.Rules, Accounts}
 
+  plug :check_if_organiser_or_scanner when action in [:show]
+
+  plug :check_if_organiser
+       when action in [:edit, :update, :start_event, :close_event, :delete]
+
   def index(conn, _params) do
     %{event_scanner: events} = Accounts.get_all_events_from_scanner(conn.assigns.current_user.id)
     render(conn, "index.html", events: events)
@@ -104,5 +109,55 @@ defmodule VisitorTrackingWeb.EventController do
         |> put_flash(:error, "Not allowed.")
         |> redirect(to: Routes.event_path(conn, :show, id))
     end
+  end
+
+  defp check_if_organiser_or_scanner(conn, _params) do
+    case is_scanner?(conn) || is_organiser?(conn) do
+      true ->
+        conn
+
+      false ->
+        conn
+        |> redirect(to: "/events")
+        |> halt()
+    end
+  end
+
+  defp check_if_organiser(conn, _params) do
+    case is_organiser?(conn) do
+      true ->
+        conn
+
+      false ->
+        conn
+        |> redirect(to: "/events")
+        |> halt()
+    end
+  end
+
+  defp is_scanner?(%{params: %{"id" => event_id}} = conn) do
+    with %{scanners: scanners} <- Events.get_event_with_preloads(event_id),
+         user_id <- get_session(conn, :user_id),
+         true <- user_in_scanners?(scanners, user_id) do
+      true
+    else
+      _ ->
+        false
+    end
+  end
+
+  defp is_scanner?(_), do: false
+
+  defp is_organiser?(%{params: %{"id" => event_id}} = conn) do
+    case Events.get_event!(event_id, conn.assigns.current_user.id) do
+      nil -> false
+      _ -> true
+    end
+  end
+
+  defp is_organiser?(_), do: false
+
+  defp user_in_scanners?(scanners, user_id) do
+    Enum.any?(scanners, fn %{id: id} -> id == user_id end)
   end
 end

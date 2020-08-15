@@ -128,7 +128,7 @@ defmodule VisitorTrackingWeb.EventControllerTest do
 
       conn = get(conn, Routes.event_path(conn, :start_event, event.id))
 
-      assert redirected_to(conn) == Routes.event_path(conn, :show, event.id)
+      assert redirected_to(conn) == Routes.event_path(conn, :index)
       assert %{status: "created"} = Events.get_event(event.id)
     end
   end
@@ -150,7 +150,7 @@ defmodule VisitorTrackingWeb.EventControllerTest do
 
       conn = get(conn, Routes.event_path(conn, :close_event, event.id))
 
-      assert redirected_to(conn) == Routes.event_path(conn, :show, event.id)
+      assert redirected_to(conn) == Routes.event_path(conn, :index)
       assert %{status: "open"} = Events.get_event(event.id)
     end
   end

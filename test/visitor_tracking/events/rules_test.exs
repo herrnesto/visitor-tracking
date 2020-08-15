@@ -11,7 +11,12 @@ defmodule VisitorTracking.Events.RulesTest do
   test "create state from event" do
     event = %{status: "closed"}
     assert rule = Rules.from_event(event)
-    assert "closed" = rule.state
+    assert "closed" == rule.state
+  end
+
+  test "error state if event is nil" do
+    assert rule = Rules.from_event(nil)
+    assert "error" == rule.state
   end
 
   describe "add a scanner" do
