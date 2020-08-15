@@ -80,4 +80,24 @@ defmodule VisitorTrackingWeb.ScanControllerTest do
       assert redirected_to(conn) =~ "/events"
     end
   end
+
+  describe "POST /api/scan/user" do
+    test "returns user json if user exists", %{conn: conn} do
+      %{uuid: uuid} = insert(:user)
+      conn = post(conn, "/api/scan/user", %{"uuid" => uuid})
+
+      assert %{
+               "status" => "ok"
+             } = json_response(conn, 200)
+    end
+
+    test "returns error json if user does not exist", %{conn: conn} do
+      conn = post(conn, "/api/scan/user", %{"uuid" => "testuuid"})
+
+      assert %{
+               "status" => "error",
+               "message" => "not_found"
+             } == json_response(conn, 200)
+    end
+  end
 end
