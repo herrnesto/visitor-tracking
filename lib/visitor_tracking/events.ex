@@ -5,9 +5,9 @@ defmodule VisitorTracking.Events do
   alias VisitorTracking.{
     Accounts,
     Events.Event,
+    Events.Rules,
     Events.Scanner,
     Events.Visitor,
-    Events.Rules,
     Repo
   }
 
@@ -29,11 +29,13 @@ defmodule VisitorTracking.Events do
     |> Repo.update()
   end
 
-  def assign_visitor(event, %Accounts.User{} = user) do
+  def assign_visitor(%{status: "open"} = event, %Accounts.User{} = user) do
     %Visitor{}
     |> Visitor.changeset(%{event_id: event.id, user_id: user.id})
     |> Repo.insert()
   end
+
+  def assign_visitor(_, _), do: {:error, :event_closed}
 
   def count_visitors(id) when is_binary(id) do
     id

@@ -5,10 +5,6 @@ defmodule VisitorTrackingWeb.ScanController do
 
   plug :check_if_scanner when action in [:show, :assign_visitor, :event_infos]
 
-  def index(conn, _params) do
-    render(conn, "index.html")
-  end
-
   def show(conn, %{"event_id" => id}) do
     case Events.get_event(id) do
       event = %{status: "open"} ->
@@ -59,34 +55,32 @@ defmodule VisitorTrackingWeb.ScanController do
     Application.get_env(:visitor_tracking, :host)
   end
 
-  defp check_if_scanner(%{params: %{"event_id" => event_id}} = conn, _params) do
+  defp check_if_scanner(conn, _params) do
+    case is_scanner?(conn) do
+      true ->
+        conn
+
+      false ->
+        conn
+        |> redirect(to: "/events")
+        |> halt()
+    end
+  end
+
+  defp is_scanner?(%{params: %{"event_id" => event_id}} = conn) do
     with %{scanners: scanners} <- Events.get_event_with_preloads(event_id),
          user_id <- get_session(conn, :user_id),
-         true <- check_user_in_scanners(scanners, user_id) do
-      conn
+         true <- user_in_scanners?(scanners, user_id) do
+      true
     else
       _ ->
-        conn
-        # |> put_flash(:error, "You don't have access to the event")
-        |> redirect(to: "/events")
-        |> halt()
+        false
     end
   end
 
-  defp check_if_organiser(%{params: %{"event_id" => event_id}} = conn, _params) do
-    case Events.get_event!(event_id, get_session(conn, :user_id)) do
-      nil ->
-        conn
-        # |> put_flash(:error, "You don't have access to the event")
-        |> redirect(to: "/events")
-        |> halt()
+  defp is_scanner?(_), do: false
 
-      _ ->
-        conn
-    end
-  end
-
-  defp check_user_in_scanners(scanners, user_id) do
+  defp user_in_scanners?(scanners, user_id) do
     Enum.any?(scanners, fn %{id: id} -> id == user_id end)
   end
 end

@@ -1,5 +1,5 @@
 defmodule VisitorTrackingWeb.EventControllerTest do
-  use VisitorTrackingWeb.ConnCase
+  use VisitorTrackingWeb.ConnCase, async: true
 
   alias VisitorTracking.Events
 
@@ -44,10 +44,14 @@ defmodule VisitorTrackingWeb.EventControllerTest do
       assert html_response(conn, 200) =~ "Veranstaltungen"
     end
 
-    @tag :skip
-    test "redirects to events if current user is not the organiser", %{conn: conn} do
+    test "redirects to events if current user is not the organiser or a scanner", %{conn: conn} do
       event = insert(:event)
       conn = get(conn, "/events/#{event.id}")
+      assert redirected_to(conn) =~ "/events"
+    end
+
+    test "redirects to events if the event does not exist", %{conn: conn} do
+      conn = get(conn, "/events/999999")
       assert redirected_to(conn) =~ "/events"
     end
   end
@@ -104,6 +108,50 @@ defmodule VisitorTrackingWeb.EventControllerTest do
       conn = delete(conn, Routes.event_path(conn, :delete, event))
       assert redirected_to(conn) == Routes.event_path(conn, :index)
       assert nil == Events.get_event(event.id)
+    end
+  end
+
+  describe "GET /events/:id/start_event" do
+    test "starts an event if the user is organiser and the event is \"created\"", %{
+      conn: conn,
+      event: event
+    } do
+      conn = get(conn, Routes.event_path(conn, :start_event, event.id))
+      assert redirected_to(conn) == Routes.event_path(conn, :show, event.id)
+      assert %{status: "open"} = Events.get_event(event.id)
+    end
+
+    test "fails to start an event if the user is not an organiser" do
+      user = insert(:user, email_verified: true, phone_verified: true)
+      conn = assign(build_conn(), :current_user, user)
+      event = insert(:event)
+
+      conn = get(conn, Routes.event_path(conn, :start_event, event.id))
+
+      assert redirected_to(conn) == Routes.event_path(conn, :index)
+      assert %{status: "created"} = Events.get_event(event.id)
+    end
+  end
+
+  describe "GET /events/:id/close_event" do
+    test "close an event if the user is organiser and the event is \"open\"", %{
+      conn: conn
+    } do
+      event = insert(:event, organiser: conn.assigns.current_user, status: "open")
+      conn = get(conn, Routes.event_path(conn, :close_event, event.id))
+      assert redirected_to(conn) == Routes.event_path(conn, :show, event.id)
+      assert %{status: "closed"} = Events.get_event(event.id)
+    end
+
+    test "fails to close an event if the user is not an organiser" do
+      user = insert(:user, email_verified: true, phone_verified: true)
+      conn = assign(build_conn(), :current_user, user)
+      event = insert(:event, status: "open")
+
+      conn = get(conn, Routes.event_path(conn, :close_event, event.id))
+
+      assert redirected_to(conn) == Routes.event_path(conn, :index)
+      assert %{status: "open"} = Events.get_event(event.id)
     end
   end
 end

@@ -54,7 +54,8 @@ defmodule VisitorTracking.Factory do
       name: "Test Event",
       venue: "Test Venue",
       visitor_limit: 100,
-      date_start: NaiveDateTime.utc_now()
+      date_start: NaiveDateTime.utc_now(),
+      status: "created"
     }
   end
 

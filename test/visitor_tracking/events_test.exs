@@ -51,7 +51,7 @@ defmodule VisitorTracking.EventsTest do
   end
 
   describe "create_event/1" do
-    test "with valid data creates a event", %{user: user} do
+    test "with valid data creates a event" do
       user = insert(:user, email_verified: true, phone_verified: true)
       data = Map.put(@valid_attrs, "organiser_id", user.id)
 
@@ -148,7 +148,7 @@ defmodule VisitorTracking.EventsTest do
 
   describe "assign_visitor/2" do
     test "assigns a visitor to an event" do
-      %{id: event_id} = event = insert(:event)
+      %{id: event_id} = event = insert(:event, status: "open")
       %{id: user_id} = user = insert(:user)
 
       assert {:ok, %Visitor{user_id: ^user_id, event_id: ^event_id}} =
@@ -156,7 +156,7 @@ defmodule VisitorTracking.EventsTest do
     end
 
     test "returns an error if visitor is already assigned" do
-      event = insert(:event)
+      event = insert(:event, status: "open")
       user = insert(:user)
       Events.assign_visitor(event, user)
 
@@ -169,6 +169,36 @@ defmodule VisitorTracking.EventsTest do
                      [constraint: :unique, constraint_name: "events_visitors_pkey"]}
                 ]
               }} = Events.assign_visitor(event, user)
+    end
+
+    test "returns an error if the event is closed" do
+      event = insert(:event, status: "closed")
+      user = insert(:user)
+
+      assert {:error, :event_closed} = Events.assign_visitor(event, user)
+    end
+  end
+
+  describe "count_visitors/1" do
+    test "starting a new event, visitors are 0" do
+      event = insert(:event)
+      assert 0 == Events.count_visitors(event.id)
+    end
+
+    test "returns a number when the id is an integer" do
+      event = insert(:event, status: "open")
+      user = insert(:user)
+      Events.assign_visitor(event, user)
+
+      assert 1 == Events.count_visitors(event.id)
+    end
+
+    test "returns a number when the id is a string" do
+      event = insert(:event, status: "open")
+      user = insert(:user)
+      Events.assign_visitor(event, user)
+
+      assert 1 == Events.count_visitors("#{event.id}")
     end
   end
 end
