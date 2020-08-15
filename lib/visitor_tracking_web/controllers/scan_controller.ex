@@ -55,32 +55,32 @@ defmodule VisitorTrackingWeb.ScanController do
     Application.get_env(:visitor_tracking, :host)
   end
 
-  defp check_if_scanner(%{params: %{"event_id" => event_id}} = conn, _params) do
-    with %{scanners: scanners} <- Events.get_event_with_preloads(event_id),
-         user_id <- get_session(conn, :user_id),
-         true <- user_in_scanners(scanners, user_id) do
-      conn
-    else
-      _ ->
+  defp check_if_scanner(conn, _params) do
+    case is_scanner?(conn) do
+      true ->
+        conn
+
+      false ->
         conn
         |> redirect(to: "/events")
         |> halt()
     end
   end
 
-  # defp check_if_organiser(%{params: %{"event_id" => event_id}} = conn, _params) do
-  #   case Events.get_event!(event_id, get_session(conn, :user_id)) do
-  #     nil ->
-  #       conn
-  #       |> redirect(to: "/events")
-  #       |> halt()
+  defp is_scanner?(%{params: %{"event_id" => event_id}} = conn) do
+    with %{scanners: scanners} <- Events.get_event_with_preloads(event_id),
+         user_id <- get_session(conn, :user_id),
+         true <- user_in_scanners?(scanners, user_id) do
+      true
+    else
+      _ ->
+        false
+    end
+  end
 
-  #     _ ->
-  #       conn
-  #   end
-  # end
+  defp is_scanner?(_), do: false
 
-  defp user_in_scanners(scanners, user_id) do
+  defp user_in_scanners?(scanners, user_id) do
     Enum.any?(scanners, fn %{id: id} -> id == user_id end)
   end
 end
