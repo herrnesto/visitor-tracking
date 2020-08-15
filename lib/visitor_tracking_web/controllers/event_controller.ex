@@ -76,7 +76,7 @@ defmodule VisitorTrackingWeb.EventController do
     |> redirect(to: Routes.event_path(conn, :index))
   end
 
-  def event_start(conn, %{"id" => id}) do
+  def start_event(conn, %{"id" => id}) do
     with event <- Events.get_event!(id, conn.assigns.current_user.id),
          {:ok, rule} <- Rules.check(Rules.from_event(event), :start_event),
          {:ok, _event} <- Events.update_event(event, %{"status" => rule.state}) do

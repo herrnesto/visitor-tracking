@@ -9,6 +9,7 @@ defmodule VisitorTracking.Events.Rules do
 
   def new(), do: {:ok, %Rules{}}
 
+  def from_event(nil), do: %Rules{state: "error"}
   def from_event(event), do: %Rules{state: event.status}
 
   def check(%Rules{state: "created"} = _rule, :add_scanner),

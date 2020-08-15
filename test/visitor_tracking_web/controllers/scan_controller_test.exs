@@ -58,18 +58,26 @@ defmodule VisitorTrackingWeb.ScanControllerTest do
       user = insert(:user, email_verified: true, phone_verified: true)
       conn = build_conn() |> Plug.Test.init_test_session(user_id: user.id)
 
-      %{uuid: uuid, id: user_id} = insert(:user, email_verified: true, phone_verified: true)
+      %{uuid: uuid} = insert(:user, email_verified: true, phone_verified: true)
 
       conn = post(conn, "/api/scan/assign_visitor", %{"event_id" => event.id, "uuid" => uuid})
       assert redirected_to(conn) =~ "/events"
     end
 
-    test "assign a visitor", %{conn: conn, event: event, user: user} do
-      %{uuid: uuid, id: user_id} = insert(:user, email_verified: true, phone_verified: true)
+    test "assign a visitor", %{conn: conn, event: event} do
+      %{uuid: uuid} = insert(:user, email_verified: true, phone_verified: true)
 
       conn = post(conn, "/api/scan/assign_visitor", %{"event_id" => event.id, "uuid" => uuid})
 
       assert %{"status" => "ok"} = json_response(conn, 200)
+    end
+
+    test "assign a visitor is no longer possible if event is not open", %{conn: conn} do
+      %{uuid: uuid} = insert(:user, email_verified: true, phone_verified: true)
+      event = insert(:event, status: "closed")
+
+      conn = post(conn, "/api/scan/assign_visitor", %{"event_id" => event.id, "uuid" => uuid})
+      assert redirected_to(conn) =~ "/events"
     end
   end
 end

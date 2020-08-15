@@ -65,7 +65,7 @@
         <% end %>
 
         <%= if @event.status == "created" do %>
-          <%= link to: Routes.event_path(@conn, :event_start, @event), class: "button is-info is-outlined" do %>
+          <%= link to: Routes.event_path(@conn, :start_event, @event), class: "button is-info is-outlined" do %>
           <span class="icon is-small">
                 <i class="fas fa-times"></i>
               </span>
