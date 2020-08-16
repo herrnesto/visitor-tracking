@@ -2,7 +2,7 @@
   <div class="container">
     <div class="navbar-brand">
       <a class="navbar-item" href="/">
-        <img src="<%= Routes.static_path(@conn, "/images/vesita-logo-text-white.svg") %>" width="100px">
+        <img src="<%= Routes.static_path(@conn, "/images/vesita-logo-text-white.svg") %>" width="100px" alt="Vesita Logo without icon">
       </a>
       <span class="navbar-burger burger" data-target="navMenu">
         <span></span>

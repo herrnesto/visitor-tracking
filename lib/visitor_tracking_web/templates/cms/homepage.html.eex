@@ -23,8 +23,8 @@
  <section>
    <div class="container mb-4">
      <div class="column is-8 is-offset-2 has-text-centered">
-       <h2 class="title">Einmal registrieren, mehrere Veranstaltungen besuchen.</h2>
-       <p class="subtitle">So einfach funktioniert Vesita.</p>
+       <h2 class="title">Warum Vesita?</h2>
+       <p class="subtitle mt-2">Mit Vesita hast Du die Möglichkeit, innert Sekunden die validierten Kontaktdaten deiner Gäste zu sammeln. Im Notfall kannst du sie direkt den kantonsärztlichen Diensten weiterleiten lassen, ohne dass du dich mit Listen oder Downloads herumschlagen musst.</p>
        <p>
          <a href="<%= Routes.cms_path(@conn, :howto) %>"><button class="button is-large is-outlined is-info">Zur Anleitung</button></a>
        </p>
@@ -51,7 +51,23 @@
             <figure>
               <i class="fa fa-check is-primary"></i>
             </figure>
-            Minimaler Aufwand</h2>
+            Kein Umsatzverlust durch ausfallende Besucher</h2>
+          <p class="subtitle">Kann ein Gast die Veranstaltung nicht besuchen, so entsteht ein Konsumations-Umsatzverlust. Unsere Verifizierung ist <strong>nicht an ein Ticket gebunden</strong>. Der Besucher kann sein Ticket spontan an jemand anderen weitergeben.</p>
+        </li>
+        <li>
+          <h2 class="colored is-5 is-primary">
+            <figure>
+              <i class="fa fa-check is-primary"></i>
+            </figure>
+            Abendkasse möglich</h2>
+          <p class="subtitle">Da eine Identigizierung über Vesita auch ohne personalisiertes Ticket möglich ist, können auch spontan an der Abendkasse noch Eintritte verkauft werden.</p>
+        </li>
+        <li>
+          <h2 class="colored is-5 is-primary">
+            <figure>
+              <i class="fa fa-check is-primary"></i>
+            </figure>
+            Minimaler Aufwand für den Veranstalter</h2>
           <p class="subtitle">Kein mühsames Verwalten von handgeschriebenen Zetteln oder Tabellen. Wir übernehmen die Verwaltung der Daten.</p>
         </li>
         <li>
@@ -75,14 +91,6 @@
             <figure>
               <i class="fa fa-check is-primary"></i>
             </figure>
-            Laufkundschaft</h2>
-          <p class="subtitle">Die Verifizierung ist <strong>nicht an ein Ticket gebunden</strong>. Du kannst auch spontan noch Eintritte verkaufen.</p>
-        </li>
-        <li>
-          <h2 class="colored is-5 is-primary">
-            <figure>
-              <i class="fa fa-check is-primary"></i>
-            </figure>
             Keine Lizenzkosten oder Abogebühren</h2>
           <p class="subtitle">Vesita ist für jeden User kostenlos. Als Veranstalter bezahlst du lediglich eine kleine Gebühr pro Besucher.</p>
         </li>
@@ -99,8 +107,32 @@
             <figure>
               <i class="fa fa-check is-primary"></i>
             </figure>
+            Mehrere Eingänge möglich</h2>
+          <p class="subtitle">Vesita erlaubt das Tracking an <strong>mehreren Eingängen gleichzeitig</strong>.</p>
+        </li>
+        <li>
+          <h2 class="colored is-5 is-primary">
+            <figure>
+              <i class="fa fa-check is-primary"></i>
+            </figure>
+            Flexibles Preismodell</h2>
+          <p class="subtitle">Je öfter du Vesita nutzt, desto mehr kommen wir dir engegen. <strong>Nimm mit uns <a href="/kontakt">Kontakt</a> auf</strong>.</p>
+        </li>
+        <li>
+          <h2 class="colored is-5 is-primary">
+            <figure>
+              <i class="fa fa-check is-primary"></i>
+            </figure>
+            Demnächst: Check-In und Check-Out</h2>
+          <p class="subtitle">In Kürze kannst du auch das <strong>Kommen und Gehen des Besuchers</strong> aufnehmen.</p>
+        </li>
+        <li>
+          <h2 class="colored is-5 is-primary">
+            <figure>
+              <i class="fa fa-check is-primary"></i>
+            </figure>
             Agiles Entwicklungsteam</h2>
-          <p class="subtitle">Wir sind in der Lage, die App rasch den neuen Bedingungen anzupassen.</p>
+          <p class="subtitle">Wir sind in der Lage, die Dienstleistung rasch den spontan wechelnden Bedingungen anzupassen.</p>
         </li>
         <li>
           <h2 class="colored is-5 is-primary">

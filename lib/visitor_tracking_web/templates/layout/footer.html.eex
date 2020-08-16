@@ -1,7 +1,7 @@
 <footer class="footer mt-6">
   <div class="content has-text-centered">
     <a href="/">
-      <img src="<%= Routes.static_path(@conn, "/images/vesita-logo-full.svg") %>" width="150">
+      <img src="<%= Routes.static_path(@conn, "/images/vesita-logo-full.svg") %>" width="150" alt="Vesita Logo full">
     </a>  
 
     <div class="footer-links mt-3">
