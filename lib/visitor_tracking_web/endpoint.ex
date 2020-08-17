@@ -10,6 +10,8 @@ defmodule VisitorTrackingWeb.Endpoint do
     signing_salt: "BMiYg4go"
   ]
 
+  plug App.Plugs.WWWRedirect
+
   socket "/socket", VisitorTrackingWeb.UserSocket,
     websocket: true,
     longpoll: false
