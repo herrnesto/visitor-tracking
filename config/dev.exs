@@ -83,7 +83,7 @@ config :phoenix, :plug_init_mode, :runtime
 
 config :visitor_tracking, VisitorTracking.Mailer,
   adapter: Bamboo.LocalAdapter,
-  open_email_in_browser_url: "http://localhost:4000/sent_emails"
+  open_email_in_browser_url: "https://0.0.0.0:4001/sent_emails"
 
 config :visitor_tracking,
   twilio_account_sid: System.get_env("TWILIO_ACCOUNT_SID") || "test",
