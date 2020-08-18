@@ -22,46 +22,52 @@
         </b-notification>
       </div>
 
+        <ValidationObserver ref="observer" v-slot="{ handleSubmit }">
+          <!-- the "handleSubmit" function on the slot-scope executes the callback if validation was successfull -->
+          <ValidationProvider rules="required|email" name="Email" v-slot="{ errors, valid }">
+            <b-field
+                label="Deine E-Mail-Adresse"
+                :type="{ 'is-danger': errors[0], 'is-success': valid }"
+                :message="errors">
+              <b-input type="email" v-model="email" size="is-medium"></b-input>
+            </b-field>
+          </ValidationProvider>
 
-      <ValidationObserver ref="observer" v-slot="{ handleSubmit }">
-        <!-- the "handleSubmit" function on the slot-scope executes the callback if validation was successfull -->
-        <ValidationProvider rules="required|email" name="Email" v-slot="{ errors, valid }">
-          <b-field
-              label="Deine E-Mail-Adresse"
-              :type="{ 'is-danger': errors[0], 'is-success': valid }"
-              :message="errors">
-            <b-input type="email" v-model="email" size="is-medium"></b-input>
-          </b-field>
-        </ValidationProvider>
+          <ValidationProvider rules="required|alpha_spaces|max:50" name="name" v-slot="{ errors, valid }">
+            <b-field
+                label="Name"
+                :type="{ 'is-danger': errors[0], 'is-success': valid }"
+                :message="errors">
+              <b-input type="text" v-model="name" size="is-medium"></b-input>
+            </b-field>
+          </ValidationProvider>
 
-        <ValidationProvider rules="required|alpha_spaces|max:50" name="name" v-slot="{ errors, valid }">
-          <b-field
-              label="Name"
-              :type="{ 'is-danger': errors[0], 'is-success': valid }"
-              :message="errors">
-            <b-input type="text" v-model="name" size="is-medium"></b-input>
-          </b-field>
-        </ValidationProvider>
+          <ValidationProvider rules="required|min:15|max:1000" name="message" v-slot="{ errors, valid }">
+            <b-field
+                label="Nachricht"
+                :type="{ 'is-danger': errors[0], 'is-success': valid }"
+                :message="errors">
+              <b-input type="textarea" v-model="message" size="is-medium"></b-input>
+            </b-field>
+          </ValidationProvider>
 
-        <ValidationProvider rules="required|min:15|max:1000" name="message" v-slot="{ errors, valid }">
-          <b-field
-              label="Nachricht"
-              :type="{ 'is-danger': errors[0], 'is-success': valid }"
-              :message="errors">
-            <b-input type="textarea" v-model="message" size="is-medium"></b-input>
-          </b-field>
-        </ValidationProvider>
+          <b-button size="is-medium"
+                    class="mt-5"
+                    icon-left="paper-plane"
+                    type="is-primary"
+                    v-bind:loading="isSending"
+                    @click="handleSubmit(executeRecaptcha)">
+            Abschicken
+          </b-button>
+        </ValidationObserver>
+        <vue-recaptcha sitekey="6Ldhsr8ZAAAAAKZys6Z4jZf3dM-Vtw2FCj5hIXwr"
+                       ref="invisibleRecaptcha"
+                       @verify="onVerify"
+                       @expired="onExpired"
+                       size="invisible"
+                       :loadRecaptchaScript="true">
+        </vue-recaptcha>
 
-        <b-button size="is-medium"
-                  class="mt-5"
-                  icon-left="paper-plane"
-                  type="is-primary"
-                  v-bind:loading="isSending"
-                  @click="handleSubmit(executeRecaptcha)">
-          Abschicken
-        </b-button>
-      </ValidationObserver>
-      <recaptcha ref="recaptcha" @verify="send_message"></recaptcha>
     </div>
   </section>
 </template>
@@ -69,17 +75,15 @@
 
 <script>
 import {ValidationObserver, ValidationProvider} from "vee-validate";
-import {VueTelInput} from 'vue-tel-input'
 import axios from 'axios';
-import Recaptcha from './Recaptcha.vue'
+import VueRecaptcha from 'vue-recaptcha';
 
 export default {
   name: "ContactForm",
   components: {
-    VueTelInput,
     ValidationProvider,
     ValidationObserver,
-    Recaptcha
+    VueRecaptcha
   },
   data() {
     return {
@@ -117,8 +121,15 @@ export default {
       })
     },
     executeRecaptcha () {
-      this.$refs.recaptcha.execute()
-    }
+      this.$refs.invisibleRecaptcha.execute()
+    },
+    onVerify: function (response) {
+      console.log('Verify: ' + response)
+      this.send_message()
+    },
+    onExpired: function () {
+      console.log('Expired')
+    },
   },
   created() {
     this.api_url = document.getElementById('api_url').value
