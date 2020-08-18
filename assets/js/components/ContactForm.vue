@@ -125,6 +125,7 @@ export default {
     },
     onVerify: function (response) {
       console.log('Verify: ' + response)
+      this.isSending =  true
       this.send_message()
     },
     onExpired: function () {
