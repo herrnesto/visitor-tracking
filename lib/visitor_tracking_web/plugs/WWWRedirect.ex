@@ -23,6 +23,6 @@ defmodule App.Plugs.WWWRedirect do
 
   # Returns whether the domain is bare (no www)
   defp bare_domain?(host) do
-    !Regex.match?(~r/\Awww\..*\z/i, host)
+    !Regex.match?(~r/^([A-Za-z0-9](?:(?:[-A-Za-z0-9]){0,61}[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:(?:[-A-Za-z0-9]){0,61}[A-Za-z0-9])?){2,})$/i, host)
   end
 end
