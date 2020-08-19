@@ -2,7 +2,7 @@ defmodule VisitorTracking.Events.Action do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "actions" do
+  schema "event_visitor_actions" do
     belongs_to :event, VisitorTracking.Events.Event
     belongs_to :user, VisitorTracking.Accounts.User
     field :action, :string
