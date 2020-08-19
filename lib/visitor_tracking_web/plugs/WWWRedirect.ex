@@ -1,4 +1,8 @@
 defmodule App.Plugs.WWWRedirect do
+  @moduledoc """
+  Redirection Plug module
+  """
+
   import Plug.Conn
 
   def init(options) do
