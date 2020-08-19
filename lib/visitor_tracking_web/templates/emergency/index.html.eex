@@ -1,0 +1,28 @@
+<h1>Listing Emergencies</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Recipient name</th>
+      <th>Recipient email</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for emergency <- @emergencies do %>
+    <tr>
+      <td><%= emergency.recipient_name %></td>
+      <td><%= emergency.recipient_email %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.emergency_path(@conn, :show, emergency) %></span>
+        <span><%= link "Edit", to: Routes.emergency_path(@conn, :edit, emergency) %></span>
+        <span><%= link "Delete", to: Routes.emergency_path(@conn, :delete, emergency), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Emergency", to: Routes.emergency_path(@conn, :new) %></span>

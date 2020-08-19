@@ -1,0 +1,18 @@
+<h1>Show Emergency</h1>
+
+<ul>
+
+  <li>
+    <strong>Recipient name:</strong>
+    <%= @emergency.recipient_name %>
+  </li>
+
+  <li>
+    <strong>Recipient email:</strong>
+    <%= @emergency.recipient_email %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.emergency_path(@conn, :edit, @emergency) %></span>
+<span><%= link "Back", to: Routes.emergency_path(@conn, :index) %></span>

@@ -32,7 +32,6 @@
         <% end %>
 
         <%= if event_organiser?(@conn, @event) do %>
-
           <%= if @event.status != "closed" do %>
             <%= link to: "/events/#{@event.id}/scanners/new", class: "button is-primary is-outlined" do %>
               <span class="icon is-small">
@@ -41,16 +40,25 @@
               <span>Scanner hinzufügen</span>
             <% end %>
           <% end %>
+
+          <%= if @event.status == "closed" do %>
+            <%= link to: Routes.emergency_path(@conn, :new), class: "button is-danger" do %>
+            <span class="icon is-small">
+                    <i class="fas fa-times"></i>
+                  </span>
+            <span>Ernstfall einleiten</span>
+            <% end %>
+          <% end %>
         <% end %>
 
         <%= if @event.status == "open" do %>
-        <%= link to: Routes.event_path(@conn, :close_event, @event), class: "button is-danger is-outlined", data: [confirm: "Event wirklich schliesse? Es können keine Besucher mehr reingelassen werden."] do %>
-        <span class="icon is-small">
-                  <i class="fas fa-times"></i>
-                </span>
-        <span>Event schliessen</span>
-        <% end %>
+          <%= link to: Routes.event_path(@conn, :close_event, @event), class: "button is-danger is-outlined", data: [confirm: "Event wirklich schliesse? Es können keine Besucher mehr reingelassen werden."] do %>
+          <span class="icon is-small">
+                    <i class="fas fa-times"></i>
+                  </span>
+          <span>Event schliessen</span>
           <% end %>
+        <% end %>
 
         <%= if @event.status == "open" do %>
           <%= link to: Routes.scan_path(@conn, :show, @event), method: :get, class: "button is-link is-outlined", data: [confirm: "Mit dem Scannen starten?"] do %>
@@ -67,7 +75,7 @@
                 <i class="fas fa-times"></i>
               </span>
           <span>Event starten</span>
-      <% end %>
+          <% end %>
         <% end %>
     </p>
 

@@ -78,6 +78,11 @@ defmodule VisitorTrackingWeb.Router do
     resources "/", ScannerController
   end
 
+  scope "/events/:event_id/emergency", VisitorTrackingWeb do
+    pipe_through [:browser, :authenticate_user, :check_phone_verified, :check_if_event_organiser]
+    resources "/", EmergencyController
+  end
+
   # Other scopes may use custom stacks.
   scope "/api", VisitorTrackingWeb do
     pipe_through :api
