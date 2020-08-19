@@ -215,4 +215,75 @@ defmodule VisitorTracking.EventsTest do
                })
     end
   end
+
+  describe "get_visitors_stats/1" do
+    test "get stats about user at an event" do
+      event = insert(:event)
+      user_1 = insert(:user)
+      user_2 = insert(:user)
+      user_3 = insert(:user)
+      user_4 = insert(:user)
+
+      assert %{total_visitors: 0, active_visitors: 0} = Events.get_visitors_stats(event.id)
+
+      insert(:visitor_action, %{event_id: event.id, user_id: user_1.id, action: "in"})
+      assert %{total_visitors: 1, active_visitors: 1} = Events.get_visitors_stats(event.id)
+      :timer.sleep(1000)
+
+      insert(:visitor_action, %{event_id: event.id, user_id: user_1.id, action: "out"})
+      assert %{total_visitors: 1, active_visitors: 0} = Events.get_visitors_stats(event.id)
+      :timer.sleep(1000)
+
+      insert(:visitor_action, %{event_id: event.id, user_id: user_1.id, action: "in"})
+      assert %{total_visitors: 1, active_visitors: 1} = Events.get_visitors_stats(event.id)
+      :timer.sleep(1000)
+
+      insert(:visitor_action, %{event_id: event.id, user_id: user_2.id, action: "in"})
+      assert %{total_visitors: 2, active_visitors: 2} = Events.get_visitors_stats(event.id)
+      :timer.sleep(1000)
+
+      insert(:visitor_action, %{event_id: event.id, user_id: user_3.id, action: "in"})
+      assert %{total_visitors: 3, active_visitors: 3} = Events.get_visitors_stats(event.id)
+      :timer.sleep(1000)
+
+      insert(:visitor_action, %{event_id: event.id, user_id: user_2.id, action: "out"})
+      assert %{total_visitors: 3, active_visitors: 2} = Events.get_visitors_stats(event.id)
+      :timer.sleep(1000)
+
+      insert(:visitor_action, %{event_id: event.id, user_id: user_3.id, action: "out"})
+      assert %{total_visitors: 3, active_visitors: 1} = Events.get_visitors_stats(event.id)
+      :timer.sleep(1000)
+
+      insert(:visitor_action, %{event_id: event.id, user_id: user_4.id, action: "in"})
+      assert %{total_visitors: 4, active_visitors: 2} = Events.get_visitors_stats(event.id)
+      :timer.sleep(1000)
+
+      insert(:visitor_action, %{event_id: event.id, user_id: user_2.id, action: "in"})
+      assert %{total_visitors: 4, active_visitors: 3} = Events.get_visitors_stats(event.id)
+    end
+
+    test "event does not exists" do
+      assert %{total_visitors: 0, active_visitors: 0} =
+               Events.get_visitors_stats(999_999_999_999_999)
+    end
+  end
+
+  describe "get_visitor_last_action/2" do
+    test "returns last action" do
+      %{id: event_id} = insert(:event)
+      %{id: user_id} = insert(:user)
+
+      insert(:visitor_action, %{event_id: event_id, user_id: user_id, action: "in"})
+
+      assert %{action: "in", user_id: user_id, event_id: event_id} =
+               Events.get_visitor_last_action(user_id, event_id)
+
+      :timer.sleep(1000)
+
+      insert(:visitor_action, %{event_id: event_id, user_id: user_id, action: "out"})
+
+      assert %{action: "out", user_id: user_id, event_id: event_id} =
+               Events.get_visitor_last_action(user_id, event_id)
+    end
+  end
 end

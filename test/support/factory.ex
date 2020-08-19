@@ -69,4 +69,12 @@ defmodule VisitorTracking.Factory do
       enabled: true
     }
   end
+
+  def visitor_action_factory(%{action: action, event_id: event_id, user_id: user_id} = _attrs) do
+    %Events.Action{
+      event_id: event_id,
+      user_id: user_id,
+      action: action
+    }
+  end
 end
