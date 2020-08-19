@@ -3,7 +3,7 @@ defmodule VisitorTrackingWeb.ScanController do
 
   alias VisitorTracking.{Accounts, Events}
 
-  plug :check_if_scanner when action in [:show, :assign_visitor, :event_infos]
+  plug :check_if_scanner when action in [:show, :assign_visitor, :event_infos, :insert_action]
 
   def show(conn, %{"event_id" => id}) do
     case Events.get_event(id) do
@@ -41,6 +41,16 @@ defmodule VisitorTrackingWeb.ScanController do
       event: event,
       visitors: Events.count_visitors(event.id)
     })
+  end
+
+  def insert_action(conn, action_params) do
+    case Events.insert_action(action_params) do
+      {:ok, action} ->
+        render(conn, "insert_action.json", action: action)
+
+      {:error, changeset} ->
+        render(conn, "insert_action_error.json", error: changeset.errors)
+    end
   end
 
   defp get_api_url do

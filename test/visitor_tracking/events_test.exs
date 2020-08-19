@@ -201,4 +201,18 @@ defmodule VisitorTracking.EventsTest do
       assert 1 == Events.count_visitors("#{event.id}")
     end
   end
+
+  describe "insert_action/1" do
+    test "inserts an action for a user" do
+      event = insert(:event)
+      %{uuid: uuid} = insert(:user)
+
+      assert {:ok, %{action: "in"}} =
+               Events.insert_action(%{
+                 "event_id" => "#{event.id}",
+                 "uuid" => "#{uuid}",
+                 "action" => "in"
+               })
+    end
+  end
 end

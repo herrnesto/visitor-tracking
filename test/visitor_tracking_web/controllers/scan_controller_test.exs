@@ -81,6 +81,32 @@ defmodule VisitorTrackingWeb.ScanControllerTest do
     end
   end
 
+  describe "POSt /api/scan/insert_action" do
+    test "insert action without beeing scanner", %{event: event} do
+      user = insert(:user, email_verified: true, phone_verified: true)
+      conn = build_conn() |> Plug.Test.init_test_session(user_id: user.id)
+
+      %{uuid: uuid} = insert(:user, email_verified: true, phone_verified: true)
+
+      conn =
+        post(conn, "/api/scan/insert_action", %{
+          "event_id" => event.id,
+          "uuid" => uuid,
+          "action" => "in"
+        })
+
+      assert redirected_to(conn) =~ "/events"
+    end
+
+    test "insert action while being a scanner", %{conn: conn, event: event} do
+      %{uuid: uuid} = insert(:user, email_verified: true, phone_verified: true)
+
+      conn = post(conn, "/api/scan/assign_visitor", %{"event_id" => event.id, "uuid" => uuid})
+
+      assert %{"status" => "ok"} = json_response(conn, 200)
+    end
+  end
+
   describe "POST /api/scan/user" do
     test "returns user json if user exists", %{conn: conn} do
       %{uuid: uuid} = insert(:user)
