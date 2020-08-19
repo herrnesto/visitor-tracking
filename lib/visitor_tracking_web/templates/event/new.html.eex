@@ -51,7 +51,7 @@
 		    <div class="field">
 		      <div class="control">
           <label class="label">Start</label>
-            <%= datetime_local_input f, :date_start, class: "input is-medium" %>
+            <%= datetime_select f, :date_start, class: "select is-medium" %>
 		      </div>
 		     	<p class="help is-danger">
 		     		<%= error_tag f, :date_start %>
