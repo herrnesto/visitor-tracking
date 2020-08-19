@@ -4,6 +4,7 @@ defmodule VisitorTracking.Events do
   """
   alias VisitorTracking.{
     Accounts,
+    Events.Action,
     Events.Event,
     Events.Rules,
     Events.Scanner,
@@ -173,5 +174,18 @@ defmodule VisitorTracking.Events do
       nil ->
         {:error, "User does not exist"}
     end
+  end
+
+  def insert_action(%{"event_id" => event_id, "uuid" => uuid, "action" => action}) do
+    user = Accounts.get_user_by(%{uuid: uuid})
+
+    %Action{}
+    |> Action.changeset(%{event_id: event_id, user_id: user.id, action: action})
+    |> Repo.insert()
+  end
+
+  def get_user_actions(id) do
+    query = from a in Action, where: a.user_id == ^id
+    Repo.all(query)
   end
 end

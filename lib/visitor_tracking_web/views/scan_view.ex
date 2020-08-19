@@ -42,4 +42,29 @@ defmodule VisitorTrackingWeb.ScanView do
       visitors: visitors
     }
   end
+
+  def render("insert_action.json", %{action: %{event: event, user: user, action: action}}) do
+    %{
+      status: "ok",
+      event: %{
+        id: event.id,
+        name: event.name,
+        venue: event.venue
+      },
+      user: %{
+        id: user.id
+      },
+      action: action
+    }
+  end
+
+  def render("insert_action_error.json", %{error: errors}) do
+    %{
+      status: "error",
+      errors:
+        Enum.map(errors, fn {key, {val, _}} ->
+          %{key => val}
+        end)
+    }
+  end
 end
