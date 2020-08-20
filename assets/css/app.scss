@@ -170,3 +170,21 @@ footer {
     margin: .5rem 0 .75rem;
   }
 }
+
+.bg-img {
+  background-image: url("https://www.vesita.ch/images/crowd-image-2.jpg") ;
+  background-position: center top;
+  background-repeat:  no-repeat;
+  background-size:  cover;
+  background-color: #999;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.3);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}

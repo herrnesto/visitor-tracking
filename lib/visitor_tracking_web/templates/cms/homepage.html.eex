@@ -1,17 +1,19 @@
- <section class="hero is-medium is-info is-bold mb-6">
-  <div class="hero-head">
-    <%= render(VisitorTrackingWeb.LayoutView, "navigation.html", %{conn: @conn, current_user: @current_user}) %>
-  </div> 
-  <div class="hero-body">
-    <div class="columns">
-      <div class="column has-text-centered is-6 is-offset-3">
-        <h1 class="title mb-6">Die einfache, innovative und kostengünstige Lösung zur Erfassung der Besucherdaten an deinen Veranstaltungen.
-        </h1>
-          <a href="<%= Routes.registration_path(@conn, :phone_validation) %>"><button class="button is-large is-inverted is-outlined is-primary">Jetzt Registrieren</button></a>
-        </p>
+ <section class="hero is-medium is-info mb-6 bg-img">
+   <div class="overlay">
+    <div class="hero-head">
+      <%= render(VisitorTrackingWeb.LayoutView, "navigation.html", %{conn: @conn, current_user: @current_user}) %>
+    </div>
+    <div class="hero-body">
+      <div class="columns">
+        <div class="column has-text-centered is-6 is-offset-3">
+          <h1 class="title mb-6">Die einfache, innovative und kostengünstige Lösung zur Erfassung der Besucherdaten an deinen Veranstaltungen.
+          </h1>
+            <a href="<%= Routes.registration_path(@conn, :phone_validation) %>"><button class="button is-large is-inverted is-outlined is-primary">Jetzt Registrieren</button></a>
+          </p>
+        </div>
       </div>
     </div>
-  </div>
+   </div>
 </section>
 
 <section>
