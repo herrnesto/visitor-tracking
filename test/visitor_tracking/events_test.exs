@@ -275,15 +275,20 @@ defmodule VisitorTracking.EventsTest do
 
       insert(:visitor_action, %{event_id: event_id, user_id: user_id, action: "in"})
 
-      assert %{action: "in", user_id: user_id, event_id: event_id} =
-               Events.get_visitor_last_action(user_id, event_id)
+      assert "in" = Events.get_visitor_last_action(user_id, event_id)
 
       :timer.sleep(1000)
 
       insert(:visitor_action, %{event_id: event_id, user_id: user_id, action: "out"})
 
-      assert %{action: "out", user_id: user_id, event_id: event_id} =
-               Events.get_visitor_last_action(user_id, event_id)
+      assert "out" = Events.get_visitor_last_action(user_id, event_id)
+    end
+
+    test "returns last action if no action is there" do
+      %{id: event_id} = insert(:event)
+      %{id: user_id} = insert(:user)
+
+      assert "out" = Events.get_visitor_last_action(user_id, event_id)
     end
   end
 end

@@ -8,7 +8,9 @@ defmodule VisitorTrackingWeb.ScanController do
   def show(conn, %{"event_id" => id}) do
     case Events.get_event(id) do
       event = %{status: "open"} ->
-        render(conn, "index.html", %{event: event, api_url: get_api_url()})
+        conn
+        |> put_layout("scanner.html")
+        |> render("index.html", %{event: event, api_url: get_api_url()})
 
       %{status: _} ->
         conn
@@ -17,10 +19,16 @@ defmodule VisitorTrackingWeb.ScanController do
     end
   end
 
-  def user(conn, %{"uuid" => uuid}) do
+  def user(conn, %{"uuid" => uuid, "event_id" => event_id}) do
     case Accounts.get_user_by(uuid: uuid) do
-      nil -> render(conn, "error.json", error: "not_found")
-      user -> render(conn, "user.json", user: user)
+      nil ->
+        render(conn, "error.json", error: "not_found")
+
+      user ->
+        render(conn, "user.json", %{
+          user: user,
+          checkin: Events.get_visitor_last_action(user.id, event_id)
+        })
     end
   end
 

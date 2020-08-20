@@ -238,6 +238,12 @@ defmodule VisitorTracking.Events do
         order_by: [desc: a.inserted_at],
         limit: 1
 
-    Repo.one(query)
+    case Repo.one(query) do
+      %{action: action} ->
+        action
+
+      _ ->
+        "out"
+    end
   end
 end

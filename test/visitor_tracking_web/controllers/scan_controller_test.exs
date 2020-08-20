@@ -98,27 +98,84 @@ defmodule VisitorTrackingWeb.ScanControllerTest do
       assert redirected_to(conn) =~ "/events"
     end
 
-    test "insert action while being a scanner", %{conn: conn, event: event} do
+    test "insert <in> action while being a scanner", %{conn: conn, event: event} do
       %{uuid: uuid} = insert(:user, email_verified: true, phone_verified: true)
 
-      conn = post(conn, "/api/scan/assign_visitor", %{"event_id" => event.id, "uuid" => uuid})
+      conn =
+        post(conn, "/api/scan/insert_action", %{
+          "event_id" => event.id,
+          "uuid" => uuid,
+          "action" => "in"
+        })
 
-      assert %{"status" => "ok"} = json_response(conn, 200)
+      assert %{"status" => "ok", "action" => "in"} = json_response(conn, 200)
+    end
+    test "insert <out> action while being a scanner", %{conn: conn, event: event} do
+      %{uuid: uuid} = insert(:user, email_verified: true, phone_verified: true)
+
+      conn =
+        post(conn, "/api/scan/insert_action", %{
+          "event_id" => event.id,
+          "uuid" => uuid,
+          "action" => "out"
+        })
+
+      assert %{"status" => "ok", "action" => "out"} = json_response(conn, 200)
     end
   end
 
   describe "POST /api/scan/user" do
-    test "returns user json if user exists", %{conn: conn} do
+    test "returns user json if user exists", %{conn: conn, event: event} do
       %{uuid: uuid} = insert(:user)
-      conn = post(conn, "/api/scan/user", %{"uuid" => uuid})
+      conn = post(conn, "/api/scan/user", %{"uuid" => uuid, "event_id" => event.id})
 
       assert %{
                "status" => "ok"
              } = json_response(conn, 200)
     end
 
-    test "returns error json if user does not exist", %{conn: conn} do
-      conn = post(conn, "/api/scan/user", %{"uuid" => "testuuid"})
+    test "returns user with state if user is checked in", %{conn: conn, event: event} do
+      user = insert(:user)
+
+      insert(:visitor_action, %{event_id: event.id, user_id: user.id, action: "in"})
+
+      conn = post(conn, "/api/scan/user", %{"uuid" => user.uuid, "event_id" => event.id})
+
+      assert %{
+               "status" => "ok",
+               "checkin" => "in",
+               "firstname" => "Test"
+             } = json_response(conn, 200)
+    end
+
+    test "returns user with state if user is checked out", %{conn: conn, event: event} do
+      user = insert(:user)
+
+      insert(:visitor_action, %{event_id: event.id, user_id: user.id, action: "out"})
+
+      conn = post(conn, "/api/scan/user", %{"uuid" => user.uuid, "event_id" => event.id})
+
+      assert %{
+               "status" => "ok",
+               "checkin" => "out",
+               "firstname" => "Test"
+             } = json_response(conn, 200)
+    end
+
+    test "returns user with state if user had no action done on that event", %{conn: conn} do
+      user = insert(:user)
+
+      conn = post(conn, "/api/scan/user", %{"uuid" => user.uuid, "event_id" => "99999999"})
+
+      assert %{
+               "status" => "ok",
+               "checkin" => "out",
+               "firstname" => "Test"
+             } = json_response(conn, 200)
+    end
+
+    test "returns error json if user does not exist", %{conn: conn, event: event} do
+      conn = post(conn, "/api/scan/user", %{"uuid" => "testuuid", "event_id" => event.id})
 
       assert %{
                "status" => "error",

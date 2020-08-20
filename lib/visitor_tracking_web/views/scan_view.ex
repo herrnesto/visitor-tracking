@@ -8,13 +8,14 @@ defmodule VisitorTrackingWeb.ScanView do
     }
   end
 
-  def render("user.json", %{user: user}) do
+  def render("user.json", %{user: user, checkin: checkin}) do
     %{
       status: "ok",
       firstname: user.firstname,
       lastname: user.lastname,
       phone_verified: user.phone_verified,
-      email_verified: user.email_verified
+      email_verified: user.email_verified,
+      checkin: checkin
     }
   end
 
@@ -43,17 +44,9 @@ defmodule VisitorTrackingWeb.ScanView do
     }
   end
 
-  def render("insert_action.json", %{action: %{event: event, user: user, action: action}}) do
+  def render("insert_action.json", %{action: %{action: action}}) do
     %{
       status: "ok",
-      event: %{
-        id: event.id,
-        name: event.name,
-        venue: event.venue
-      },
-      user: %{
-        id: user.id
-      },
       action: action
     }
   end

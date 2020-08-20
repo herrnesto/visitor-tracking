@@ -31,7 +31,7 @@
                     icon-left="check"
                     type="is-success"
                     v-bind:loading="buttons.confirm.isLoading"
-                    @click="confirm_visitor">
+                    @click="checking_visitor">
             Gast bestätigen
           </b-button>
         </p>
@@ -104,7 +104,7 @@
             })
       },
       check_visitor: function () {
-        axios.post(this.api_url + `/scan/user`, {uuid: this.uuid})
+        axios.post(this.api_url + `/scan/user`, {uuid: this.uuid, event_id: this.event_id})
           .then(response => {
             if(response.data.status == "error"){
               this.toast("is-danger", "Ungültiger QR Code!")
@@ -116,23 +116,29 @@
             this.errors.push(e)
           })
       },
-      confirm_visitor: function () {
+      checking_visitor: function () {
+        this.insert_action("in")
+      },
+      checkout_visitor: function () {
+        this.insert_action("out")
+      },
+      insert_action(action){
         this.buttons.confirm.isLoading = true
-        axios.post(this.api_url + `/scan/assign_visitor`, {
-            event_id: this.event.id,
-            uuid: this.uuid
-          })
-          .then(response => {
-            this.visitor = false
-            this.buttons.confirm.isLoading = false
-            this.toast("is-success", "Besucher wurde registiert.")
-          })
-          .catch(e => {
-            this.errors.push(e)
-            this.buttons.confirm.isLoading = false
-            this.toast("is-danger", "Fehler beim Registrieren.")
-          })
-
+        axios.post(this.api_url + `/scan/insert_action`, {
+          event_id: this.event.id,
+          uuid: this.uuid,
+          action: action
+        })
+        .then(response => {
+          this.visitor = false
+          this.buttons.confirm.isLoading = false
+          this.toast("is-success", "Besucher wurde registiert.")
+        })
+        .catch(e => {
+          this.errors.push(e)
+          this.buttons.confirm.isLoading = false
+          this.toast("is-danger", "Fehler beim Registrieren.")
+        })
       },
       async onDetect(promise) {
         try {
