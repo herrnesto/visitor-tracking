@@ -11,11 +11,8 @@
         <span class="tag <%= if @event.status == "closed" do %>is-warning<% end %>">Geschlossen</span>
         <span class="tag <%= if @event.status == "archived" do %>is-danger<% end %>">Archiviert</span>
       </div>
-      <h2 class="title is-5">Besucher übersicht</h2>
-      <p><%= @visitors %> von max <%= @event.visitor_limit %></p>
-      <progress class="progress is-info" value="<%= @visitors %>" max="<%= @event.visitor_limit %>"><%= 100 / @event.visitor_limit * @visitors %>%</progress>
 
-      <h2 class="title is-5">Aktionen</h2>
+      <h2 class="title is-4 mt-6">Aktionen</h2>
       <p class="buttons">
 
       <%= if @event.status == "created" do %>
@@ -73,6 +70,32 @@
       <% end %>
         <% end %>
     </p>
+
+      <h2 class="title is-4 mt-6">Besucher Übersicht</h2>
+      <p class="subtitle"><%= @visitors %> von <%= @event.visitor_limit %></p>
+      <progress class="progress is-info" value="<%= @visitors %>" max="<%= @event.visitor_limit %>"><%= 100 / @event.visitor_limit * @visitors %>%</progress>
+
+    </div>
+  </div>
+</section>
+
+<section class="mt-6">
+  <div class="container">
+    <div class="column">
+      <h1 class="title is-4">Scanners</h1>
+      <p class="subtitle">Hier kannst du Personen hinzufügen, welche die Besucher registrieren können. Die Personen müssen bei Vesita registriert sein.</p>
+    </div>
+  </div>
+  <div class="container">
+    <div class="column">
+      <%= render(VisitorTrackingWeb.ScannerView, "index.html", %{ conn: @conn, current_user: @current_user, event_id: @event.id, scanners: @scanners}) %>
+    </div>
+  </div>
+</section>
+
+<section class="mt-6">
+  <div class="container">
+    <div class="column">
       <p class="buttons">
         <a class="button is-link is-outlined" href="<%= Routes.event_path(@conn, :index) %>">
           <span class="icon is-small">
@@ -81,9 +104,6 @@
           <span>Zurück zur Übersicht</span>
         </a>
       </p>
-      <p class="buttons">
     </div>
   </div>
 </section>
-
-<%= render(VisitorTrackingWeb.ScannerView, "index.html", %{ conn: @conn, current_user: @current_user, event_id: @event.id, scanners: @scanners}) %>

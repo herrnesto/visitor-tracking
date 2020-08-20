@@ -19,15 +19,15 @@
 <p>Ihre Daten werden nicht verwendet, um Rückschlüsse auf Ihre Person zu ziehen. Informationen dieser Art werden lediglich statistisch ausgewertet, um unseren Internetauftritt und die dahinterstehende Technik zu optimieren.</p>
 
 <h3>Personenbezogene Daten</h3>
-<p>Alle persönlichen Daten sie sie in ihrem Profil angegeben haben werden gespeichert. Dies dient dazu, dass dem BAG im Falle einer bekannten Infektion eine Liste aller Besucher übermittelt werden kann.</p>
+<p>Alle persönlichen Daten sie sie in ihrem Profil angegeben haben werden gespeichert. Dies dient dazu, dass dem kantonsärztlichen Dienst im Falle einer bekannten Infektion eine Liste aller Besucher übermittelt werden kann.</p>
 
 <h2>Speicherdauer von Daten</h2>
 <p>Für Benutzer, die sich auf unserer Website registrieren, speichern wir zusätzlich die persönlichen Informationen, die sie in ihren Benutzerprofilen angeben. Alle Benutzer können jederzeit ihre persönlichen Informationen einsehen, verändern oder löschen (nur per E-Mail Anfrage -> Rechtliche Grundlagen beachten).</p>
-<p>Alle Personenbezogenen Daten müssen per Gesetz während 14 Tagen nach der letzten Anmeldung an einem Event gespeichert werden. Nach dem Ablauf dieser Frist löschen wir in jedem Fall die Verknüpfung ihrer Daten zu einem Event.</p>
+<p>Alle personenbezogenen Daten müssen per Gesetz während 14 Tagen nach der letzten Anmeldung an einem Event gespeichert werden. Nach dem Ablauf dieser Frist löschen wir in jedem Fall die Verknüpfung ihrer Daten zu einem Event.</p>
 
 <h2>Wer hat Einsicht in ihre Daten</h2>
 <p>Der Veranstalter kann ihre Daten zu keiner Zeit auslesen. Lediglich beim Scannen des QR Codes wird ihr Name kurz erscheinen. Dies dient zur Identifikation zusammen mit der ID.</p>
-<p>Der Bund (BAG) kann per Gesetz eine Liste aller Gäste inklusive Kontaktdaten anfordern. Sollten wir aufgefordert werden ihre Daten auszuhändigen, werden sie von uns per E-Mail informiert.</p>
+<p>Der kantonsärztliche Dienst kann per Gesetz eine Liste aller Gäste inklusive Kontaktdaten anfordern. Sollten wir aufgefordert werden ihre Daten auszuhändigen, werden sie von uns per E-Mail informiert.</p>
 
 <h2>Datenübertragung</h2>
 <p>Um die Sicherheit Ihrer Daten bei der Übertragung zu schützen, verwenden wir dem aktuellen Stand der Technik entsprechende Verschlüsselungsverfahren (z. B. SSL) über HTTPS.</p>
@@ -45,4 +45,4 @@
 		  </div>
     </div>
   </div>
-</h2>
+</section>

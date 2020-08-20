@@ -1,11 +1,4 @@
-<section>
-  <div class="container">
-    <div class="column">
-      <h1 class="title is-3">Scanners</h1>
-    </div>
-  </div>
-  <div class="container">
-    <div class="column">
+
       <%= if @scanners == [] do %>
         <p>No scanner users have been assigned</p>
       <% else %>
@@ -26,6 +19,3 @@
           </tbody>
         </table>
       <% end %>
-    </div>
-	</div>
-</section>
