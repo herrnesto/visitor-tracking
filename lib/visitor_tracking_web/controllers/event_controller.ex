@@ -46,7 +46,7 @@ defmodule VisitorTrackingWeb.EventController do
       event ->
         render(conn, "show.html", %{
           event: event,
-          visitors: Events.count_visitors(event.id),
+          visitors: Events.get_visitors_stats(event.id),
           scanners: Events.list_scanners(id)
         })
     end

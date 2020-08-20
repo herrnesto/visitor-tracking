@@ -179,12 +179,12 @@
         .then(response => {
           this.visitor = false
           this.buttons.confirm.isLoading = false
-          this.toast("is-success", "Besucher wurde registiert.")
+          this.toast("is-success", (action == "in") ? "Besucher wurde registiert." : "Besucher wurde abgemeldet.")
         })
         .catch(e => {
           this.errors.push(e)
           this.buttons.confirm.isLoading = false
-          this.toast("is-danger", "Fehler beim Registrieren.")
+          this.toast("is-danger", "Aktion konnte nicht durchgeführt werden.")
         })
       },
       async onDetect(promise) {
