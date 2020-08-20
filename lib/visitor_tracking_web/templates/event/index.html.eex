@@ -23,18 +23,17 @@
           <thead>
             <tr>
               <th>Name</th>
-              <th>Veranstaltungsort</th>
+              <th></th>
               <th>Besucher Limite</th>
-              <th>Status</th>
               <th>Start</th>
             </tr>
           </thead>
           <tbody>
             <%= for event <- @events do %>
                 <tr>
-                  <td><a href="<%= Routes.event_path(@conn, :show, event) %>"><%= event.name %></a></td>
-                  <td><%= event.venue %></td>
-                  <td><%= event.visitor_limit %></td>
+                  <td>
+                    <a href="<%= Routes.event_path(@conn, :show, event) %>"><%= event.name %></a>
+                  </td>
                   <td>
                     <span class="tag
                       <%= if event.status == "created" do %>is-primary<% end %>
@@ -43,6 +42,7 @@
                       <%= if event.status == "archived" do %>is-danger<% end %>">
                       <%= event.status %></span>
                   </td>
+                  <td><%= event.visitor_limit %></td>
                   <td><%= event.date_start %></td>
                 </tr>
             <% end %>
