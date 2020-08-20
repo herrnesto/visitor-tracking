@@ -1,3 +1,25 @@
+<nav class="navbar is-white">
+  <div class="container">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+        <img src="<%= Routes.static_path(@conn, "/images/vesita-logo-text-black.svg") %>" width="100px" alt="Vesita Logo without icon">
+      </div>
+      <p class="navbar-burger">
+
+      </p>
+      <div class="navbar-item">
+        <div class="buttons">
+          <a href="<%= Routes.event_path(@conn, :show, @event.id) %>" class="button is-light">
+            <span class="icon is-small">
+              <i class="fas fa-power-off"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
 <section>
   <div class="container">
     <div class="columns">

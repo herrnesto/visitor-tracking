@@ -47,7 +47,7 @@ defmodule VisitorTrackingWeb.ScanController do
     render(conn, "event_infos.json", %{
       status: "ok",
       event: event,
-      visitors: Events.count_visitors(event.id)
+      visitors: Events.get_visitors_stats(event_id)
     })
   end
 

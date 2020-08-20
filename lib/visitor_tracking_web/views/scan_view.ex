@@ -38,7 +38,8 @@ defmodule VisitorTrackingWeb.ScanView do
       event: %{
         id: event.id,
         name: event.name,
-        venue: event.venue
+        venue: event.venue,
+        visitor_limit: event.visitor_limit
       },
       visitors: visitors
     }

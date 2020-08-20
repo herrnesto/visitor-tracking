@@ -1,44 +1,91 @@
 <template>
-  <div>
-    <h1 class="title is-4">{{ event.name }}</h1>
-    <p class="subtitle is-6">Besucher: {{ visitors }}</p>
+  <div class="column">
+    <h1 class="title is-4 mt-5">{{ event.name }}</h1>
+    <p><strong>{{ visitors.total_visitors }} Besucher</strong></p>
+    <b-progress :value="100 / event.visitor_limit * visitors.active_visitors"
+                size="is-medium"
+                type="is-info"
+                show-value>
+      <span style="color: black">Aktive: {{ visitors.active_visitors }} / {{ event.visitor_limit }}</span>
+    </b-progress>
 
     <b-message title="Warnung!" type="is-warning" has-icon aria-close-label="Close message" :active.sync="warning.isActive">
       {{ warning.msg }}
     </b-message>
 
     <div v-if="visitor">
-      <h2 class="title is-3 mb-6">{{ visitor.firstname }} {{ visitor.lastname }}</h2>
-      <h2 class="title is-5 mt-4">Prüfe den Namen mit der ID</h2>
+      <div v-if="visitor.checkin == 'out'">
+        <b-message type="is-info">
+          <h2 class="title is-3 mb-2">{{ visitor.firstname }} {{ visitor.lastname }}</h2>
+          <span class="icon has-text-success" v-if="visitor.phone_verified"><i class="fas fa-check"></i></span>
+          <span class="icon has-text-danger" v-else><i class="fas fa-times"></i></span> Mobilnummer
 
-      <div class="content">
-        <span class="icon has-text-success" v-if="visitor.phone_verified"><i class="fas fa-check"></i></span>
-        <span class="icon has-text-danger" v-else><i class="fas fa-times"></i></span> Mobilnummer
+          <br>
+          <span class="icon has-text-success" v-if="visitor.email_verified"><i class="fas fa-check"></i></span>
+          <span class="icon has-text-danger" v-else><i class="fas fa-times"></i></span> E-Mail
+        </b-message>
 
-        <br>
-        <span class="icon has-text-success" v-if="visitor.email_verified"><i class="fas fa-check"></i></span>
-        <span class="icon has-text-danger" v-else><i class="fas fa-times"></i></span> E-Mail
+        <b-message type="is-warning">
+          <h2 class="title is-5">Überprüfe die Daten mit der ID</h2>
+        </b-message>
+
+        <div class="field is-grouped is-grouped-centered">
+          <p class="control">
+            <b-button size="is-medium"
+                      icon-left="ban"
+                      type="is-danger"
+                      @click="visitor = false">
+              Ablehnen
+            </b-button>
+            <b-button size="is-medium"
+                      icon-left="check"
+                      type="is-success"
+                      v-bind:loading="buttons.confirm.isLoading"
+                      @click="checkin_visitor">
+              Gast bestätigen
+            </b-button>
+          </p>
+        </div>
       </div>
-      <div class="field is-grouped is-grouped-centered">
-        <p class="control">
-          <b-button size="is-medium"
-                    icon-left="ban"
-                    type="is-danger"
-                    @click="visitor = false">
-            Ablehnen
-          </b-button>
-          <b-button size="is-medium"
-                    icon-left="check"
-                    type="is-success"
-                    v-bind:loading="buttons.confirm.isLoading"
-                    @click="checking_visitor">
-            Gast bestätigen
-          </b-button>
-        </p>
+      <div v-else>
+        <b-message type="is-info">
+          <h2 class="title is-3 mb-2">{{ visitor.firstname }} {{ visitor.lastname }}</h2>
+          <span class="icon has-text-success" v-if="visitor.phone_verified"><i class="fas fa-check"></i></span>
+          <span class="icon has-text-danger" v-else><i class="fas fa-times"></i></span> Mobilnummer
+
+          <br>
+          <span class="icon has-text-success" v-if="visitor.email_verified"><i class="fas fa-check"></i></span>
+          <span class="icon has-text-danger" v-else><i class="fas fa-times"></i></span> E-Mail
+        </b-message>
+
+        <b-message type="is-warning">
+          <h2 class="title is-5">Gast wirklich abmelden?</h2>
+        </b-message>
+
+        <div class="field is-grouped is-grouped-centered">
+          <p class="control">
+            <b-button size="is-medium"
+                      icon-left="ban"
+                      type="is-danger"
+                      @click="visitor = false">
+              Abbrechen
+            </b-button>
+            <b-button size="is-medium"
+                      icon-left="check"
+                      type="is-success"
+                      v-bind:loading="buttons.confirm.isLoading"
+                      @click="checkout_visitor">
+              Gast abmelden
+            </b-button>
+          </p>
+        </div>
       </div>
     </div>
     <div v-else>
-      <p class="title is-6 mt-6">Halte die Kamera vor einen QR-Code:</p>
+      <b-message type="is-info">
+        Erfasse einen QR-Code mit deiner Kamera.
+      </b-message>
+      <p class="title is-6 mt-5"></p>
       <qrcode-stream @detect="onDetect" @init="onInit"></qrcode-stream>
     </div>
 
@@ -116,7 +163,7 @@
             this.errors.push(e)
           })
       },
-      checking_visitor: function () {
+      checkin_visitor: function () {
         this.insert_action("in")
       },
       checkout_visitor: function () {

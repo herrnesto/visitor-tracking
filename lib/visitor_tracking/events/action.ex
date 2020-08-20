@@ -1,4 +1,9 @@
 defmodule VisitorTracking.Events.Action do
+  @moduledoc """
+  User actions on an event.
+  in -> user is in the venue
+  out -> user has left the venue
+  """
   use Ecto.Schema
   import Ecto.Changeset
 

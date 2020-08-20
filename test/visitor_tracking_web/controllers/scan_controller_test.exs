@@ -44,9 +44,14 @@ defmodule VisitorTrackingWeb.ScanControllerTest do
       conn = post(conn, "/api/scan/event_infos", %{"event_id" => event.id})
 
       test_data = %{
-        "event" => %{"id" => event.id, "name" => "Test Event", "venue" => "Test Venue"},
+        "event" => %{
+          "id" => event.id,
+          "name" => "Test Event",
+          "venue" => "Test Venue",
+          "visitor_limit" => 100
+        },
         "status" => "ok",
-        "visitors" => 0
+        "visitors" => %{"active_visitors" => 0, "total_visitors" => 0}
       }
 
       assert json_response(conn, 200) == test_data
@@ -110,6 +115,7 @@ defmodule VisitorTrackingWeb.ScanControllerTest do
 
       assert %{"status" => "ok", "action" => "in"} = json_response(conn, 200)
     end
+
     test "insert <out> action while being a scanner", %{conn: conn, event: event} do
       %{uuid: uuid} = insert(:user, email_verified: true, phone_verified: true)
 
