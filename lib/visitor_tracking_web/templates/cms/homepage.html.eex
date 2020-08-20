@@ -62,7 +62,7 @@
               <i class="fa fa-check is-primary"></i>
             </figure>
             Abendkasse möglich</h2>
-          <p class="subtitle">Da eine Identigizierung über Vesita auch ohne personalisiertes Ticket möglich ist, können auch spontan an der Abendkasse noch Eintritte verkauft werden.</p>
+          <p class="subtitle">Da eine Identifizierung über Vesita auch ohne personalisiertes Ticket möglich ist, können auch spontan an der Abendkasse noch Eintritte verkauft werden.</p>
         </li>
         <li>
           <h2 class="colored is-5 is-primary">
@@ -78,7 +78,7 @@
               <i class="fa fa-check is-primary"></i>
             </figure>
             Keine Probleme mit dem Datenschutz</h2>
-          <p class="subtitle">Per Gesetz müssen personifizierten Daten innert 14 Tagen beim Veranstalter gelöscht werden. Der Veranstalter ist bei uns nie im Besitz der Daten. Jede Verbindung zum Event wird nach 14 Tagen gelöscht.</p>
+          <p class="subtitle">Per Gesetz müssen die personifizierten Daten innert 14 Tagen beim Veranstalter gelöscht werden. Der Veranstalter ist bei uns nie im Besitz der Daten. Jede Verbindung zum Event wird nach 14 Tagen gelöscht.</p>
         </li>
         <li>
           <h2 class="colored is-5 is-primary">
@@ -86,7 +86,7 @@
               <i class="fa fa-check is-primary"></i>
             </figure>
             100% Transparent</h2>
-          <p class="subtitle">Der Kunde hat zu jeder Zeit die <strong>Kontrolle über seine Daten</strong>.</p>
+          <p class="subtitle">Die Daten sind dem Veranstalter nicht zugänglich. Der Kunde hat zu jeder Zeit die <strong>Kontrolle über seine Daten</strong>.</p>
         </li>
         <li>
           <h2 class="colored is-5 is-primary">
@@ -118,7 +118,7 @@
               <i class="fa fa-check is-primary"></i>
             </figure>
             Flexibles Preismodell</h2>
-          <p class="subtitle">Je öfter du Vesita nutzt, desto mehr kommen wir dir engegen. <strong>Nimm mit uns <a href="/kontakt">Kontakt</a> auf</strong>.</p>
+          <p class="subtitle">Gerne offerieren wir Dir ein individuelles Angebot. <strong>Nimm mit uns <a href="/kontakt">Kontakt</a> auf</strong>.</p>
         </li>
         <li>
           <h2 class="colored is-5 is-primary">
@@ -126,7 +126,7 @@
               <i class="fa fa-check is-primary"></i>
             </figure>
             Demnächst: Check-In und Check-Out</h2>
-          <p class="subtitle">In Kürze kannst du auch das <strong>Kommen und Gehen des Besuchers</strong> aufnehmen.</p>
+          <p class="subtitle">In Kürze kannst du auch das <strong>Kommen und Gehen des Besuchers</strong> registrieren.</p>
         </li>
         <li>
           <h2 class="colored is-5 is-primary">
@@ -142,7 +142,7 @@
               <i class="fa fa-check is-primary"></i>
             </figure>
             State-of-the-Art Technologie</h2>
-          <p class="subtitle">Wir setzen auf <strong>Elixir</strong>, eine moderne und performante Programmiersprache. Welche eine hohe Performance unseres Systems ermöglicht.</p>
+          <p class="subtitle">Wir setzen auf <strong>Elixir</strong>, eine moderne und leistungsfähige Programmiersprache.</p>
         </li>
       </ul>
     </div>
