@@ -222,14 +222,6 @@ defmodule VisitorTracking.Events do
     |> Repo.insert()
   end
 
-  @doc """
-  Used for what??
-  """
-  def get_user_actions(id) do
-    query = from a in Action, where: a.user_id == ^id
-    Repo.all(query)
-  end
-
   def get_visitor_last_action(user_id, event_id) do
     query =
       from a in Action,
