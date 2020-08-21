@@ -7,6 +7,10 @@
 		<div class="column is-4 is-offset-4 has-text-centered">
 			<%= form_for @changeset, "/users", [id: "registration-form"], fn f ->	 %>
 
+        <div class="notification is-info is-light">
+          Deine Daten werden sicher verwahrt und sind für niemanden sichtbar. Auch <strong>für den Veranstalter bleibst du Anonym</strong> (ausgenommen ID Kontrolle). Du wirst von uns informiert, sollten deine Daten <strong>im Ernstfall</strong> an den kantonsärztlichen Dienst weitergeleitet werden.
+        </div>
+
         <p class="title is-4">Personalien</p>
         <div class="field">
           <div class="control">
@@ -45,8 +49,8 @@
 		      </p>
 		    </div>
 
-        <p class="title is-4 mt-5">Passwort</p>
-        <p class="subtitle is-6">Wähle ein Passwort um jederzeit die Kontrolle über deine Personalien zu haben.</p>
+        <p class="title is-4 mt-5">Sicherheit</p>
+        <p class="subtitle is-6">Setze ein Passwort mit mindestens 8 Zeichen, um jederzeit die Kontrolle über deine Daten zu haben.</p>
         <div class="field">
           <div class="control">
             <%= password_input f, :password, class: "input is-medium", placeholder: "Passwort" %>

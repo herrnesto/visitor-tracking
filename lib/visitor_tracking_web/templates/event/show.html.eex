@@ -72,9 +72,9 @@
     </p>
 
       <h2 class="title is-4 mt-6">Besucher Übersicht</h2>
-      <p class="subtitle"><%= @visitors %> von <%= @event.visitor_limit %></p>
-      <progress class="progress is-info" value="<%= @visitors %>" max="<%= @event.visitor_limit %>"><%= 100 / @event.visitor_limit * @visitors %>%</progress>
-
+      <p><%= @visitors.active_visitors %> von <%= @event.visitor_limit %></p>
+      <progress class="progress is-info" value="<%= @visitors.active_visitors %>" max="<%= @event.visitor_limit %>"></progress>
+      <p>Total wurden an der Veranstaltung <%= @visitors.total_visitors %> Besucher registriert.</p>
     </div>
   </div>
 </section>

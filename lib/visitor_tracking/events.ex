@@ -4,6 +4,7 @@ defmodule VisitorTracking.Events do
   """
   alias VisitorTracking.{
     Accounts,
+    Events.Action,
     Events.Event,
     Events.Rules,
     Events.Scanner,
@@ -45,6 +46,44 @@ defmodule VisitorTracking.Events do
 
   def count_visitors(id) do
     Repo.one(from e in "events_visitors", where: e.event_id == ^id, select: count(e.event_id))
+  end
+
+  def get_visitors_stats(event_id) do
+    query = "SELECT
+      va.user_id,
+      (
+        SELECT
+        action
+        FROM
+        event_visitor_actions xva
+        WHERE
+        xva.user_id = va.user_id
+        AND xva.event_id = va.event_id
+        ORDER BY
+        xva.inserted_at DESC
+        LIMIT 1) AS last_state
+      FROM
+        event_visitor_actions va
+      WHERE
+        event_id = #{event_id}
+      GROUP BY
+        va.user_id,
+        last_state;"
+
+    with {:ok, %{num_rows: total_visitors, rows: rows}} <- Ecto.Adapters.SQL.query(Repo, query) do
+      active_visitors =
+        Enum.reduce(rows, 0, fn [_ | status], acc ->
+          case status do
+            ["in"] -> acc + 1
+            _ -> acc
+          end
+        end)
+
+      %{
+        total_visitors: total_visitors,
+        active_visitors: active_visitors
+      }
+    end
   end
 
   @doc """
@@ -172,6 +211,31 @@ defmodule VisitorTracking.Events do
 
       nil ->
         {:error, "User does not exist"}
+    end
+  end
+
+  def insert_action(%{"event_id" => event_id, "uuid" => uuid, "action" => action}) do
+    user = Accounts.get_user_by(%{uuid: uuid})
+
+    %Action{}
+    |> Action.changeset(%{event_id: event_id, user_id: user.id, action: action})
+    |> Repo.insert()
+  end
+
+  def get_visitor_last_action(user_id, event_id) do
+    query =
+      from a in Action,
+        where: a.user_id == ^user_id,
+        where: a.event_id == ^event_id,
+        order_by: [desc: a.inserted_at],
+        limit: 1
+
+    case Repo.one(query) do
+      %{action: action} ->
+        action
+
+      _ ->
+        "out"
     end
   end
 end
