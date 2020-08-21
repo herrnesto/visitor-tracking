@@ -1,12 +1,12 @@
 <template>
   <div class="column">
-    <h1 class="title is-4 mt-5">{{ event.name }}</h1>
-    <p><strong>{{ visitors.total_visitors }} Besucher</strong></p>
+    <h1 class="title is-4 mt-5" v-text="event.name"></h1>
+    <p><strong><span v-text="visitors.total_visitors"></span> Besucher</strong></p>
     <b-progress :value="100 / event.visitor_limit * visitors.active_visitors"
                 size="is-medium"
                 type="is-info"
                 show-value>
-      <span style="color: black">Aktive: {{ visitors.active_visitors }} / {{ event.visitor_limit }}</span>
+      <span style="color: black" v-text="'Angemeldet: ' + visitors.active_visitors + '/' + event.visitor_limit"></span>
     </b-progress>
 
     <b-message title="Warnung!" type="is-warning" has-icon aria-close-label="Close message" :active.sync="warning.isActive">
@@ -15,15 +15,8 @@
 
     <div v-if="visitor">
       <div v-if="visitor.checkin == 'out'">
-        <b-message type="is-info">
-          <h2 class="title is-3 mb-2">{{ visitor.firstname }} {{ visitor.lastname }}</h2>
-          <span class="icon has-text-success" v-if="visitor.phone_verified"><i class="fas fa-check"></i></span>
-          <span class="icon has-text-danger" v-else><i class="fas fa-times"></i></span> Mobilnummer
 
-          <br>
-          <span class="icon has-text-success" v-if="visitor.email_verified"><i class="fas fa-check"></i></span>
-          <span class="icon has-text-danger" v-else><i class="fas fa-times"></i></span> E-Mail
-        </b-message>
+        <UserInfo :visitor="visitor" ></UserInfo>
 
         <b-message type="is-warning">
           <h2 class="title is-5">Überprüfe die Daten mit der ID</h2>
@@ -48,15 +41,8 @@
         </div>
       </div>
       <div v-else>
-        <b-message type="is-info">
-          <h2 class="title is-3 mb-2">{{ visitor.firstname }} {{ visitor.lastname }}</h2>
-          <span class="icon has-text-success" v-if="visitor.phone_verified"><i class="fas fa-check"></i></span>
-          <span class="icon has-text-danger" v-else><i class="fas fa-times"></i></span> Mobilnummer
 
-          <br>
-          <span class="icon has-text-success" v-if="visitor.email_verified"><i class="fas fa-check"></i></span>
-          <span class="icon has-text-danger" v-else><i class="fas fa-times"></i></span> E-Mail
-        </b-message>
+        <UserInfo :visitor="visitor"></UserInfo>
 
         <b-message type="is-warning">
           <h2 class="title is-5">Gast wirklich abmelden?</h2>
@@ -81,6 +67,7 @@
         </div>
       </div>
     </div>
+
     <div v-else>
       <b-message type="is-info">
         Erfasse einen QR-Code mit deiner Kamera.
@@ -97,20 +84,22 @@
 <script>
   import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader'
   import axios from 'axios';
+  import UserInfo from "./event_scanner/UserInfo.vue";
 
   export default {
-
+    name: "EventScanner",
     components: {
       QrcodeStream,
       QrcodeDropZone,
-      QrcodeCapture
+      QrcodeCapture,
+      UserInfo
     },
     data() {
       return {
         api_url: null,
         event_id: null,
         event: { name: ""},
-        visitors: 0,
+        visitors: Array,
         visitor: false,
         uuid: null,
         scanner: {
@@ -157,6 +146,7 @@
               this.toast("is-danger", "Ungültiger QR Code!")
             } else {
               this.visitor = response.data
+              this.request_event_data()
             }
           })
           .catch(e => {
@@ -180,6 +170,7 @@
           this.visitor = false
           this.buttons.confirm.isLoading = false
           this.toast("is-success", (action == "in") ? "Besucher wurde registiert." : "Besucher wurde abgemeldet.")
+          this.request_event_data()
         })
         .catch(e => {
           this.errors.push(e)
@@ -235,13 +226,6 @@
           this.scanner.isLoading = false
         }
       },
-    },
-    mounted() {
-      this.$nextTick(function () {
-        window.setInterval(() => {
-          this.request_event_data()
-        },5000);
-      })
     },
     created() {
       this.api_url = document.getElementById('api_url').value
