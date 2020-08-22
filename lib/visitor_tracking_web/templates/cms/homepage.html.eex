@@ -85,6 +85,30 @@
             <figure>
               <i class="fa fa-check is-primary"></i>
             </figure>
+            Check-In und Check-Out</h2>
+          <p class="subtitle">In Kürze kannst du auch das <strong>Kommen und Gehen des Besuchers</strong> registrieren.</p>
+        </li>
+        <li>
+          <h2 class="colored is-5 is-primary">
+            <figure>
+              <i class="fa fa-check is-primary"></i>
+            </figure>
+            Kleine und grosse Veranstaltungen</h2>
+          <p class="subtitle">Vesita eignet sich für kleine Veranstaltungen (weniger als 100 Personen) aber auch für Grosse (über 1000 Personen)</p>
+        </li>
+        <li>
+          <h2 class="colored is-5 is-primary">
+            <figure>
+              <i class="fa fa-check is-primary"></i>
+            </figure>
+            Kostenlose Demo</h2>
+          <p class="subtitle">Du kannst Vesita an einer Veranstaltung bis max. 300 Peronen kostenlos testen.</p>
+        </li>
+        <li>
+          <h2 class="colored is-5 is-primary">
+            <figure>
+              <i class="fa fa-check is-primary"></i>
+            </figure>
             100% Transparent</h2>
           <p class="subtitle">Die Daten sind dem Veranstalter nicht zugänglich. Der Kunde hat zu jeder Zeit die <strong>Kontrolle über seine Daten</strong>.</p>
         </li>
@@ -119,14 +143,6 @@
             </figure>
             Flexibles Preismodell</h2>
           <p class="subtitle">Gerne offerieren wir Dir ein individuelles Angebot. <strong>Nimm mit uns <a href="/kontakt">Kontakt</a> auf</strong>.</p>
-        </li>
-        <li>
-          <h2 class="colored is-5 is-primary">
-            <figure>
-              <i class="fa fa-check is-primary"></i>
-            </figure>
-            Demnächst: Check-In und Check-Out</h2>
-          <p class="subtitle">In Kürze kannst du auch das <strong>Kommen und Gehen des Besuchers</strong> registrieren.</p>
         </li>
         <li>
           <h2 class="colored is-5 is-primary">
