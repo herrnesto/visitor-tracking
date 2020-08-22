@@ -42,7 +42,7 @@
           <% end %>
 
           <%= if @event.status == "closed" do %>
-            <%= link to: Routes.emergency_path(@conn, :new), class: "button is-danger" do %>
+            <%= link to: Routes.emergency_path(@conn, :new, @event.id), class: "button is-danger" do %>
             <span class="icon is-small">
                     <i class="fas fa-times"></i>
                   </span>

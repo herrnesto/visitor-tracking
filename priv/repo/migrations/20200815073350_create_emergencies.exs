@@ -10,5 +10,12 @@ defmodule VisitorTracking.Repo.Migrations.CreateEmergencies do
 
       timestamps()
     end
+
+    create index(:emergencies, [:initiator_id])
+    create index(:emergencies, [:event_id])
+
+    create unique_index(:emergencies, [:initiator_id, :event_id],
+             name: :initiator_id_user_id_unique_index
+           )
   end
 end

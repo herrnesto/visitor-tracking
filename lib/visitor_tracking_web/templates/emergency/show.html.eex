@@ -13,6 +13,3 @@
   </li>
 
 </ul>
-
-<span><%= link "Edit", to: Routes.emergency_path(@conn, :edit, @emergency) %></span>
-<span><%= link "Back", to: Routes.emergency_path(@conn, :index) %></span>

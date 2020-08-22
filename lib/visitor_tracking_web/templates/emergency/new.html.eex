@@ -1,5 +1,46 @@
-<h1>New Emergency</h1>
+<%= render(VisitorTrackingWeb.LayoutView, "header.html", %{conn: @conn, current_user: @current_user}) %>
 
-<%= render "form.html", Map.put(assigns, :action, Routes.emergency_path(@conn, :create)) %>
+<section>
+  <div class="container">
+    <div class="column">
+      <h1 class="title">Neue Veranstaltung</h1>
+      <p class="buttons">
+        <a class="button is-link is-outlined" href="<%= Routes.event_path(@conn, :show, @event_id) %>">
+          <span class="icon is-small">
+            <i class="fas fa-arrow-left"></i>
+          </span>
+          <span>Zurück</span>
+        </a>
+      </p>
+    </div>
+  </div>
+  <div class="container">
+    <div class="column is-4">
+      <%= form_for @changeset, Routes.emergency_path(@conn, :create, @event_id), fn f ->	 %>
 
-<span><%= link "Back", to: Routes.emergency_path(@conn, :index) %></span>
+      <div class="field">
+        <div class="control">
+          <label class="label">Empfänger Name</label>
+          <%= text_input f, :recipient_name, class: "input is-medium", autofocus: "true" %>
+        </div>
+        <p class="help is-danger">
+          <%= error_tag f, :recipient_name %>
+        </p>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <label class="label">Empfänger E-Mail</label>
+          <%= email_input f, :recipient_email, class: "input is-medium" %>
+        </div>
+        <p class="help is-danger">
+          <%= error_tag f, :recipient_email %>
+        </p>
+      </div>
+
+      <%= submit "Notfall erstellen", class: "button is-block is-primary is-fullwidth is-medium" %>
+
+      <% end %>
+    </div>
+  </div>
+</section>

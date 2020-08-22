@@ -9,54 +9,29 @@ defmodule VisitorTrackingWeb.EmergencyController do
     render(conn, "index.html", emergencies: emergencies)
   end
 
-  def new(conn, _params) do
+  def new(conn, %{"event_id" => event_id}) do
     changeset = Emergencies.change_emergency(%Emergency{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html", changeset: changeset, event_id: event_id)
   end
 
-  def create(conn, %{"emergency" => emergency_params}) do
-    case Emergencies.create_emergency(emergency_params) do
+  def create(conn, %{"emergency" => emergency_params, "event_id" => event_id}) do
+    emergency_params
+    |> Map.put("initiator_id", get_session(conn, :user_id))
+    |> Map.put("event_id", event_id)
+    |> Emergencies.create_emergency()
+    |> case do
       {:ok, emergency} ->
         conn
         |> put_flash(:info, "Emergency created successfully.")
-        |> redirect(to: Routes.emergency_path(conn, :show, emergency))
+        |> redirect(to: Routes.event_path(conn, :show, event_id))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, event_id: event_id)
     end
   end
 
   def show(conn, %{"id" => id}) do
     emergency = Emergencies.get_emergency!(id)
     render(conn, "show.html", emergency: emergency)
-  end
-
-  def edit(conn, %{"id" => id}) do
-    emergency = Emergencies.get_emergency!(id)
-    changeset = Emergencies.change_emergency(emergency)
-    render(conn, "edit.html", emergency: emergency, changeset: changeset)
-  end
-
-  def update(conn, %{"id" => id, "emergency" => emergency_params}) do
-    emergency = Emergencies.get_emergency!(id)
-
-    case Emergencies.update_emergency(emergency, emergency_params) do
-      {:ok, emergency} ->
-        conn
-        |> put_flash(:info, "Emergency updated successfully.")
-        |> redirect(to: Routes.emergency_path(conn, :show, emergency))
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", emergency: emergency, changeset: changeset)
-    end
-  end
-
-  def delete(conn, %{"id" => id}) do
-    emergency = Emergencies.get_emergency!(id)
-    {:ok, _emergency} = Emergencies.delete_emergency(emergency)
-
-    conn
-    |> put_flash(:info, "Emergency deleted successfully.")
-    |> redirect(to: Routes.emergency_path(conn, :index))
   end
 end

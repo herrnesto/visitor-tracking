@@ -50,11 +50,4 @@ defmodule VisitorTracking.Events.Event do
     |> cast(%{organiser_id: organiser_id}, [:organiser_id])
     |> validate_required([:organiser_id])
   end
-
-  # @doc false
-  # def changeset_visitor(event, visitor) do
-  #   event
-  #   |> cast(%{}, [])
-  #   |> put_assoc(:visitors, [visitor | event.visitors])
-  # end
 end

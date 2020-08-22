@@ -6,67 +6,51 @@ defmodule VisitorTracking.EmergenciesTest do
   describe "emergencies" do
     alias VisitorTracking.Emergencies.Emergency
 
-    @valid_attrs %{recipient_email: "some recipient_email", recipient_name: "some recipient_name"}
-    @update_attrs %{
-      recipient_email: "some updated recipient_email",
-      recipient_name: "some updated recipient_name"
-    }
-    @invalid_attrs %{recipient_email: nil, recipient_name: nil}
-
-    def emergency_fixture(attrs \\ %{}) do
-      {:ok, emergency} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Emergencies.create_emergency()
-
-      emergency
-    end
-
     test "list_emergencies/0 returns all emergencies" do
-      emergency = emergency_fixture()
+      %{id: event_id, organiser: %{id: user_id}} = insert(:event)
+      emergency = insert(:emergency, %{event_id: event_id, user_id: user_id})
       assert Emergencies.list_emergencies() == [emergency]
     end
 
-    test "get_emergency!/1 returns the emergency with given id" do
-      emergency = emergency_fixture()
-      assert Emergencies.get_emergency!(emergency.id) == emergency
+    test "get_emergency_by_event_id!/1 returns the emergency with given id" do
+      %{id: event_id, organiser: %{id: user_id}} = insert(:event)
+      emergency = insert(:emergency, %{event_id: event_id, user_id: user_id})
+
+      assert Emergencies.get_emergency_by_event_id!(emergency.event_id) == emergency
     end
 
     test "create_emergency/1 with valid data creates a emergency" do
-      assert {:ok, %Emergency{} = emergency} = Emergencies.create_emergency(@valid_attrs)
+      assert {:ok, %Emergency{} = emergency} =
+               VisitorTracking.Emergencies.create_emergency(%{
+                 initiator_id: 2000,
+                 event_id: 1000,
+                 recipient_email: "some recipient_email",
+                 recipient_name: "some recipient_name"
+               })
+
       assert emergency.recipient_email == "some recipient_email"
-      assert emergency.recipient_name == "some recipient_name"
+      assert emergency.recipient_email == "some recipient_email"
+      assert emergency.initiator_id == 2000
+      assert emergency.event_id == 1000
+    end
+
+    test "returns an error if emergency is already assigned" do
+      %{id: event_id, organiser: %{id: user_id}} = insert(:event)
+      insert(:emergency, %{event_id: event_id, user_id: user_id})
+
+      assert {:error,
+              %Ecto.Changeset{
+                valid?: false,
+                errors: [
+                  event_id:
+                    {"ALREADY_EXISTS", [constraint: :unique, constraint_name: "emergencies_pkey"]}
+                ]
+              }} = insert(:emergency, %{event_id: event_id, user_id: user_id})
     end
 
     test "create_emergency/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Emergencies.create_emergency(@invalid_attrs)
-    end
-
-    test "update_emergency/2 with valid data updates the emergency" do
-      emergency = emergency_fixture()
-
-      assert {:ok, %Emergency{} = emergency} =
-               Emergencies.update_emergency(emergency, @update_attrs)
-
-      assert emergency.recipient_email == "some updated recipient_email"
-      assert emergency.recipient_name == "some updated recipient_name"
-    end
-
-    test "update_emergency/2 with invalid data returns error changeset" do
-      emergency = emergency_fixture()
-      assert {:error, %Ecto.Changeset{}} = Emergencies.update_emergency(emergency, @invalid_attrs)
-      assert emergency == Emergencies.get_emergency!(emergency.id)
-    end
-
-    test "delete_emergency/1 deletes the emergency" do
-      emergency = emergency_fixture()
-      assert {:ok, %Emergency{}} = Emergencies.delete_emergency(emergency)
-      assert_raise Ecto.NoResultsError, fn -> Emergencies.get_emergency!(emergency.id) end
-    end
-
-    test "change_emergency/1 returns a emergency changeset" do
-      emergency = emergency_fixture()
-      assert %Ecto.Changeset{} = Emergencies.change_emergency(emergency)
+      assert {:error, %Ecto.Changeset{}} =
+               Emergencies.create_emergency(%{recipient_email: nil, recipient_name: nil})
     end
   end
 end

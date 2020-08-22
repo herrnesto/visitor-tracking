@@ -238,4 +238,10 @@ defmodule VisitorTracking.Events do
         "out"
     end
   end
+
+
+  def get_all_visitors_by_event(event_id) do
+    Repo.all(from p in :event_visitor_actions, select: p.user_id, where: p.event_id == ^event_id, group_by: p.user_id)
+    |> Repo.preload(:user)
+  end
 end
