@@ -89,4 +89,22 @@ defmodule VisitorTrackingWeb.EmergencyControllerTest do
     emergency = fixture(:emergency)
     %{emergency: emergency}
   end
+
+  describe "add_visitors_data\1" do
+    test "add visitors to emergency data" do
+      organiser = insert(:user, phone_verified: true, email_verified: true)
+      event = insert(:event, organiser: organiser)
+
+      user_1 = insert(:user)
+      user_2 = insert(:user)
+      user_3 = insert(:user)
+
+      insert(:visitor_action, %{event_id: event.id, user_id: user_1.id, action: "in"})
+      insert(:visitor_action, %{event_id: event.id, user_id: user_2.id, action: "in"})
+      insert(:visitor_action, %{event_id: event.id, user_id: user_3.id, action: "in"})
+
+      assert [%Accounts.User{}, %Accounts.User{}, %Accounts.User{}] =
+               EmergencyController.add_visitors_data(params.event_id)
+    end
+  end
 end

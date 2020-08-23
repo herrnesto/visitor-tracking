@@ -239,9 +239,20 @@ defmodule VisitorTracking.Events do
     end
   end
 
-
   def get_all_visitors_by_event(event_id) do
-    Repo.all(from p in :event_visitor_actions, select: p.user_id, where: p.event_id == ^event_id, group_by: p.user_id)
-    |> Repo.preload(:user)
+    query = "SELECT
+      user_id
+      FROM
+        event_visitor_actions
+      WHERE
+        event_id = #{event_id}
+      GROUP BY
+        user_id;"
+
+    {:ok, %{rows: user_ids}} = Ecto.Adapters.SQL.query(Repo, query)
+
+    user_ids
+    |> List.flatten()
+    |> Accounts.get_user()
   end
 end

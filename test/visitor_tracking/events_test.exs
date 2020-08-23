@@ -1,7 +1,7 @@
 defmodule VisitorTracking.EventsTest do
   use VisitorTracking.DataCase, async: true
 
-  alias VisitorTracking.{Events, Events.Event, Events.Visitor}
+  alias VisitorTracking.{Accounts, Events, Events.Event, Events.Visitor}
 
   setup do
     user = insert(:user, email_verified: true, phone_verified: true)
@@ -293,7 +293,7 @@ defmodule VisitorTracking.EventsTest do
   end
 
   describe "get_all_visitors_by_event/2" do
-    test "returns last action" do
+    test "returns a list of users" do
       organiser = insert(:user, phone_verified: true, email_verified: true)
       event = insert(:event, organiser: organiser)
 
@@ -305,8 +305,22 @@ defmodule VisitorTracking.EventsTest do
       insert(:visitor_action, %{event_id: event.id, user_id: user_2.id, action: "in"})
       insert(:visitor_action, %{event_id: event.id, user_id: user_3.id, action: "in"})
 
+      assert [%Accounts.User{}, %Accounts.User{}, %Accounts.User{}] =
+               Events.get_all_visitors_by_event(event.id)
+    end
 
-      assert [%{_}, %{_}, %{_}] = Events.get_visitor_last_action(user_id, event_id)
+    test "returns no user" do
+      organiser = insert(:user, phone_verified: true, email_verified: true)
+      event = insert(:event, organiser: organiser)
+
+      assert [] = Events.get_all_visitors_by_event(event.id)
+      assert true = Enum.empty?(Events.get_all_visitors_by_event(event.id))
+    end
+
+    test "send invalid event_id" do
+      event_id = 99999
+      assert [] = Events.get_all_visitors_by_event(event.id)
+      assert true = Enum.empty?(Events.get_all_visitors_by_event(event.id))
     end
   end
 end

@@ -1,5 +1,9 @@
 defmodule VisitorTracking.Emergencies.Emergency do
+  @moduledoc """
+  Connects a user with an event.
+  """
   use Ecto.Schema
+
   import Ecto.Changeset
 
   alias VisitorTracking.{Event, Accounts.User}
@@ -13,11 +17,11 @@ defmodule VisitorTracking.Emergencies.Emergency do
     timestamps()
   end
 
-  @doc false
+  @required_fields ~w(recipient_name recipient_email initiator_id event_id)a
   def changeset(emergency, attrs) do
     emergency
-    |> cast(attrs, [:recipient_name, :recipient_email, :initiator_id, :event_id])
-    |> validate_required([:recipient_name, :recipient_email, :initiator_id, :event_id])
+    |> cast(attrs, @required_fields)
+    |> validate_required(@required_fields)
     |> foreign_key_constraint(:initiator_id)
     |> foreign_key_constraint(:event_id)
     |> unique_constraint([:initiator_id, :event_id],

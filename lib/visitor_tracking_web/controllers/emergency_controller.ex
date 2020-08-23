@@ -15,12 +15,20 @@ defmodule VisitorTrackingWeb.EmergencyController do
   end
 
   def create(conn, %{"emergency" => emergency_params, "event_id" => event_id}) do
+    emergency_params =
+      emergency_params
+      |> Map.put("initiator_id", get_session(conn, :user_id))
+      |> Map.put("event_id", event_id)
+
     emergency_params
-    |> Map.put("initiator_id", get_session(conn, :user_id))
-    |> Map.put("event_id", event_id)
     |> Emergencies.create_emergency()
     |> case do
       {:ok, emergency} ->
+        emergency_params
+        |> add_visitors_data()
+        |> Email.contact_form_email()
+        |> Mailer.deliver_now()
+
         conn
         |> put_flash(:info, "Emergency created successfully.")
         |> redirect(to: Routes.event_path(conn, :show, event_id))
@@ -33,5 +41,9 @@ defmodule VisitorTrackingWeb.EmergencyController do
   def show(conn, %{"id" => id}) do
     emergency = Emergencies.get_emergency!(id)
     render(conn, "show.html", emergency: emergency)
+  end
+
+  def add_visitors_data(params) do
+    Events.get_all_visitors_by_event(params.event_id)
   end
 end

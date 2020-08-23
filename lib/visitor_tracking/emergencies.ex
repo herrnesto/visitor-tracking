@@ -23,4 +23,8 @@ defmodule VisitorTracking.Emergencies do
     |> Emergency.changeset(attrs)
     |> Repo.insert()
   end
+
+  def change_emergency(%Emergency{} = emergency, attrs \\ %{}) do
+    Emergency.changeset(emergency, attrs)
+  end
 end

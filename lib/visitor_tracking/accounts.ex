@@ -6,6 +6,13 @@ defmodule VisitorTracking.Accounts do
   alias VisitorTracking.Accounts.User
   alias VisitorTracking.{Repo, Verification}
 
+  import Ecto.Query
+
+  def get_user(id) when is_list(id) do
+    query = from(p in User, where: p.id in ^id)
+    Repo.all(query)
+  end
+
   def get_user(id) do
     Repo.get(User, id)
   end

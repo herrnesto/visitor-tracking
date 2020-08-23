@@ -34,6 +34,7 @@ defmodule VisitorTracking.EmergenciesTest do
       assert emergency.event_id == 1000
     end
 
+    @tag :skip
     test "returns an error if emergency is already assigned" do
       %{id: event_id, organiser: %{id: user_id}} = insert(:event)
       insert(:emergency, %{event_id: event_id, user_id: user_id})
