@@ -18,12 +18,21 @@ defmodule VisitorTracking.EmailTest do
     recipient_name = "Dr. Pill"
 
     data = %{
+      "event" => %{
+        name: "partyhard",
+        organiser: %{
+          firstname: "sepp",
+          lastname: "meier",
+          phone: "+41000000000",
+          email: "bla@bla.com"
+        }
+      },
       "event_id" => "5",
       "initiator_id" => 1,
       "recipient_email" => recipient_email,
       "recipient_name" => recipient_name,
       "visitors" => [
-        %VisitorTracking.Accounts.User{
+        %{
           city: "brugg",
           email: "simon@daddsad.com",
           email_verified: false,
@@ -40,9 +49,13 @@ defmodule VisitorTracking.EmailTest do
           role: "user",
           updated_at: ~N[2020-08-04 19:33:44],
           uuid: "137216f4-d689-11ea-8ebd-784f439a034a",
-          zip: "6000"
+          zip: "6000",
+          actions: [
+            %{action: "in", datetime: "2020-8-22 14:00"},
+            %{action: "out", datetime: "2020-8-22 14:05"}
+          ]
         },
-        %VisitorTracking.Accounts.User{
+        %{
           city: "Mollit",
           email: "tymyce@mailinator.com",
           email_verified: false,
@@ -59,7 +72,8 @@ defmodule VisitorTracking.EmailTest do
           role: "user",
           updated_at: ~N[2020-08-12 21:17:08],
           uuid: "2d488b9a-dce1-11ea-ac2b-784f439a034a",
-          zip: "1785"
+          zip: "1785",
+          actions: [%{action: "in", datetime: "2020-8-22 15:00"}]
         }
       ]
     }
@@ -68,19 +82,25 @@ defmodule VisitorTracking.EmailTest do
     assert email.to =~ recipient_email
     assert email.subject =~ "Contact Tracing Daten"
     assert email.html_body =~ "Hallo " <> recipient_name
+    assert email.html_body =~ "bla@bla.com"
+    assert email.html_body =~ "+41000000000"
+    assert email.html_body =~ "sepp meier"
 
     assert email.html_body =~ "<td>Basia</td>"
     assert email.html_body =~ "<td>Thornton</td>"
     assert email.html_body =~ "<td>+41793154408</td>"
     assert email.html_body =~ "<td>1785</td>"
     assert email.html_body =~ "<td>Mollit</td>"
-    
+    assert email.html_body =~ "<td>2020-8-22 14:00 (in)</td>"
+    assert email.html_body =~ "<td>2020-8-22 14:05 (out)</td>"
+
     assert email.text_body =~ "Basia"
     assert email.text_body =~ "Thornton"
     assert email.text_body =~ "+41793154408"
     assert email.text_body =~ "1785"
     assert email.text_body =~ "Mollit"
-
+    assert email.text_body =~ "2020-8-22 14:00 (in)"
+    assert email.text_body =~ "2020-8-22 14:05 (out)"
 
     assert email.html_body =~ "<td>Mans</td>"
     assert email.html_body =~ "<td>huster</td>"
@@ -88,6 +108,7 @@ defmodule VisitorTracking.EmailTest do
     assert email.html_body =~ "<td>6000</td>"
     assert email.html_body =~ "<td>brugg</td>"
     assert email.html_body =~ "<td>simon@daddsad.com</td>"
+    assert email.html_body =~ "<td>2020-8-22 15:00 (in)</td>"
 
     assert email.text_body =~ "Mans"
     assert email.text_body =~ "huster"
@@ -95,5 +116,6 @@ defmodule VisitorTracking.EmailTest do
     assert email.text_body =~ "6000"
     assert email.text_body =~ "brugg"
     assert email.text_body =~ "simon@daddsad.com"
+    assert email.text_body =~ "2020-8-22 15:00 (in)"
   end
 end

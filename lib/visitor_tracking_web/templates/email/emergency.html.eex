@@ -2,8 +2,18 @@
   Contact Tracing Daten
 </div>
 <h1>Hallo <%= @recipient_name %></h1>
-
+<p>Veranstaltung: <%= @event.name%></p>
+<p>Für Rückfragen wenden sie sich bitte an den Veranstalter:<br><%= @event.organiser.firstname %> <%= @event.organiser.lastname %>, <%= @event.organiser.phone %>, <%= @event.organiser.email%></p>
 <table>
+  <thead>
+    <td>Vorname</td>
+    <td>Nachname</td>
+    <td>Telefon</td>
+    <td>Plz</td>
+    <td>Ort</td>
+    <td>E-Mail</td>
+    <td>Aktionen</td>
+  </thead>
   <%= for visitor <- @visitors do %>
     <tr>
       <td><%= visitor.firstname %></td>
@@ -12,6 +22,9 @@
       <td><%= visitor.zip %></td>
       <td><%= visitor.city %></td>
       <td><%= visitor.email %></td>
+      <%= for action <- visitor.actions do %>
+      <td><%= action.datetime %> (<%= action.action %>)</td>
+      <% end %>
     </tr>
   <% end %>
 </table>

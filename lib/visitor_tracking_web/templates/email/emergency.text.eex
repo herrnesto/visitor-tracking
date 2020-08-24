@@ -1,4 +1,7 @@
 Hallo <%= @recipient_name %>
+Veranstaltung: @event.name
+Für Rückfragen wenden sie sich bitte an den Veranstalter:
+<%= @event.organiser.firstname %> <%= @event.organiser.lastname %>, <%= @event.organiser.phone %>, <%= @event.organiser.email%>
 
 <%= for visitor <- @visitors do %>
 <%= visitor.firstname %>
@@ -7,6 +10,9 @@ Hallo <%= @recipient_name %>
 <%= visitor.zip %>
 <%= visitor.city %>
 <%= visitor.email %>
+<%= for action <- visitor.actions do %>
+<%= action.datetime %> (<%= action.action %>)<% end %>
+
 <% end %>
 
 
