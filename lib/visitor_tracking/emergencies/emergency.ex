@@ -25,7 +25,7 @@ defmodule VisitorTracking.Emergencies.Emergency do
     |> foreign_key_constraint(:initiator_id)
     |> foreign_key_constraint(:event_id)
     |> unique_constraint([:initiator_id, :event_id],
-      name: :emergencies_pkey,
+      name: :initiator_id_user_id_unique_index,
       message: "ALREADY_EXISTS"
     )
   end
