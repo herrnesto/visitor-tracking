@@ -65,7 +65,8 @@ defmodule VisitorTracking.EmailTest do
     }
 
     email = VisitorTracking.Email.emergency_email(data)
-    assert email.to == recipient_email
+    assert email.to =~ recipient_email
+    assert email.subject =~ "Contact Tracing Daten"
     assert email.html_body =~ "Hallo " <> recipient_name
 
     assert email.html_body =~ "<td>Basia</td>"
