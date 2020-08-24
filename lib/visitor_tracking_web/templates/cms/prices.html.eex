@@ -16,32 +16,17 @@
         <p>
             Keine Mindestkosten <span class="is-success"><i class="fa fa-check is-primary"></i></span>
         </p>
-        <div class="notification is-primary is-light">
-          Veranstaltest du regelmässig Events? Wir machen dir ein Angebot. Nimm mit uns <a href="/kontakt">Kontakt</a> auf!
-        </div>
         <div class="pricing-table">
           <div class="pricing-plan is-active">
-            <div class="plan-price"><span class="plan-price-amount"><span class="plan-price-currency">CHF</span>1.00</span>/Besucher</div>
+            <div class="plan-price"><span class="plan-price-amount"><span class="plan-price-currency">CHF</span>0.49</span>/Besucher</div>
             <div class="plan-items">
-              <div class="plan-item">0 - 50 Besucher</div>
+              <div class="plan-item">Für neue Registrationen</div>
             </div>
           </div>
           <div class="pricing-plan is-active">
-            <div class="plan-price"><span class="plan-price-amount"><span class="plan-price-currency">CHF</span>0.90</span>/Besucher</div>
+            <div class="plan-price"><span class="plan-price-amount"><span class="plan-price-currency">CHF</span>0.29</span>/Besucher</div>
             <div class="plan-items">
-              <div class="plan-item">51 - 100 Besucher</div>
-            </div>
-          </div>
-          <div class="pricing-plan is-active">
-            <div class="plan-price"><span class="plan-price-amount"><span class="plan-price-currency">CHF</span>0.80</span>/Besucher</div>
-            <div class="plan-items">
-              <div class="plan-item">101 - 200 Besucher</div>
-            </div>
-          </div>
-          <div class="pricing-plan is-active">
-            <div class="plan-price"><span class="plan-price-amount"><span class="plan-price-currency">CHF</span>0.70</span>/Besucher</div>
-            <div class="plan-items">
-              <div class="plan-item">ab 201 Besucher</div>
+              <div class="plan-item">Für wiederkehrende Gäste.<br>Falls sich der Gast bereits einmal bei uns Registriert hat.</div>
             </div>
           </div>
         </div>
