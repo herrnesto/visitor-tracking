@@ -14,8 +14,8 @@ defmodule VisitorTracking.Emergencies do
 
   def get_emergency!(id), do: Repo.get!(Emergency, id)
 
-  def get_emergency_by_event_id!(event_id) do
-    Repo.get_by!(Emergency, %{event_id: event_id})
+  def get_emergency_by_event_id(event_id) do
+    Repo.get_by(Emergency, %{event_id: event_id})
   end
 
   def create_emergency(attrs \\ %{}) do

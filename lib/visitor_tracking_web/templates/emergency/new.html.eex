@@ -3,7 +3,7 @@
 <section>
   <div class="container">
     <div class="column">
-      <h1 class="title">Neue Veranstaltung</h1>
+      <h1 class="title">Neuer Ernstfall einleiten</h1>
       <p class="buttons">
         <a class="button is-link is-outlined" href="<%= Routes.event_path(@conn, :show, @event_id) %>">
           <span class="icon is-small">
@@ -16,6 +16,11 @@
   </div>
   <div class="container">
     <div class="column is-4">
+
+      <div class="notification is-danger">
+        <strong>Achtung:</strong> Dieser Schritt kann nicht Rückgängig gemacht werden. Alle Besucherdaten werden sofort an die Zieladresse übermittelt. Alle Besucher werden per E-Mail informiert.
+      </div>
+
       <%= form_for @changeset, Routes.emergency_path(@conn, :create, @event_id), fn f ->	 %>
 
       <div class="field">
@@ -38,7 +43,7 @@
         </p>
       </div>
 
-      <%= submit "Notfall erstellen", class: "button is-block is-primary is-fullwidth is-medium" %>
+      <%= submit "Ernstfall sofort einleiten und Daten übermitteln", class: "button is-block is-danger is-fullwidth is-medium",  data: [confirm: "Bist du sicher, dass du alle Besucherdaten überitteln willst?"] %>
 
       <% end %>
     </div>

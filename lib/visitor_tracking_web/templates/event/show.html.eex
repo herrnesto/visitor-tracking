@@ -12,6 +12,12 @@
         <span class="tag <%= if @event.status == "archived" do %>is-danger<% end %>">Archiviert</span>
       </div>
 
+      <%= if @emergency do %>
+        <div class="notification is-danger">
+          <strong>Ernstfall wurde eingeleitet:</strong> Daten geschickt an <%= @emergency.recipient_name %>, <%= @emergency.recipient_email %></strong>
+        </div>
+      <% end %>
+
       <h2 class="title is-4 mt-6">Aktionen</h2>
       <p class="buttons">
 
@@ -42,11 +48,15 @@
           <% end %>
 
           <%= if @event.status == "closed" do %>
-            <%= link to: Routes.emergency_path(@conn, :new, @event.id), class: "button is-danger" do %>
-            <span class="icon is-small">
-                    <i class="fas fa-times"></i>
-                  </span>
-            <span>Ernstfall einleiten</span>
+            <%= if !@emergency do %>
+              <%= link to: Routes.emergency_path(@conn, :new, @event.id), class: "button is-danger" do %>
+              <span class="icon is-small">
+                      <i class="fas fa-times"></i>
+                    </span>
+              <span>Ernstfall einleiten</span>
+              <% end %>
+            <% else %>
+                <em>Keine Aktionen möglich.</em>
             <% end %>
           <% end %>
         <% end %>
@@ -77,7 +87,7 @@
           <span>Event starten</span>
           <% end %>
         <% end %>
-    </p>
+      </p>
 
       <h2 class="title is-4 mt-6">Besucher Übersicht</h2>
       <p><%= @visitors.active_visitors %> von <%= @event.visitor_limit %></p>

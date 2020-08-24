@@ -262,29 +262,25 @@ defmodule VisitorTracking.Events do
   Get all visitor actions from an event. Grouped by visitor.
   This is used for the emergency email.
   """
-  def get_all_visitor_actions_by_event(event_id) do
+  def get_all_visitor_actions_by_event(event_id, user_id) do
     query = "SELECT
       *
       FROM
         event_visitor_actions
       WHERE
         event_id = #{event_id}
+        AND user_id = #{user_id}
       ORDER BY
-        user_id ASC;"
+        inserted_at ASC;"
 
     {:ok, %{rows: rows}} = Ecto.Adapters.SQL.query(Repo, query)
 
-    Enum.reduce(rows, %{}, fn [_id, _event_id, user_id, action, insert_date, update_date], acc ->
+    Enum.reduce(rows, [], fn [_id, _event_id, user_id, action, insert_date, update_date], acc ->
       datetime =
         Timezone.convert(insert_date, "Europe/Zurich")
         |> Timex.format!("{YYYY}-{M}-{D} {h24}:{m}")
 
-      acc =
-        update_in(
-          acc,
-          ["#{user_id}"],
-          &update_actions(&1, %{action: action, datetime: datetime})
-        )
+      acc ++ [%{action: action, datetime: datetime}]
     end)
   end
 
