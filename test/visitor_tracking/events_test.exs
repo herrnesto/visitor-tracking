@@ -389,7 +389,7 @@ defmodule VisitorTracking.EventsTest do
     end
 
     test "send invalid event_id" do
-      event_id = 99999
+      event_id = 999
       assert [] = Events.get_all_visitors_by_event(event_id)
       assert true = Enum.empty?(Events.get_all_visitors_by_event(event_id))
     end
@@ -430,14 +430,14 @@ defmodule VisitorTracking.EventsTest do
       organiser = insert(:user, phone_verified: true, email_verified: true)
       event = insert(:event, organiser: organiser)
 
-      assert [] = Events.get_all_visitor_actions_by_event(event.id, 99999)
-      assert true = Enum.empty?(Events.get_all_visitor_actions_by_event(event.id, 99999))
+      assert [] = Events.get_all_visitor_actions_by_event(event.id, 999)
+      assert true = Enum.empty?(Events.get_all_visitor_actions_by_event(event.id, 999))
     end
 
     test "send invalid event_id" do
-      event_id = 99999
-      assert [] = Events.get_all_visitor_actions_by_event(event_id, 99999)
-      assert true = Enum.empty?(Events.get_all_visitor_actions_by_event(event_id, 99999))
+      event_id = 999
+      assert [] = Events.get_all_visitor_actions_by_event(event_id, 999)
+      assert true = Enum.empty?(Events.get_all_visitor_actions_by_event(event_id, 999))
     end
   end
 end

@@ -22,11 +22,10 @@ defmodule VisitorTrackingWeb.EmergencyController do
     emergency_params
     |> Emergencies.create_emergency()
     |> case do
-      {:ok, emergency} ->
+      {:ok, _emergency} ->
         emergency_params
         |> add_event_data()
         |> add_visitors_data()
-        |> IO.inspect()
         |> Email.emergency_email()
         |> Mailer.deliver_now()
 
