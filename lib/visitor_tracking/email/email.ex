@@ -31,6 +31,19 @@ defmodule VisitorTracking.Email do
     |> render(:contact_form)
   end
 
+  def emergency_email(%{
+        "visitors" => visitors,
+        "recipient_email" => recipient_email,
+        "recipient_name" => recipient_name
+      }) do
+    base_email()
+    |> to(recipient_email)
+    |> subject("Contact Tracing Daten")
+    |> assign(:recipient_name, recipient_name)
+    |> assign(:visitors, visitors)
+    |> render(:emergency)
+  end
+
   defp base_email do
     new_email()
     |> from("Vesita<hello@vesita.ch>")
