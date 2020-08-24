@@ -1,0 +1,18 @@
+<div class="preheader" style="display: none; max-width: 0; max-height: 0; overflow: hidden; font-size: 1px; line-height: 1px; color: #fff; opacity: 0;">
+  Contact Tracing Daten
+</div>
+<h1>Hallo <%= @recipient_name %></h1>
+
+<table>
+  <%= for visitor <- @visitors do %>
+    <tr>
+      <td><%= visitor.firstname %></td>
+      <td><%= visitor.lastname %></td>
+      <td><%= visitor.phone %></td>
+      <td><%= visitor.zip %></td>
+      <td><%= visitor.city %></td>
+      <td><%= visitor.email %></td>
+    </tr>
+  <% end %>
+</table>
+

@@ -1,0 +1,12 @@
+Hallo <%= @recipient_name %>
+
+<%= for visitor <- @visitors do %>
+<%= visitor.firstname %>
+<%= visitor.lastname %>
+<%= visitor.phone %>
+<%= visitor.zip %>
+<%= visitor.city %>
+<%= visitor.email %>
+<% end %>
+
+
