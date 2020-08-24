@@ -16,7 +16,7 @@ defmodule VisitorTracking.EmergenciesTest do
       %{id: event_id, organiser: %{id: user_id}} = insert(:event)
       emergency = insert(:emergency, %{event_id: event_id, user_id: user_id})
 
-      assert Emergencies.get_emergency_by_event_id!(emergency.event_id) == emergency
+      assert Emergencies.get_emergency_by_event_id(emergency.event_id) == emergency
     end
 
     test "create_emergency/1 with valid data creates a emergency" do
@@ -44,7 +44,8 @@ defmodule VisitorTracking.EmergenciesTest do
                 valid?: false,
                 errors: [
                   event_id:
-                    {"ALREADY_EXISTS", [constraint: :unique, constraint_name: "emergencies_pkey"]}
+                    {"ALREADY_EXISTS",
+                     [constraint: :unique, constraint_name: "initiator_id_user_id_unique_index"]}
                 ]
               }} = insert(:emergency, %{event_id: event_id, user_id: user_id})
     end

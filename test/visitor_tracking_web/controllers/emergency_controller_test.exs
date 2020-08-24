@@ -1,7 +1,8 @@
 defmodule VisitorTrackingWeb.EmergencyControllerTest do
   use VisitorTrackingWeb.ConnCase
 
-  alias VisitorTracking.Emergencies
+  alias VisitorTracking.{Accounts, Emergencies}
+  alias VisitorTrackingWeb.EmergencyController
 
   @create_attrs %{recipient_email: "some recipient_email", recipient_name: "some recipient_name"}
   @update_attrs %{
@@ -10,101 +11,50 @@ defmodule VisitorTrackingWeb.EmergencyControllerTest do
   }
   @invalid_attrs %{recipient_email: nil, recipient_name: nil}
 
+  setup %{conn: conn} do
+    user = insert(:user, email_verified: true, phone_verified: true)
+    conn = assign(conn, :current_user, user)
+    event = insert(:event, organiser: user)
+
+    {:ok, %{conn: conn, event: event}}
+  end
+
   def fixture(:emergency) do
     {:ok, emergency} = Emergencies.create_emergency(@create_attrs)
     emergency
   end
 
-  describe "index" do
-    test "lists all emergencies", %{conn: conn} do
-      conn = get(conn, Routes.emergency_path(conn, :index))
-      assert html_response(conn, 200) =~ "Listing Emergencies"
-    end
-  end
-
   describe "new emergency" do
-    test "renders form", %{conn: conn} do
-      conn = get(conn, Routes.emergency_path(conn, :new))
-      assert html_response(conn, 200) =~ "New Emergency"
+    test "renders form", %{conn: conn, event: event} do
+      conn = get(conn, Routes.emergency_path(conn, :new, event.id))
+      assert html_response(conn, 200) =~ "alert notification is-danger"
+      assert html_response(conn, 200) =~ "Neuer Ernstfall einleiten"
     end
   end
 
   describe "create emergency" do
-    test "redirects to show when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.emergency_path(conn, :create), emergency: @create_attrs)
-
+    @tag :skip
+    test "redirects to show when data is valid", %{conn: conn, event: event} do
+      conn = post(conn, Routes.emergency_path(conn, :create, event.id), emergency: @create_attrs)
+      IO.inspect(redirected_params(conn))
+      id = event.id
       assert %{id: id} = redirected_params(conn)
-      assert redirected_to(conn) == Routes.emergency_path(conn, :show, id)
+      assert redirected_to(conn) == Routes.event_path(conn, :show, event.id)
 
-      conn = get(conn, Routes.emergency_path(conn, :show, id))
-      assert html_response(conn, 200) =~ "Show Emergency"
+      conn = get(conn, Routes.event_path(conn, :show, id))
+      assert html_response(conn, 200) =~ "alert notification is-info"
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, Routes.emergency_path(conn, :create), emergency: @invalid_attrs)
-      assert html_response(conn, 200) =~ "New Emergency"
-    end
-  end
+      %{id: event_id} = insert(:event)
 
-  describe "edit emergency" do
-    setup [:create_emergency]
-
-    test "renders form for editing chosen emergency", %{conn: conn, emergency: emergency} do
-      conn = get(conn, Routes.emergency_path(conn, :edit, emergency))
-      assert html_response(conn, 200) =~ "Edit Emergency"
-    end
-  end
-
-  describe "update emergency" do
-    setup [:create_emergency]
-
-    test "redirects when data is valid", %{conn: conn, emergency: emergency} do
-      conn = put(conn, Routes.emergency_path(conn, :update, emergency), emergency: @update_attrs)
-      assert redirected_to(conn) == Routes.emergency_path(conn, :show, emergency)
-
-      conn = get(conn, Routes.emergency_path(conn, :show, emergency))
-      assert html_response(conn, 200) =~ "some updated recipient_email"
-    end
-
-    test "renders errors when data is invalid", %{conn: conn, emergency: emergency} do
-      conn = put(conn, Routes.emergency_path(conn, :update, emergency), emergency: @invalid_attrs)
-      assert html_response(conn, 200) =~ "Edit Emergency"
-    end
-  end
-
-  describe "delete emergency" do
-    setup [:create_emergency]
-
-    test "deletes chosen emergency", %{conn: conn, emergency: emergency} do
-      conn = delete(conn, Routes.emergency_path(conn, :delete, emergency))
-      assert redirected_to(conn) == Routes.emergency_path(conn, :index)
-
-      assert_error_sent 404, fn ->
-        get(conn, Routes.emergency_path(conn, :show, emergency))
-      end
+      conn = post(conn, Routes.emergency_path(conn, :create, event_id), emergency: @invalid_attrs)
+      assert html_response(conn, 200) =~ "Neuer Ernstfall einleiten"
     end
   end
 
   defp create_emergency(_) do
     emergency = fixture(:emergency)
     %{emergency: emergency}
-  end
-
-  describe "add_visitors_data\1" do
-    test "add visitors to emergency data" do
-      organiser = insert(:user, phone_verified: true, email_verified: true)
-      event = insert(:event, organiser: organiser)
-
-      user_1 = insert(:user)
-      user_2 = insert(:user)
-      user_3 = insert(:user)
-
-      insert(:visitor_action, %{event_id: event.id, user_id: user_1.id, action: "in"})
-      insert(:visitor_action, %{event_id: event.id, user_id: user_2.id, action: "in"})
-      insert(:visitor_action, %{event_id: event.id, user_id: user_3.id, action: "in"})
-
-      assert [%Accounts.User{}, %Accounts.User{}, %Accounts.User{}] =
-               EmergencyController.add_visitors_data(params.event_id)
-    end
   end
 end

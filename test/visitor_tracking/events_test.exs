@@ -395,14 +395,12 @@ defmodule VisitorTracking.EventsTest do
     end
   end
 
-  describe "get_all_visitor_actions_by_event/1" do
+  describe "get_all_visitor_actions_by_event/2" do
     test "returns a list of actions by users" do
       organiser = insert(:user, phone_verified: true, email_verified: true)
       event = insert(:event, organiser: organiser)
 
       user_1 = insert(:user)
-      user_2 = insert(:user)
-      user_3 = insert(:user)
 
       insert(:visitor_action, %{
         event_id: event.id,
@@ -413,50 +411,33 @@ defmodule VisitorTracking.EventsTest do
 
       insert(:visitor_action, %{
         event_id: event.id,
-        user_id: user_2.id,
-        action: "in",
-        inserted_at: ~N[2020-08-22 12:01:00.000000]
-      })
-
-      insert(:visitor_action, %{
-        event_id: event.id,
-        user_id: user_3.id,
-        action: "in",
-        inserted_at: ~N[2020-08-22 12:02:00.000000]
-      })
-
-      insert(:visitor_action, %{
-        event_id: event.id,
         user_id: user_1.id,
         action: "out",
         inserted_at: ~N[2020-08-22 15:00:00.000000]
       })
 
-      result = Events.get_all_visitor_actions_by_event(event.id)
+      result = Events.get_all_visitor_actions_by_event(event.id, user_1.id)
 
-      assert true = is_list(Map.get(result, "#{user_1.id}"))
+      assert true = is_list(result)
 
       assert [
-               %{action: "in", datetime: "2020-8-22 14:00"}
-               | %{action: "out", datetime: "2020-8-22 17:00"}
-             ] = Map.get(result, "#{user_1.id}")
-
-      assert [%{action: "in", datetime: "2020-8-22 14:01"}] = Map.get(result, "#{user_2.id}")
-      assert [%{action: "in", datetime: "2020-8-22 14:02"}] = Map.get(result, "#{user_3.id}")
+               %{action: "in", datetime: "2020-8-22 14:00"},
+               %{action: "out", datetime: "2020-8-22 17:00"}
+             ] = result
     end
 
     test "returns no user" do
       organiser = insert(:user, phone_verified: true, email_verified: true)
       event = insert(:event, organiser: organiser)
 
-      assert [] = Events.get_all_visitors_by_event(event.id)
-      assert true = Enum.empty?(Events.get_all_visitor_actions_by_event(event.id))
+      assert [] = Events.get_all_visitor_actions_by_event(event.id, 99999)
+      assert true = Enum.empty?(Events.get_all_visitor_actions_by_event(event.id, 99999))
     end
 
     test "send invalid event_id" do
       event_id = 99999
-      assert [] = Events.get_all_visitors_by_event(event_id)
-      assert true = Enum.empty?(Events.get_all_visitor_actions_by_event(event_id))
+      assert [] = Events.get_all_visitor_actions_by_event(event_id, 99999)
+      assert true = Enum.empty?(Events.get_all_visitor_actions_by_event(event_id, 99999))
     end
   end
 end
