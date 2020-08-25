@@ -2,21 +2,17 @@ defmodule VisitorTracking.EmergenciesTest do
   use VisitorTracking.DataCase
 
   alias VisitorTracking.Emergencies
+  alias VisitorTracking.Emergencies.Emergency
 
   describe "emergencies" do
-    alias VisitorTracking.Emergencies.Emergency
-
     test "list_emergencies/0 returns all emergencies" do
-      %{id: event_id, organiser: %{id: user_id}} = insert(:event)
-      emergency = insert(:emergency, %{event_id: event_id, user_id: user_id})
-      assert Emergencies.list_emergencies() == [emergency]
+      %{id: id} = insert(:emergency)
+      assert [%Emergency{id: ^id}] = Emergencies.list_emergencies()
     end
 
     test "get_emergency_by_event_id!/1 returns the emergency with given id" do
-      %{id: event_id, organiser: %{id: user_id}} = insert(:event)
-      emergency = insert(:emergency, %{event_id: event_id, user_id: user_id})
-
-      assert Emergencies.get_emergency_by_event_id(emergency.event_id) == emergency
+      %{id: id, event_id: event_id} = insert(:emergency)
+      assert %{id: ^id} = Emergencies.get_emergency_by_event_id(event_id)
     end
 
     test "create_emergency/1 with valid data creates a emergency" do
@@ -37,7 +33,7 @@ defmodule VisitorTracking.EmergenciesTest do
     @tag :skip
     test "returns an error if emergency is already assigned" do
       %{id: event_id, organiser: %{id: user_id}} = insert(:event)
-      insert(:emergency, %{event_id: event_id, user_id: user_id})
+      insert(:emergency, event_id: event_id, tororganiser_id: user_id)
 
       assert {:error,
               %Ecto.Changeset{

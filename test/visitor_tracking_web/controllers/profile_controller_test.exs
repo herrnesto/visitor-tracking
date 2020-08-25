@@ -26,4 +26,21 @@ defmodule VisitorTrackingWeb.ProfileControllerTest do
       assert html_response(conn, 200)
     end
   end
+
+  describe "GET /v/:token" do
+    test "verifies email if token is correct" do
+      user = insert(:user)
+      {:ok, token} = VisitorTracking.Verification.create_link_token(user.id, user.email)
+
+      conn = get(build_conn(), "/v/#{token}")
+
+      assert redirected_to(conn) == "/profile"
+    end
+
+    test "returns an error if token is wrong" do
+      conn = get(build_conn(), "/v/wrong_token")
+
+      assert redirected_to(conn) == "/expecting_verification"
+    end
+  end
 end

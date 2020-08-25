@@ -81,10 +81,10 @@ defmodule VisitorTracking.Factory do
     }
   end
 
-  def emergency_factory(%{event_id: event_id, user_id: user_id} = _attrs) do
+  def emergency_factory do
     %Emergencies.Emergency{
-      event_id: event_id,
-      initiator_id: user_id,
+      event: insert(:event),
+      initiator: insert(:user),
       recipient_name: "Dr. Pill",
       recipient_email: "doctor@gov.com"
     }
