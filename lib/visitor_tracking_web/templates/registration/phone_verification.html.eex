@@ -1,32 +1,36 @@
-
 <%= render(VisitorTrackingWeb.LayoutView, "header.html", %{conn: @conn, current_user: @current_user}) %>
 
 <section>
-	<%= render(VisitorTrackingWeb.RegistrationView, "steps.html", step: 2) %>
+  <%= render(VisitorTrackingWeb.RegistrationView, "steps.html", step: 2) %>
 
-	<div class="container">
-		<div class="column is-4 is-offset-4">
-			<p class="subtitle has-text-centered">
-				Wir haben dir einen Code als SMS geschickt. Tippe ihn ins Textfeld:
-				<%= form_for @conn, "/phone", fn f ->	 %>
-				<div class="field">
-				  <div class="control">
-						<%= text_input f, :code, class: "input is-medium", autofocus: "true" %>
-						<p class="help is-danger">
-							<%= error_tag f, :code %>
-						</p>
-			  </div>
-			  <p class="help is-danger">
-			  	<%= error_tag f, :code %>
-			  </p>
-			</div>
+  <div class="container">
+    <div class="column is-4 is-offset-4">
+      <div class="notification is-warning is-light">
+        Wir haben dir einen 6-stelligen Code als SMS geschickt. Es kann unter Umständen einen Moment dauern. Solltest du
+        nach 3 Minuten keinen Token erhalten haben, wende dich an das Personal.
+      </div>
+      <p class="subtitle has-text-centered">
+        Tippe den 6-stelligen Code ins Textfeld:
+      </p>
+      <%= form_for @conn, "/phone", fn f ->	 %>
+      <div class="field">
+        <div class="control">
+          <%= number_input f, :code, class: "input is-medium", autofocus: "true" %>
+          <p class="help is-danger">
+            <%= error_tag f, :code %>
+          </p>
+        </div>
+        <p class="help is-danger">
+          <%= error_tag f, :code %>
+        </p>
+      </div>
 
-			<div class="field is-grouped is-grouped-centered">
-			  <div class="control">
-			    <%= submit "Bestätigen", class: "button is-block is-primary is-fullwidth is-medium" %>
-			  </div>
-			</div>
-			<% end %>
-		</div>
-	</div>
+      <div class="field is-grouped is-grouped-centered">
+        <div class="control">
+          <%= submit "Bestätigen", class: "button is-block is-primary is-fullwidth is-medium" %>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
 </section>

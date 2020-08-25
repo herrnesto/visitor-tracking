@@ -80,7 +80,7 @@ defmodule VisitorTracking.Accounts.User do
       ~r/\A\+\d+\z/,
       message: "invalid mobile number, must be of format +00000000000"
     )
-    |> validate_length(:zip, is: 10)
+    |> validate_length(:zip, max: 10)
     |> validate_format(
       :email,
       ~r/\A[\w.!\#$%&'*+\/=?^_`{|}~-]+@[\w](?:[\w-]{0,61}[\w])?(?:\.[\w](?:[\w-]{0,61}[\w])?)*\z/i,

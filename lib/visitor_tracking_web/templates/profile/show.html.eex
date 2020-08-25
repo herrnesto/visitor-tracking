@@ -3,6 +3,9 @@
 <section>
 	<div class="container">
 		<div class="column is-4 is-offset-4">
+      <div class="notification is-success is-light">
+        Du kannst dir den QR-Code ausdrucken oder auf deinem Mobiltelefon speichern. Er mehrmals gültig.
+      </div>
 			<div class="card">
 			  <div class="card-image">
 			    <figure class="image is-4by4">
