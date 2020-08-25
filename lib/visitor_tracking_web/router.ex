@@ -68,6 +68,7 @@ defmodule VisitorTrackingWeb.Router do
     get "/events/:id/start_event", EventController, :start_event
     get "/events/:id/close_event", EventController, :close_event
     get "/events/:event_id/scan", ScanController, :show
+    resources "/events/:event_id/emergency", EmergencyController, only: [:new, :create]
     get "/profile", ProfileController, :show
     get "/profile/qrcode", ProfileController, :show
   end
@@ -76,6 +77,11 @@ defmodule VisitorTrackingWeb.Router do
     pipe_through [:browser, :authenticate_user, :check_phone_verified, :check_if_event_organiser]
 
     resources "/", ScannerController
+  end
+
+  scope "/events/:event_id/emergency", VisitorTrackingWeb do
+    pipe_through [:browser, :authenticate_user, :check_phone_verified, :check_if_event_organiser]
+    # resources "/", EmergencyController
   end
 
   # Other scopes may use custom stacks.

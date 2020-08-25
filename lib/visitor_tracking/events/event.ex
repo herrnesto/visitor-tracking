@@ -6,7 +6,7 @@ defmodule VisitorTracking.Events.Event do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias VisitorTracking.Accounts.User
+  alias VisitorTracking.{Accounts.User, Emergency}
 
   schema "events" do
     belongs_to :organiser, User
@@ -16,6 +16,7 @@ defmodule VisitorTracking.Events.Event do
     field :status, :string
     field :venue, :string
     field :visitor_limit, :integer
+    has_one :emergency, Emergency
 
     many_to_many :scanners, User, join_through: "event_scanners"
 
@@ -50,11 +51,4 @@ defmodule VisitorTracking.Events.Event do
     |> cast(%{organiser_id: organiser_id}, [:organiser_id])
     |> validate_required([:organiser_id])
   end
-
-  # @doc false
-  # def changeset_visitor(event, visitor) do
-  #   event
-  #   |> cast(%{}, [])
-  #   |> put_assoc(:visitors, [visitor | event.visitors])
-  # end
 end

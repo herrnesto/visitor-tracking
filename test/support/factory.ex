@@ -2,7 +2,7 @@ defmodule VisitorTracking.Factory do
   @moduledoc false
 
   use ExMachina.Ecto, repo: VisitorTracking.Repo
-  alias VisitorTracking.{Accounts, Events, Verification}
+  alias VisitorTracking.{Accounts, Events, Verification, Emergencies}
 
   def user_factory do
     %Accounts.User{
@@ -70,11 +70,23 @@ defmodule VisitorTracking.Factory do
     }
   end
 
-  def visitor_action_factory(%{action: action, event_id: event_id, user_id: user_id} = _attrs) do
+  def visitor_action_factory(
+        %{action: action, event_id: event_id, user_id: user_id, inserted_at: inserted_at} = _attrs
+      ) do
     %Events.Action{
       event_id: event_id,
       user_id: user_id,
-      action: action
+      action: action,
+      inserted_at: inserted_at
+    }
+  end
+
+  def emergency_factory(%{event_id: event_id, user_id: user_id} = _attrs) do
+    %Emergencies.Emergency{
+      event_id: event_id,
+      initiator_id: user_id,
+      recipient_name: "Dr. Pill",
+      recipient_email: "doctor@gov.com"
     }
   end
 end

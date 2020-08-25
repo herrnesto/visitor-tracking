@@ -14,6 +14,8 @@ defmodule VisitorTracking.Events do
 
   import Ecto.Query
 
+  use Timex
+
   def get_event(id) do
     Repo.get(Event, id)
   end
@@ -238,4 +240,50 @@ defmodule VisitorTracking.Events do
         "out"
     end
   end
+
+  def get_all_visitors_by_event(event_id) do
+    query = "SELECT
+      user_id
+      FROM
+        event_visitor_actions
+      WHERE
+        event_id = #{event_id}
+      GROUP BY
+        user_id;"
+
+    {:ok, %{rows: user_ids}} = Ecto.Adapters.SQL.query(Repo, query)
+
+    user_ids
+    |> List.flatten()
+    |> Accounts.get_user()
+  end
+
+  @doc """
+  Get all visitor actions from an event. Grouped by visitor.
+  This is used for the emergency email.
+  """
+  def get_all_visitor_actions_by_event(event_id, user_id) do
+    query = "SELECT
+      *
+      FROM
+        event_visitor_actions
+      WHERE
+        event_id = #{event_id}
+        AND user_id = #{user_id}
+      ORDER BY
+        inserted_at ASC;"
+
+    {:ok, %{rows: rows}} = Ecto.Adapters.SQL.query(Repo, query)
+
+    Enum.reduce(rows, [], fn [_id, _event_id, user_id, action, insert_date, update_date], acc ->
+      datetime =
+        Timezone.convert(insert_date, "Europe/Zurich")
+        |> Timex.format!("{YYYY}-{M}-{D} {h24}:{m}")
+
+      acc ++ [%{action: action, datetime: datetime}]
+    end)
+  end
+
+  defp update_actions(list, action) when is_list(list) and is_map(action), do: list ++ action
+  defp update_actions(list, action) when is_map(action), do: [action]
 end

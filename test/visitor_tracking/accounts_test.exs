@@ -34,6 +34,17 @@ defmodule VisitorTracking.AccountsTest do
       %{id: id} = insert(:user)
       assert %{id: ^id} = Accounts.get_user(id)
     end
+
+    test "returns a list with users" do
+      user_1 = insert(:user)
+      user_2 = insert(:user)
+
+      assert true = is_list(Accounts.get_user([user_1.id, user_2.id]))
+      assert [a | [b]] = Accounts.get_user([user_1.id, user_2.id])
+
+      assert a.id == user_1.id
+      assert b.id == user_2.id
+    end
   end
 
   describe "change_user/1" do

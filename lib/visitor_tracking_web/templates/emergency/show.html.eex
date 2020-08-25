@@ -1,0 +1,15 @@
+<h1>Show Emergency</h1>
+
+<ul>
+
+  <li>
+    <strong>Recipient name:</strong>
+    <%= @emergency.recipient_name %>
+  </li>
+
+  <li>
+    <strong>Recipient email:</strong>
+    <%= @emergency.recipient_email %>
+  </li>
+
+</ul>

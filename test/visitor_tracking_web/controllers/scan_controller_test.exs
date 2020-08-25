@@ -143,7 +143,12 @@ defmodule VisitorTrackingWeb.ScanControllerTest do
     test "returns user with state if user is checked in", %{conn: conn, event: event} do
       user = insert(:user)
 
-      insert(:visitor_action, %{event_id: event.id, user_id: user.id, action: "in"})
+      insert(:visitor_action, %{
+        event_id: event.id,
+        user_id: user.id,
+        action: "in",
+        inserted_at: ~N[2020-08-22 12:02:00.000000]
+      })
 
       conn = post(conn, "/api/scan/user", %{"uuid" => user.uuid, "event_id" => event.id})
 
@@ -157,7 +162,12 @@ defmodule VisitorTrackingWeb.ScanControllerTest do
     test "returns user with state if user is checked out", %{conn: conn, event: event} do
       user = insert(:user)
 
-      insert(:visitor_action, %{event_id: event.id, user_id: user.id, action: "out"})
+      insert(:visitor_action, %{
+        event_id: event.id,
+        user_id: user.id,
+        action: "out",
+        inserted_at: ~N[2020-08-22 12:02:00.000000]
+      })
 
       conn = post(conn, "/api/scan/user", %{"uuid" => user.uuid, "event_id" => event.id})
 

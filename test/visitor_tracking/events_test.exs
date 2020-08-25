@@ -1,7 +1,7 @@
 defmodule VisitorTracking.EventsTest do
   use VisitorTracking.DataCase, async: true
 
-  alias VisitorTracking.{Events, Events.Event, Events.Visitor}
+  alias VisitorTracking.{Accounts, Events, Events.Event, Events.Visitor}
 
   setup do
     user = insert(:user, email_verified: true, phone_verified: true)
@@ -226,39 +226,85 @@ defmodule VisitorTracking.EventsTest do
 
       assert %{total_visitors: 0, active_visitors: 0} = Events.get_visitors_stats(event.id)
 
-      insert(:visitor_action, %{event_id: event.id, user_id: user_1.id, action: "in"})
-      assert %{total_visitors: 1, active_visitors: 1} = Events.get_visitors_stats(event.id)
-      :timer.sleep(1000)
+      insert(:visitor_action, %{
+        event_id: event.id,
+        user_id: user_1.id,
+        action: "in",
+        inserted_at: ~N[2020-08-22 12:00:00.000000]
+      })
 
-      insert(:visitor_action, %{event_id: event.id, user_id: user_1.id, action: "out"})
+      assert %{total_visitors: 1, active_visitors: 1} = Events.get_visitors_stats(event.id)
+
+      insert(:visitor_action, %{
+        event_id: event.id,
+        user_id: user_1.id,
+        action: "out",
+        inserted_at: ~N[2020-08-22 12:01:00.000000]
+      })
+
       assert %{total_visitors: 1, active_visitors: 0} = Events.get_visitors_stats(event.id)
-      :timer.sleep(1000)
 
-      insert(:visitor_action, %{event_id: event.id, user_id: user_1.id, action: "in"})
+      insert(:visitor_action, %{
+        event_id: event.id,
+        user_id: user_1.id,
+        action: "in",
+        inserted_at: ~N[2020-08-22 12:02:00.000000]
+      })
+
       assert %{total_visitors: 1, active_visitors: 1} = Events.get_visitors_stats(event.id)
-      :timer.sleep(1000)
 
-      insert(:visitor_action, %{event_id: event.id, user_id: user_2.id, action: "in"})
+      insert(:visitor_action, %{
+        event_id: event.id,
+        user_id: user_2.id,
+        action: "in",
+        inserted_at: ~N[2020-08-22 12:03:00.000000]
+      })
+
       assert %{total_visitors: 2, active_visitors: 2} = Events.get_visitors_stats(event.id)
-      :timer.sleep(1000)
 
-      insert(:visitor_action, %{event_id: event.id, user_id: user_3.id, action: "in"})
+      insert(:visitor_action, %{
+        event_id: event.id,
+        user_id: user_3.id,
+        action: "in",
+        inserted_at: ~N[2020-08-22 12:04:00.000000]
+      })
+
       assert %{total_visitors: 3, active_visitors: 3} = Events.get_visitors_stats(event.id)
-      :timer.sleep(1000)
 
-      insert(:visitor_action, %{event_id: event.id, user_id: user_2.id, action: "out"})
+      insert(:visitor_action, %{
+        event_id: event.id,
+        user_id: user_2.id,
+        action: "out",
+        inserted_at: ~N[2020-08-22 12:05:00.000000]
+      })
+
       assert %{total_visitors: 3, active_visitors: 2} = Events.get_visitors_stats(event.id)
-      :timer.sleep(1000)
 
-      insert(:visitor_action, %{event_id: event.id, user_id: user_3.id, action: "out"})
+      insert(:visitor_action, %{
+        event_id: event.id,
+        user_id: user_3.id,
+        action: "out",
+        inserted_at: ~N[2020-08-22 12:05:00.000000]
+      })
+
       assert %{total_visitors: 3, active_visitors: 1} = Events.get_visitors_stats(event.id)
-      :timer.sleep(1000)
 
-      insert(:visitor_action, %{event_id: event.id, user_id: user_4.id, action: "in"})
+      insert(:visitor_action, %{
+        event_id: event.id,
+        user_id: user_4.id,
+        action: "in",
+        inserted_at: ~N[2020-08-22 12:06:00.000000]
+      })
+
       assert %{total_visitors: 4, active_visitors: 2} = Events.get_visitors_stats(event.id)
-      :timer.sleep(1000)
 
-      insert(:visitor_action, %{event_id: event.id, user_id: user_2.id, action: "in"})
+      insert(:visitor_action, %{
+        event_id: event.id,
+        user_id: user_2.id,
+        action: "in",
+        inserted_at: ~N[2020-08-22 12:08:00.000000]
+      })
+
       assert %{total_visitors: 4, active_visitors: 3} = Events.get_visitors_stats(event.id)
     end
 
@@ -273,13 +319,21 @@ defmodule VisitorTracking.EventsTest do
       %{id: event_id} = insert(:event)
       %{id: user_id} = insert(:user)
 
-      insert(:visitor_action, %{event_id: event_id, user_id: user_id, action: "in"})
+      insert(:visitor_action, %{
+        event_id: event_id,
+        user_id: user_id,
+        action: "in",
+        inserted_at: ~N[2020-08-22 12:00:00.000000]
+      })
 
       assert "in" = Events.get_visitor_last_action(user_id, event_id)
 
-      :timer.sleep(1000)
-
-      insert(:visitor_action, %{event_id: event_id, user_id: user_id, action: "out"})
+      insert(:visitor_action, %{
+        event_id: event_id,
+        user_id: user_id,
+        action: "out",
+        inserted_at: ~N[2020-08-22 12:01:00.000000]
+      })
 
       assert "out" = Events.get_visitor_last_action(user_id, event_id)
     end
@@ -289,6 +343,101 @@ defmodule VisitorTracking.EventsTest do
       %{id: user_id} = insert(:user)
 
       assert "out" = Events.get_visitor_last_action(user_id, event_id)
+    end
+  end
+
+  describe "get_all_visitors_by_event/1" do
+    test "returns a list of users" do
+      organiser = insert(:user, phone_verified: true, email_verified: true)
+      event = insert(:event, organiser: organiser)
+
+      user_1 = insert(:user)
+      user_2 = insert(:user)
+      user_3 = insert(:user)
+
+      insert(:visitor_action, %{
+        event_id: event.id,
+        user_id: user_1.id,
+        action: "in",
+        inserted_at: ~N[2020-08-22 12:01:00.000000]
+      })
+
+      insert(:visitor_action, %{
+        event_id: event.id,
+        user_id: user_2.id,
+        action: "in",
+        inserted_at: ~N[2020-08-22 12:02:00.000000]
+      })
+
+      insert(:visitor_action, %{
+        event_id: event.id,
+        user_id: user_3.id,
+        action: "in",
+        inserted_at: ~N[2020-08-22 12:03:00.000000]
+      })
+
+      assert [%Accounts.User{}, %Accounts.User{}, %Accounts.User{}] =
+               Events.get_all_visitors_by_event(event.id)
+    end
+
+    test "returns no user" do
+      organiser = insert(:user, phone_verified: true, email_verified: true)
+      event = insert(:event, organiser: organiser)
+
+      assert [] = Events.get_all_visitors_by_event(event.id)
+      assert true = Enum.empty?(Events.get_all_visitors_by_event(event.id))
+    end
+
+    test "send invalid event_id" do
+      event_id = 999
+      assert [] = Events.get_all_visitors_by_event(event_id)
+      assert true = Enum.empty?(Events.get_all_visitors_by_event(event_id))
+    end
+  end
+
+  describe "get_all_visitor_actions_by_event/2" do
+    test "returns a list of actions by users" do
+      organiser = insert(:user, phone_verified: true, email_verified: true)
+      event = insert(:event, organiser: organiser)
+
+      user_1 = insert(:user)
+
+      insert(:visitor_action, %{
+        event_id: event.id,
+        user_id: user_1.id,
+        action: "in",
+        inserted_at: ~N[2020-08-22 12:00:00.000000]
+      })
+
+      insert(:visitor_action, %{
+        event_id: event.id,
+        user_id: user_1.id,
+        action: "out",
+        inserted_at: ~N[2020-08-22 15:00:00.000000]
+      })
+
+      result = Events.get_all_visitor_actions_by_event(event.id, user_1.id)
+
+      assert true = is_list(result)
+
+      assert [
+               %{action: "in", datetime: "2020-8-22 14:00"},
+               %{action: "out", datetime: "2020-8-22 17:00"}
+             ] = result
+    end
+
+    test "returns no user" do
+      organiser = insert(:user, phone_verified: true, email_verified: true)
+      event = insert(:event, organiser: organiser)
+
+      assert [] = Events.get_all_visitor_actions_by_event(event.id, 999)
+      assert true = Enum.empty?(Events.get_all_visitor_actions_by_event(event.id, 999))
+    end
+
+    test "send invalid event_id" do
+      event_id = 999
+      assert [] = Events.get_all_visitor_actions_by_event(event_id, 999)
+      assert true = Enum.empty?(Events.get_all_visitor_actions_by_event(event_id, 999))
     end
   end
 end
