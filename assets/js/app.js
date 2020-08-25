@@ -73,6 +73,7 @@ import Vue from "vue";
 import PhoneInput from "./components/PhoneInput.vue";
 import EventScanner from "./components/EventScanner.vue";
 import ContactForm from "./components/ContactForm.vue";
+import RegistrationForm from "./components/RegistrationForm.vue";
 import Buefy from 'buefy'
 import "./vee-validate";
 
@@ -99,6 +100,13 @@ if (contact_form) {
   new Vue({
     render: h => h(ContactForm)
   }).$mount("#contact-form")
+}
+
+const registration_form = document.querySelector('#vue-registration-form')
+if (registration_form) {
+  new Vue({
+    render: h => h(RegistrationForm)
+  }).$mount("#vue-registration-form")
 }
 
 
