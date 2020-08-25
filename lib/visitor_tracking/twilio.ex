@@ -20,7 +20,10 @@ defmodule VisitorTracking.Twilio do
   def send_token(_), do: {:error, "missing params"}
 
   def send_qr(%{uuid: uuid, target_number: target_number} = args) do
-    message = "VESITA: Bewahre diese SMS auf. Deinen QR-Code kannst du jederzeit hier abrufen: https://www.vesita.ch/qr/#{uuid}"
+    message =
+      "VESITA: Bewahre diese SMS auf. Deinen QR-Code kannst du jederzeit hier abrufen: https://www.vesita.ch/qr/#{
+        uuid
+      }"
 
     with {:ok, response} <- Message.send(%{message: message, target_number: target_number}) do
       Responses.log(response, args)
