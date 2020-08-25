@@ -24,12 +24,12 @@ defmodule VisitorTracking.EmergenciesTest do
                VisitorTracking.Emergencies.create_emergency(%{
                  initiator_id: 2000,
                  event_id: 1000,
-                 recipient_email: "some recipient_email",
+                 recipient_email: "test@google.com",
                  recipient_name: "some recipient_name"
                })
 
-      assert emergency.recipient_email == "some recipient_email"
-      assert emergency.recipient_email == "some recipient_email"
+      assert emergency.recipient_email == "test@google.com"
+      assert emergency.recipient_name == "some recipient_name"
       assert emergency.initiator_id == 2000
       assert emergency.event_id == 1000
     end

@@ -22,6 +22,11 @@ defmodule VisitorTracking.Emergencies.Emergency do
     emergency
     |> cast(attrs, @required_fields)
     |> validate_required(@required_fields)
+    |> validate_format(
+         :recipient_email,
+         ~r/\A[\w.!\#$%&'*+\/=?^_`{|}~-]+@[\w](?:[\w-]{0,61}[\w])?(?:\.[\w](?:[\w-]{0,61}[\w])?)*\z/i,
+         message: "invalid E-Mail address"
+       )
     |> foreign_key_constraint(:initiator_id)
     |> foreign_key_constraint(:event_id)
     |> unique_constraint([:initiator_id, :event_id],
