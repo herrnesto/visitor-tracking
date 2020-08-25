@@ -3,12 +3,27 @@ defmodule VisitorTrackingWeb.EmergencyControllerTest do
 
   alias VisitorTracking.Emergencies
 
-  @create_attrs %{recipient_email: "some recipient_email", recipient_name: "some recipient_name"}
-  @invalid_attrs %{recipient_email: nil, recipient_name: nil}
+  @create_attrs %{
+    "emergency" => %{
+      "recipient_email" => "recipient@example.com",
+      "recipient_name" => "some recipient_name"
+    }
+  }
+  @invalid_attrs %{
+    "emergency" => %{
+      "recipient_email" => nil,
+      "recipient_name" => nil
+    }
+  }
 
   setup %{conn: conn} do
     user = insert(:user, email_verified: true, phone_verified: true)
-    conn = assign(conn, :current_user, user)
+
+    conn =
+      conn
+      |> assign(:current_user, user)
+      |> Plug.Test.init_test_session(user_id: user.id)
+
     event = insert(:event, organiser: user)
 
     {:ok, %{conn: conn, event: event}}
@@ -28,14 +43,13 @@ defmodule VisitorTrackingWeb.EmergencyControllerTest do
   end
 
   describe "create emergency" do
-    @tag :skip
-    test "redirects to show when data is valid", %{conn: conn, event: event} do
-      conn = post(conn, Routes.emergency_path(conn, :create, event.id), emergency: @create_attrs)
-      id = event.id
-      assert %{id: id} = redirected_params(conn)
-      assert redirected_to(conn) == Routes.event_path(conn, :show, event.id)
+    test "redirects to show when data is valid", %{conn: conn, event: %{id: event_id}} do
+      conn = post(conn, Routes.emergency_path(conn, :create, event_id), @create_attrs)
+      %{id: id} = redirected_params(conn)
+      assert "#{event_id}" == id
+      assert redirected_to(conn) == Routes.event_path(conn, :show, event_id)
 
-      conn = get(conn, Routes.event_path(conn, :show, id))
+      conn = get(conn, Routes.event_path(conn, :show, event_id))
       assert html_response(conn, 200) =~ "alert notification is-info"
     end
 

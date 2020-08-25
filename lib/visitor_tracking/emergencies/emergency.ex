@@ -6,7 +6,7 @@ defmodule VisitorTracking.Emergencies.Emergency do
 
   import Ecto.Changeset
 
-  alias VisitorTracking.{Event, Accounts.User}
+  alias VisitorTracking.{Events.Event, Accounts.User}
 
   schema "emergencies" do
     belongs_to :initiator, User

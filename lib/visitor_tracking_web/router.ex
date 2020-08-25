@@ -32,6 +32,7 @@ defmodule VisitorTrackingWeb.Router do
     pipe_through :browser
 
     get "/", CmsController, :homepage
+    get "/v/:token", ProfileController, :verify_email
     get "/datenschutz", CmsController, :privacy
     get "/preise", CmsController, :prices
     get "/so-einfach-funktioniert-vesita", CmsController, :howto
@@ -63,7 +64,6 @@ defmodule VisitorTrackingWeb.Router do
     pipe_through [:browser, :authenticate_user, :check_phone_verified]
 
     get "/expecting_verification", ProfileController, :expecting_verification
-    get "/v/:token", ProfileController, :verify_email
     resources "/events", EventController
     get "/events/:id/start_event", EventController, :start_event
     get "/events/:id/close_event", EventController, :close_event
