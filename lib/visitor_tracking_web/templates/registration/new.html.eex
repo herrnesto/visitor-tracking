@@ -7,7 +7,7 @@
 		<div class="column is-4 is-offset-4 has-text-centered">
 
       <div class="notification is-info is-light">
-          Deine Daten werden sicher verwahrt und sind für niemanden sichtbar. Auch <strong>für den Veranstalter bleibst du Anonym</strong> (ausgenommen ID Kontrolle). Du wirst von uns informiert, sollten deine Daten <strong>im Ernstfall</strong> an den kantonsärztlichen Dienst weitergeleitet werden.
+          Deine Daten werden sicher verwahrt. Für <strong>für den Veranstalter bleibst du Anonym</strong> (ausgenommen ID Kontrolle). Du wirst von uns informiert, sollten deine Daten <strong>im Ernstfall</strong> an den kantonsärztlichen Dienst weitergeleitet werden.
         </div>
       <div id="vue-registration-form"></div>
       <input type="hidden" id="create_path" value="<%= Routes.registration_api_path(@conn, :create) %>" />
