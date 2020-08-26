@@ -75,12 +75,6 @@ config :visitor_tracking, VisitorTracking.Repo,
   url: database_url,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
-# configure bamboo adapter by environment variable
-bamboo_adapter =
-  if System.get_env("DEVELOPER_TOOLS") == "true",
-    do: Bamboo.TestAdapter,
-    else: Bamboo.SendGridAdapter
-
 twilio_account_sid = System.get_env("TWILIO_ACCOUNT_SID") || raise "Twilio account sid is missing"
 twilio_auth_token = System.get_env("TWILIO_AUTH_TOKEN") || raise "Twilio auth token missing"
 twilio_from = System.get_env("TWILIO_FROM") || raise "Twilio from number is missing"
@@ -90,11 +84,23 @@ config :visitor_tracking,
   twilio_auth_token: twilio_auth_token,
   twilio_from: twilio_from
 
-sendgrid_key = System.get_env("SENDGRID_KEY") || raise "SendGrid API key is missing"
+# configure bamboo adapter by environment variable
+bamboo_adapter =
+  if System.get_env("DEVELOPER_TOOLS") == "true",
+    do: Bamboo.TestAdapter,
+    else: Bamboo.MailgunAdapter
+
+mailgun_key = System.get_env("MAILGUN_KEY") || raise "SendGrid API key is missing"
+mailgun_domain = System.get_env("MAILGUN_DOMAIN") || raise "SendGrid API key is missing"
 
 config :visitor_tracking, VisitorTracking.Mailer,
   adapter: bamboo_adapter,
-  api_key: sendgrid_key
+  api_key: mailgun_key,
+  domain: mailgun_domain,
+  base_uri: "https://api.eu.mailgun.net/v3",
+  hackney_opts: [
+    recv_timeout: :timer.minutes(1)
+  ]
 
 sentry_dsn =
   System.get_env("SENTRY_DSN") ||
