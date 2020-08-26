@@ -6,7 +6,7 @@ defmodule VisitorTrackingWeb.RegistrationControllerTest do
       conn = post(conn, "/register", %{"phone" => "+41000000000"})
 
       assert html_response(conn, 200) =~ "Registrieren"
-      assert html_response(conn, 200) =~ "Passwort"
+      assert html_response(conn, 200) =~ "vue-registration-form"
     end
 
     test "when passed an existing phone redirects to /login", %{conn: conn} do

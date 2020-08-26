@@ -93,6 +93,7 @@ defmodule VisitorTrackingWeb.Router do
     post "/scan/assign_visitor", ScanController, :assign_visitor
     post "/contact_forms/create", ContactFormController, :create
     post "/scan/insert_action", ScanController, :insert_action
+    post "/registration/user", RegistrationApiController, :create
   end
 
   # Enables LiveDashboard only for development

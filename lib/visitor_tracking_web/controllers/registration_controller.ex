@@ -35,7 +35,7 @@ defmodule VisitorTrackingWeb.RegistrationController do
     with :phone_verified <- Twilio.validate_phone(phone),
          nil <- Accounts.get_user_by(phone: phone),
          changeset <- Accounts.change_user() do
-      render(conn, "new.html", changeset: changeset, phone: phone)
+      render(conn, "new.html", changeset: changeset, phone: phone, api_url: get_api_url())
     else
       %Accounts.User{} ->
         conn
@@ -123,5 +123,17 @@ defmodule VisitorTrackingWeb.RegistrationController do
       _ ->
         conn
     end
+  end
+
+  defp get_api_url do
+    get_protocol() <> get_host()
+  end
+
+  defp get_protocol do
+    Application.get_env(:visitor_tracking, :protocol)
+  end
+
+  defp get_host do
+    Application.get_env(:visitor_tracking, :host)
   end
 end

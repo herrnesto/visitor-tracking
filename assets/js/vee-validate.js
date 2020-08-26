@@ -1,9 +1,14 @@
-import { required, alpha_spaces, min, max, email } from "vee-validate/dist/rules";
+import { required, alpha_spaces, integer, email } from "vee-validate/dist/rules";
 import { extend } from "vee-validate";
 
 extend("required", {
   ...required,
   message: "Das ist ein Pflichtfeld!"
+});
+
+extend("integer", {
+  ...integer,
+  message: "Nur Zahlen erlaubt."
 });
 
 extend("email", {
@@ -16,12 +21,27 @@ extend("alpha_spaces", {
   message: "Nutze alphanumerische Zeichen."
 });
 
-extend("min", {
-  ...min,
-  message: "Minimum 15 Zeichen."
+
+extend('min', {
+  validate(value, { length }) {
+    return value.length >= length;
+  },
+  params: ['length'],
+  message: 'Die Eingabe muss aus mindestens {length} Zeichen bestehen.'
 });
 
-extend("max", {
-  ...max,
-  message: "Maximale Anzahl Zeichen erreicht."
+extend('max', {
+  validate(value, { length }) {
+    return value.length <= length;
+  },
+  params: ['length'],
+  message: 'Die Eingabe darf aus maximal {length} Zeichen bestehen.'
+});
+
+extend('password', {
+  params: ['target'],
+  validate(value, { target }) {
+    return value === target;
+  },
+  message: 'Beide Passwörter müssen übereinstimmen.'
 });

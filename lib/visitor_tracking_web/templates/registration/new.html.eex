@@ -1,83 +1,19 @@
 <%= render(VisitorTrackingWeb.LayoutView, "header.html", %{conn: @conn, current_user: @current_user}) %>
 
-<section>
-		<%= render(VisitorTrackingWeb.RegistrationView, "steps.html", step: 2) %>
 
+<section>
+  <%= render(VisitorTrackingWeb.RegistrationView, "steps.html", step: 2) %>
 	<div class="container">
 		<div class="column is-4 is-offset-4 has-text-centered">
-			<%= form_for @changeset, "/users", [id: "registration-form"], fn f ->	 %>
 
-        <div class="notification is-info is-light">
-          Deine Daten werden sicher verwahrt und sind für niemanden sichtbar. Auch <strong>für den Veranstalter bleibst du Anonym</strong> (ausgenommen ID Kontrolle). Du wirst von uns informiert, sollten deine Daten <strong>im Ernstfall</strong> an den kantonsärztlichen Dienst weitergeleitet werden.
+      <div class="notification is-info is-light">
+          Deine Daten werden sicher verwahrt. Für <strong>für den Veranstalter bleibst du Anonym</strong> (ausgenommen ID Kontrolle). Du wirst von uns informiert, sollten deine Daten <strong>im Ernstfall</strong> an den kantonsärztlichen Dienst weitergeleitet werden.
         </div>
-
-        <p class="title is-4">Personalien</p>
-        <div class="field">
-          <div class="control">
-            <%= text_input f, :firstname, class: "input is-medium", placeholder: "Vorname" %>
-          </div>
-          <p class="help is-danger"><%= error_tag f, :firstname %></p>
-        </div>
-
-        <div class="field">
-          <div class="control">
-            <%= text_input f, :lastname, class: "input is-medium", placeholder: "Nachname" %>
-          </div>
-          <p class="help is-danger"><%= error_tag f, :lastname %></p>
-        </div>
-
-        <div class="field">
-          <div class="control">
-            <%= text_input f, :zip, class: "input is-medium", placeholder: "Postleitzahl" %>
-          </div>
-          <p class="help is-danger"><%= error_tag f, :zip %></p>
-        </div>
-
-        <div class="field">
-          <div class="control">
-            <%= text_input f, :city, class: "input is-medium", placeholder: "Stadt" %>
-          </div>
-          <p class="help is-danger"><%= error_tag f, :city %></p>
-        </div>
-
-        <div class="field">
-          <div class="control">
-            <%= email_input f, :email, class: "input is-medium", placeholder: "E-Mail" %>
-          </div>
-          <p class="help is-danger">
-		     	  <%= error_tag f, :email %>
-		      </p>
-		    </div>
-
-        <p class="title is-4 mt-5">Sicherheit</p>
-        <p class="subtitle is-6">Setze ein Passwort mit mindestens 8 Zeichen, um jederzeit die Kontrolle über deine Daten zu haben.</p>
-        <div class="field">
-          <div class="control">
-            <%= password_input f, :password, class: "input is-medium", placeholder: "Passwort" %>
-          </div>
-          <p class="help is-danger">
-            <%= error_tag f, :password %>
-          </p>
-        </div>
-        <div class="field">
-          <div class="control">
-            <%= password_input f, :password_confirmation, class: "input is-medium", placeholder: "Passwort bestätigen" %>
-          </div>
-          <p class="help is-danger">
-            <%= error_tag f, :password_confirmation %>
-          </p>
-        </div>
-
-        <%= hidden_input f, :phone, value: @phone, class: "input is-medium", hidden: true %>
-
-		    <%= submit "Kostenlos Registrieren", class: "button is-block is-primary is-fullwidth is-medium" %>
-		    <br />
-		    <small>
-		    	<em>
-		    		Mit dem Registrieren stimmst du unseren <%= link "Datenschutzrichtlinien", to: Routes.cms_path(@conn, :privacy) %> zu.
-		    	</em>
-		    </small>
-	    <% end %>
-		</div>
+      <div id="vue-registration-form"></div>
+      <input type="hidden" id="create_path" value="<%= Routes.registration_api_path(@conn, :create) %>" />
+      <input type="hidden" id="api_url" value="<%= @api_url %>" />
+      <input type="hidden" id="phone" value="<%= @phone %>" />
+      <input type="hidden" id="next_step_url" value="<%= Routes.registration_path(@conn, :phone_verification) %>" />
+    </div>
 	</div>
 </section>
