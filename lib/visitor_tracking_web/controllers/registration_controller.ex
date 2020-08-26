@@ -97,7 +97,7 @@ defmodule VisitorTrackingWeb.RegistrationController do
 
       user.email
       |> Email.verification_email(link)
-      |> Mailer.deliver_now()
+      |> Mailer.deliver_later()
 
       render(conn, "phone_verification.html")
     else

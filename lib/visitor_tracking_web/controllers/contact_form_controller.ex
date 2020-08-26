@@ -29,7 +29,7 @@ defmodule VisitorTrackingWeb.ContactFormController do
       {:ok, _contact_form} ->
         contact_form_params
         |> Email.contact_form_email()
-        |> Mailer.deliver_now()
+        |> Mailer.deliver_later()
 
         render(conn, "response.json", status: "ok", params: contact_form_params)
 
