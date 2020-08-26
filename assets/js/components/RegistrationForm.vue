@@ -144,7 +144,7 @@ export default {
         } else {
           this.isSuccess = true
           window.scrollTo(0, 0);
-          location.reload();
+          window.location.href = this.api_url + this.next_step_url;
         }
       })
       .catch(e => {
