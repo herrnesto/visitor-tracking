@@ -11,7 +11,7 @@ defmodule VisitorTrackingWeb.RegistrationApiController do
         |> Auth.login(user)
         |> render("response.json", status: "ok", params: user_params)
 
-      {:error, changeset} ->
+      {:error, _changeset} ->
         render(conn, "response.json", status: "error", params: user_params)
     end
   end
