@@ -52,7 +52,7 @@ defmodule VisitorTrackingWeb.Plugs.Auth do
       conn
     else
       conn
-      |> put_flash(:error, "Du musst zuerst deine E-Mail-Adresse bestätigen.")
+      |> put_flash(:error, "Du musst zuerst deine Mobilnummer bestätigen.")
       |> redirect(to: "/phone_verification")
       |> halt()
     end
