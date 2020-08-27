@@ -97,6 +97,14 @@ defmodule VisitorTrackingWeb.RegistrationController do
          {:ok, _} <- Twilio.send_token(%{token: token, target_number: user.phone}) do
       render(conn, "phone_verification.html")
     else
+      {:error, :wait_before_recreate} ->
+        conn
+        |> put_flash(
+          :error,
+          "Du kannst nur ein Token pro Minute anfordern. Bitte lade die Seite in einem Augebblick neu."
+        )
+        |> render("phone_verification.html")
+
       {:error, status} ->
         conn
         |> put_flash(:error, "SMS Gateway Fehler (#{status})")
