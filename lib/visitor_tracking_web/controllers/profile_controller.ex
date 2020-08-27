@@ -9,7 +9,7 @@ defmodule VisitorTrackingWeb.ProfileController do
     {:ok, token} = Verification.create_link_token(id, email)
 
     Email.verification_email(email, token)
-    |> Mailer.deliver_now()
+    |> Mailer.deliver_later()
 
     render(conn, "expecting_verification.html")
   end
@@ -29,7 +29,7 @@ defmodule VisitorTrackingWeb.ProfileController do
 
         user.email
         |> Email.verification_email(token)
-        |> Mailer.deliver_now()
+        |> Mailer.deliver_later()
 
         redirect(conn, to: "/expecting_verification")
     end
