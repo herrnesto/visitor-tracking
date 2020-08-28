@@ -25,7 +25,7 @@
             </div>
             <div class="timeline-content">
               <p class="heading">Eine Veranstaltung erstellen.</p>
-              <p>Du kannst eine Veranstaltung erstellen und beliebig vielen Personen erlauben, Besucher zu erfassen.</p>
+              <p>Erstelle eine Verstanstaltung und füge beliebig viele <strong>Scanner</strong> hinzu. Ein Scanner ist eine Person, welcher <strong>das Kommen und Gehen des Besuchers mittels QR-Codes erfasst</strong>. Du kannst zum Beispiel 2 Scanner beim Eingang haben und einen Scanner beim Ausgang, der die Besucher wieder abmeldet. Um den QR-Code zu erfassen benötigt jeder Scanner ein gängiges Smartphone (Android / iOS).</p>
             </div>
           </div>
           <div class="timeline-item">
@@ -34,7 +34,7 @@
             </div>
             <div class="timeline-content">
               <p class="heading">Die Veranstaltung beginnt.</p>
-              <p>Am Veranstaltungstag eröffnest du die Veranstaltung und schon bist du bereit, die Besucher über die Webapplikation zu erfassen.</p>
+              <p>Am Veranstaltungstag eröffnest du die Veranstaltung und schon sind die Scanner bereit, die Besucher über die Webapplikation zu erfassen.</p>
             </div>
           </div>
           <div class="timeline-item">
