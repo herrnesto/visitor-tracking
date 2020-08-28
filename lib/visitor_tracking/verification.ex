@@ -7,7 +7,7 @@ defmodule VisitorTracking.Verification do
   import Ecto.Query
 
   # 15 min
-  @sms_expire_threshold 15 * 60
+  @sms_expire_threshold 5 * 60
 
   # 24 hours
   @link_expire_threshold 24 * 60 * 60
@@ -24,7 +24,6 @@ defmodule VisitorTracking.Verification do
       {:ok, token.code}
     else
       true -> {:error, :wait_before_recreate}
-      error -> error
     end
   end
 
@@ -127,7 +126,8 @@ defmodule VisitorTracking.Verification do
     from(t in Token,
       where: t.mobile == ^mobile,
       where: t.user_id == ^user_id,
-      where: t.inserted_at > ^time
+      where: t.inserted_at > ^time,
+      limit: 1
     )
     |> Repo.one()
     |> case do

@@ -57,7 +57,6 @@ defmodule VisitorTrackingWeb.Router do
     delete "/logout", SessionController, :delete
     get "/new_token", RegistrationController, :new_token
     get "/phone_verification", RegistrationController, :phone_verification
-    post "/phone", RegistrationController, :verify_phone
   end
 
   scope "/", VisitorTrackingWeb do
@@ -94,6 +93,7 @@ defmodule VisitorTrackingWeb.Router do
     post "/contact_forms/create", ContactFormController, :create
     post "/scan/insert_action", ScanController, :insert_action
     post "/registration/user", RegistrationApiController, :create
+    post "/phone", RegistrationApiController, :verify_phone
   end
 
   # Enables LiveDashboard only for development

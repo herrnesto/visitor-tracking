@@ -9,28 +9,15 @@
         Wir haben dir einen 6-stelligen Code als SMS geschickt. Es kann unter Umständen einen Moment dauern. Solltest du
         nach 3 Minuten keinen Token erhalten haben, wende dich an das Personal.
       </div>
+
       <p class="subtitle has-text-centered">
         Tippe den 6-stelligen Code ins Textfeld:
       </p>
-      <%= form_for @conn, "/phone", fn f ->	 %>
-      <div class="field">
-        <div class="control">
-          <%= number_input f, :code, class: "input is-medium", autofocus: "true" %>
-          <p class="help is-danger">
-            <%= error_tag f, :code %>
-          </p>
-        </div>
-        <p class="help is-danger">
-          <%= error_tag f, :code %>
-        </p>
-      </div>
 
-      <div class="field is-grouped is-grouped-centered">
-        <div class="control">
-          <%= submit "Bestätigen", class: "button is-block is-primary is-fullwidth is-medium" %>
-        </div>
-      </div>
-      <% end %>
+      <div id="vue-token-form"></div>
+      <input type="hidden" id="create_path" value="<%= Routes.registration_api_path(@conn, :verify_phone) %>" />
+      <input type="hidden" id="api_url" value="<%= @api_url %>" />
+      <input type="hidden" id="next_step_url" value="<%= Routes.profile_path(@conn, :show) %>" />
     </div>
   </div>
 </section>
