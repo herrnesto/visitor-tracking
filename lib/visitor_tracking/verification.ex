@@ -13,13 +13,17 @@ defmodule VisitorTracking.Verification do
   @link_expire_threshold 24 * 60 * 60
 
   def create_sms_code(user_id, mobile) do
-    case create_token(%{
-           type: "sms",
-           user_id: user_id,
-           mobile: mobile,
-           code: generate_code(mobile)
-         }) do
-      {:ok, token} -> {:ok, token.code}
+    with false <- sms_token_in_the_last_minute?(user_id, mobile),
+         {:ok, token} <-
+           create_token(%{
+             type: "sms",
+             user_id: user_id,
+             mobile: mobile,
+             code: generate_code(mobile)
+           }) do
+      {:ok, token.code}
+    else
+      true -> {:error, :wait_before_recreate}
       error -> error
     end
   end
@@ -115,5 +119,20 @@ defmodule VisitorTracking.Verification do
 
     :crypto.hmac(:sha256, key, email)
     |> Base.encode16()
+  end
+
+  def sms_token_in_the_last_minute?(user_id, mobile) do
+    time = NaiveDateTime.utc_now() |> NaiveDateTime.add(-@sms_expire_threshold)
+
+    from(t in Token,
+      where: t.mobile == ^mobile,
+      where: t.user_id == ^user_id,
+      where: t.inserted_at > ^time
+    )
+    |> Repo.one()
+    |> case do
+      nil -> false
+      _ -> true
+    end
   end
 end

@@ -29,19 +29,19 @@
         </b-field>
       </ValidationProvider>
 
-      <ValidationProvider rules="required|alpha_spaces|max:50" name="city" v-slot="{ errors, valid }">
-        <b-field
-            :type="{ 'is-danger': errors[0], 'is-success': valid }"
-            :message="errors">
-          <b-input type="text" v-model="city" size="is-medium" placeholder="Wohnort"></b-input>
-        </b-field>
-      </ValidationProvider>
-
       <ValidationProvider rules="required|integer|min:4|max:10" name="zip" v-slot="{ errors, valid }">
         <b-field
             :type="{ 'is-danger': errors[0], 'is-success': valid }"
             :message="errors">
           <b-input type="text" v-model="zip" size="is-medium" placeholder="Postleitzahl"></b-input>
+        </b-field>
+      </ValidationProvider>
+
+      <ValidationProvider rules="required|alpha_spaces|max:50" name="city" v-slot="{ errors, valid }">
+        <b-field
+            :type="{ 'is-danger': errors[0], 'is-success': valid }"
+            :message="errors">
+          <b-input type="text" v-model="city" size="is-medium" placeholder="Wohnort"></b-input>
         </b-field>
       </ValidationProvider>
 
@@ -143,7 +143,6 @@ export default {
           this.isSending = false
         } else {
           this.isSuccess = true
-          window.scrollTo(0, 0);
           window.location.href = this.api_url + this.next_step_url;
         }
       })

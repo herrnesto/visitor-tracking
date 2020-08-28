@@ -9,10 +9,32 @@ defmodule VisitorTracking.VerificationTest do
     %{user: Factory.insert(:user)}
   end
 
-  test "are different each time", %{user: user} do
-    assert {:ok, code_1} = Verification.create_sms_code(user.id, "+41791234567")
-    assert {:ok, code_2} = Verification.create_sms_code(user.id, "+41791234567")
-    refute code_1 == code_2
+  describe "create_sms_code/2" do
+    test "are different each time", %{user: user} do
+      user_2 = insert(:user)
+      assert {:ok, code_1} = Verification.create_sms_code(user.id, "+41791234567")
+      assert {:ok, code_2} = Verification.create_sms_code(user_2.id, "+41791234567")
+      refute code_1 == code_2
+    end
+
+    test "can not create 2 codes within a minute", %{user: user} do
+      assert {:ok, code_1} = Verification.create_sms_code(user.id, "+41791234567")
+      assert {:error, error} = Verification.create_sms_code(user.id, "+41791234567")
+      assert :wait_before_recreate = error
+    end
+  end
+
+  describe "sms_token_in_the_last_minute?/2" do
+    test "is there a token not older than one minute", %{user: user} do
+      mobile = "+41791234567"
+      insert(:sms_token, user: user, mobile: mobile)
+      assert Verification.sms_token_in_the_last_minute?(user.id, mobile)
+    end
+
+    test "there is no token created within the last minute", %{user: user} do
+      mobile = "+41791234567"
+      refute Verification.sms_token_in_the_last_minute?(user.id, mobile)
+    end
   end
 
   describe "create link token" do

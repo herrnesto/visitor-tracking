@@ -82,6 +82,8 @@ defmodule VisitorTrackingWeb.RegistrationController do
 
         Twilio.send_qr(%{uuid: user.uuid, target_number: user.phone})
 
+        send_email_verifictation(user)
+
         conn
         |> put_flash(:info, "Mobilnummer bestätigt!")
         |> redirect(to: "/profile")
@@ -93,14 +95,16 @@ defmodule VisitorTrackingWeb.RegistrationController do
 
     with {:ok, token} <- Verification.create_sms_code(user.id, user.phone),
          {:ok, _} <- Twilio.send_token(%{token: token, target_number: user.phone}) do
-      {:ok, link} = Verification.create_link_token(user.id, user.email)
-
-      user.email
-      |> Email.verification_email(link)
-      |> Mailer.deliver_later()
-
       render(conn, "phone_verification.html")
     else
+      {:error, :wait_before_recreate} ->
+        conn
+        |> put_flash(
+          :error,
+          "Du kannst nur ein Token pro Minute anfordern. Bitte lade die Seite in einem Augebblick neu."
+        )
+        |> render("phone_verification.html")
+
       {:error, status} ->
         conn
         |> put_flash(:error, "SMS Gateway Fehler (#{status})")
@@ -111,6 +115,14 @@ defmodule VisitorTrackingWeb.RegistrationController do
         |> put_flash(:error, error)
         |> render("phone_verification.html")
     end
+  end
+
+  def send_email_verifictation(user) do
+    {:ok, token} = Verification.create_link_token(user.id, user.email)
+
+    user.email
+    |> Email.verification_email(token)
+    |> Mailer.deliver_later()
   end
 
   defp redirect_if_phone_verified(conn, _) do
