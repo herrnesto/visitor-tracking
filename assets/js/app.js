@@ -74,6 +74,7 @@ import PhoneInput from "./components/PhoneInput.vue";
 import EventScanner from "./components/EventScanner.vue";
 import ContactForm from "./components/ContactForm.vue";
 import RegistrationForm from "./components/RegistrationForm.vue";
+import TokenForm from "./components/TokenForm.vue";
 import Buefy from 'buefy'
 import "./vee-validate";
 
@@ -107,6 +108,13 @@ if (registration_form) {
   new Vue({
     render: h => h(RegistrationForm)
   }).$mount("#vue-registration-form")
+}
+
+const token_form = document.querySelector('#vue-token-form')
+if (token_form) {
+  new Vue({
+    render: h => h(TokenForm)
+  }).$mount("#vue-token-form")
 }
 
 
