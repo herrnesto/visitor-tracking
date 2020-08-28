@@ -72,7 +72,7 @@
         </b-field>
       </ValidationProvider>
 
-      <div class="notification is-danger is-light mt-5" v-if="invalid">
+      <div class="notification is-warning is-light mt-5" v-if="invalid">
         Mindestens eine Eingabe fehlt oder ist falsch.
       </div>
 
@@ -91,6 +91,9 @@
         Mit dem Registrieren stimmst du unseren <a href="/datenschutz">Datenschutzrichtlinien</a> zu.
       </em>
     </small>
+
+    <b-loading :is-full-page="true" :active.sync="isSending" :can-cancel="true"></b-loading>
+
   </div>
 </template>
 
