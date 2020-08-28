@@ -30,7 +30,9 @@ defmodule VisitorTrackingWeb.SessionController do
         |> redirect(to: "/profile")
 
       {:error, _} ->
-        render(conn, "new.html")
+        conn
+        |> put_flash(:error, "Die Mobilnummer und/oder das Passwort ist falsch.")
+        |> render("new.html")
     end
   end
 
