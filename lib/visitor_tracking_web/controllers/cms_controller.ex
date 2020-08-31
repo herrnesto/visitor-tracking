@@ -73,8 +73,7 @@ defmodule VisitorTrackingWeb.CmsController do
     conn
     |> put_meta_tags(%{
       title: "Impressum | Vesita",
-      description:
-        "Impressum.",
+      description: "Impressum.",
       url: "https://www.vesita.ch",
       image:
         "https://" <>
