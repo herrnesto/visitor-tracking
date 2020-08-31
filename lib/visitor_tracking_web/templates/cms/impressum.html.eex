@@ -1,0 +1,17 @@
+<%= render(VisitorTrackingWeb.LayoutView, "header.html", %{conn: @conn, current_user: @current_user}) %>
+
+<section>
+  <div class="container mb-4">
+    <div class="column is-offset-3 is-6">
+			<div class="content is-medium">
+		    <h1 class="title has-text-centered">Impressum</h1>
+        <h2 class="is-1">Idee, Konzept, Management, Entwicklung</h2>
+        <p><a href="https://www.linkedin.com/in/simon-kistler-85648084/">Simon Kistler</a>, 5200 Brugg</p>
+        <h2 class="is-1">Konzept, Entwicklung</h2>
+        <p><a href="https://www.linkedin.com/in/george-mantzouranis-38203028/">George Mantzouranis</a></p>
+        <p></p>
+        <p class="mt-6">Bitte nutze unser <a href="/kontakt">Kontaktformular</a>.</p>
+		  </div>
+    </div>
+  </div>
+</section>

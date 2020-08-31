@@ -35,6 +35,7 @@ defmodule VisitorTrackingWeb.Router do
     get "/v/:token", ProfileController, :verify_email
     get "/datenschutz", CmsController, :privacy
     get "/preise", CmsController, :prices
+    get "/impressum", CmsController, :impressum
     get "/so-einfach-funktioniert-vesita", CmsController, :howto
     get "/login", SessionController, :new
     post "/sessions", SessionController, :create

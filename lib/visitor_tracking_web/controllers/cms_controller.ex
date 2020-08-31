@@ -68,4 +68,21 @@ defmodule VisitorTrackingWeb.CmsController do
     })
     |> render("prices.html", [])
   end
+
+  def impressum(conn, _) do
+    conn
+    |> put_meta_tags(%{
+      title: "Impressum | Vesita",
+      description:
+        "Impressum.",
+      url: "https://www.vesita.ch",
+      image:
+        "https://" <>
+          Application.get_env(:visitor_tracking, :host) <> "/images/vesita-logo-full-klein.png",
+      "og:image":
+        "https://" <>
+          Application.get_env(:visitor_tracking, :host) <> "/images/vesita-logo-full-klein.png"
+    })
+    |> render("impressum.html", [])
+  end
 end

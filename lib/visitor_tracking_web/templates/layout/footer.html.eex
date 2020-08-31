@@ -5,9 +5,10 @@
     </a>  
 
     <div class="footer-links mt-3">
-        <%= link "Kontakt", to: Routes.contact_form_path(@conn, :new), class: "button is-text" %>
-        <%= link "Preise", to: Routes.cms_path(@conn, :prices), class: "button is-text" %>
-        <%= link "Datenschutz", to: Routes.cms_path(@conn, :privacy), class: "button is-text" %>
+      <%= link "Preise", to: Routes.cms_path(@conn, :prices), class: "button is-text" %>
+      <%= link "Impressum", to: Routes.cms_path(@conn, :impressum), class: "button is-text" %>
+      <%= link "Kontakt", to: Routes.contact_form_path(@conn, :new), class: "button is-text" %>
+      <%= link "Datenschutz", to: Routes.cms_path(@conn, :privacy), class: "button is-text" %>
     </div>
 
     <p>Developed with <i class="fas fa-heart"></i></p>
