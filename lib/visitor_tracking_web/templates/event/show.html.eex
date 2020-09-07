@@ -19,6 +19,18 @@
       <% end %>
 
       <h2 class="title is-4 mt-6">Aktionen</h2>
+      
+      <%= if @event.status == "closed" do %>
+      <article class="message is-warning">
+        <div class="message-body">
+          Der Event wurde geschlossen. Es können <strong>keine Besucher</strong> mehr erfasst werden. Falls der Event noch nicht fertig ist kannst du ihn wieder öffnen.<br>
+          <%= link to: Routes.event_path(@conn, :start_event, @event), class: "button is-info is-outlined" do %>
+          <span>Event wieder öffnen</span>
+          <% end %>
+        </div>
+      </article>
+      <% end %>
+
       <p class="buttons">
 
       <%= if @event.status == "created" do %>

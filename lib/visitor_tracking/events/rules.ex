@@ -27,6 +27,9 @@ defmodule VisitorTracking.Events.Rules do
   def check(%Rules{state: "open"} = _rule, :add_scanner),
     do: {:ok, %Rules{state: "open"}}
 
+  def check(%Rules{state: "closed"} = _rule, :start_event),
+    do: {:ok, %Rules{state: "open"}}
+
   def check(%Rules{state: "closed"} = _rule, :archive_event),
     do: {:ok, %Rules{state: "archived"}}
 
