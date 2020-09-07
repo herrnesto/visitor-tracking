@@ -217,16 +217,18 @@ defmodule VisitorTracking.Events do
   end
 
   def remove_scanner(event_id, user_id) do
-    with false <- is_organiser?(event_id, user_id) do
-      query =
-        from(s in "event_scanners", where: s.event_id == ^event_id, where: s.user_id == ^user_id)
+    case is_organiser?(event_id, user_id) do
+      false ->
+        query =
+          from(s in "event_scanners", where: s.event_id == ^event_id, where: s.user_id == ^user_id)
 
-      case Repo.delete_all(query) do
-        {1, nil} -> :ok
-        {0, nil} -> {:error, "Scanner does not exist."}
-      end
-    else
-      true -> {:error, "Organiser can not be removed as a scanner."}
+        case Repo.delete_all(query) do
+          {1, nil} -> :ok
+          {0, nil} -> {:error, "Scanner does not exist."}
+        end
+
+      true ->
+        {:error, "Organiser can not be removed as a scanner."}
     end
   end
 
