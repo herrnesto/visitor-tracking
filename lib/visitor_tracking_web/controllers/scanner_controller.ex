@@ -30,4 +30,23 @@ defmodule VisitorTrackingWeb.ScannerController do
         |> render("new.html", action: action, error: reason)
     end
   end
+
+  def delete(conn, %{"id" => id, "event_id" => event_id}) do
+    case Events.remove_scanner(String.to_integer(event_id), String.to_integer(id)) do
+      :ok ->
+        conn
+        |> put_flash(:success, "Scanner wurde entfernt.")
+        |> redirect(to: Routes.event_path(conn, :show, event_id))
+
+      {:error, "Organiser can not be removed as a scanner."} ->
+        conn
+        |> put_flash(:error, "Der Organisator kann nicht als Scanner entfernt werden.")
+        |> redirect(to: Routes.event_path(conn, :show, event_id))
+
+      {:error, _} ->
+        conn
+        |> put_flash(:error, "Ein unbekannter Fehler ist aufgetreten.")
+        |> redirect(to: Routes.event_path(conn, :show, event_id))
+    end
+  end
 end

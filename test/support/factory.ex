@@ -59,9 +59,12 @@ defmodule VisitorTracking.Factory do
     }
   end
 
-  def scanner_factory do
+  def scanner_factory(attrs) do
     %{id: event_id} = insert(:event)
     %{id: user_id} = insert(:user, email_verified: true, phone_verified: true)
+
+    user_id = Map.get(attrs, :user_id, user_id)
+    event_id = Map.get(attrs, :event_id, event_id)
 
     %Events.Scanner{
       event_id: event_id,

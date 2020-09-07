@@ -7,13 +7,22 @@
           <tr>
             <th>Vorname</th>
             <th>Telefonnummer</th>
+            <th>Aktionen</th>
           </tr>
           </thead>
           <tbody>
           <%= for scanner <- @scanners do %>
           <tr>
-            <td><%= scanner.user.firstname %></td>
+            <td><%= scanner.user.firstname %> <%= if scanner.user.id == scanner.event.organiser_id do %><span class="tag is-info">Organisator</span><% end %></td>
             <td><%= scanner.user.phone %></td>
+            <td>
+              <%= link to: Routes.scanner_path(@conn, :delete, scanner.event_id, scanner.user.id), method: :delete, class: "button is-warning is-small", data: [confirm: "Scanner wirklich entfernen?"] do %>
+              <span class="icon is-small">
+                <i class="fas fa-times"></i>
+              </span>
+              <span>Scanner entfernen</span>
+              <% end %>
+            </td>
           </tr>
           <% end %>
           </tbody>
