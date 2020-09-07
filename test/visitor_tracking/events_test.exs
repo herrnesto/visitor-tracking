@@ -128,6 +128,40 @@ defmodule VisitorTracking.EventsTest do
     end
   end
 
+  describe "remove_scanner/2" do
+    test "returns an error if the scanner does not exist" do
+      event = insert(:event)
+      assert {:error, "Scanner does not exist."} == Events.remove_scanner(event.id, 9999)
+    end
+
+    test "returns an {:ok, scanner} if the scanner exists" do
+      %{event_id: event_id, user_id: user_id} = insert(:scanner)
+      assert :ok = Events.remove_scanner(event_id, user_id)
+    end
+
+    test "returns an error if the scanner is the organiser" do
+      %{id: event_id, organiser: %{id: organiser_id}} = insert(:event)
+
+      %{event_id: event_id, user_id: user_id} =
+        insert(:scanner, %{event_id: event_id, user_id: organiser_id})
+
+      assert {:error, "Organiser can not be removed as a scanner."} =
+               Events.remove_scanner(event_id, user_id)
+    end
+  end
+
+  describe "is_organiser?/2" do
+    test "user is organiser" do
+      %{id: event_id, organiser: %{id: user_id}} = insert(:event)
+      assert true = Events.is_organiser?(event_id, user_id)
+    end
+
+    test "user is not organiser" do
+      %{id: event_id} = insert(:event)
+      refute false = Events.is_organiser?(event_id, 9_999_999)
+    end
+  end
+
   test "get_event_with_preloads/1 returns an event with the organiser and scanners preloaded" do
     user = insert(:user, phone_verified: true, email_verified: true)
     event = insert(:event, organiser: user)
