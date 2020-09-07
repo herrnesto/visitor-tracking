@@ -106,7 +106,7 @@
   </div>
   <div class="container">
     <div class="column">
-      <%= render(VisitorTrackingWeb.ScannerView, "index.html", %{ conn: @conn, current_user: @current_user, event_id: @event.id, scanners: @scanners}) %>
+      <%= render(VisitorTrackingWeb.ScannerView, "index.html", %{ conn: @conn, current_user: @current_user, event_id: @event.id, scanners: @scanners, organiser: @event.organiser}) %>
     </div>
   </div>
 </section>
