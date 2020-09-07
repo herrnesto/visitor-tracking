@@ -91,7 +91,9 @@ defmodule VisitorTracking.Events.RulesTest do
     test "when closed" do
       event = %{status: "closed"}
       assert rule = Rules.from_event(event)
-      assert :error = Rules.check(rule, :start_event)
+      assert {:ok, rule_after} = Rules.check(rule, :start_event)
+      assert "open" = rule_after.state
+
     end
 
     test "when archived" do
