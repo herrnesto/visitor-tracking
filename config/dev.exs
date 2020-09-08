@@ -88,4 +88,4 @@ config :visitor_tracking, VisitorTracking.Mailer,
 config :visitor_tracking,
   twilio_account_sid: System.get_env("TWILIO_ACCOUNT_SID") || "test",
   twilio_auth_token: System.get_env("TWILIO_AUTH_TOKEN") || "test",
-  twilio_from: "+10000000000"
+  twilio_from: "VESITA - DEV"
