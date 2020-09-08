@@ -317,6 +317,7 @@ defmodule VisitorTracking.Events do
       NaiveDateTime.utc_now()
       |> Timex.shift(hours: 1)
       |> Timezone.convert("Europe/Zurich")
+    IO.inspect threshold
 
     Event
     |> where([e], e.status == "created")
