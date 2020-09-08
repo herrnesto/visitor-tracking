@@ -484,9 +484,7 @@ defmodule VisitorTracking.EventsTest do
         |> Timezone.convert("Europe/Zurich")
 
       %{id: event_1_id} = insert(:event, %{date_start: Timex.shift(now, hours: -2)})
-
       %{id: event_2_id} = insert(:event, %{date_start: Timex.shift(now, minutes: 50)})
-
       %{id: event_3_id} = insert(:event, %{date_start: Timex.shift(now, hours: 2)})
 
       events = Events.autostart_events()
@@ -496,6 +494,28 @@ defmodule VisitorTracking.EventsTest do
       assert %VisitorTracking.Events.Event{status: "open"} = Events.get_event(event_1_id)
       assert %VisitorTracking.Events.Event{status: "open"} = Events.get_event(event_2_id)
       assert %VisitorTracking.Events.Event{status: "created"} = Events.get_event(event_3_id)
+    end
+  end
+
+  describe "autoarchive_event/1" do
+    test "start events" do
+      now =
+        NaiveDateTime.utc_now()
+        |> Timezone.convert("Europe/Zurich")
+
+      %{id: event_1_id} = insert(:event, %{date_start: Timex.shift(now, days: -5)})
+      %{id: event_2_id} = insert(:event, %{date_start: Timex.shift(now, days: -13)})
+      %{id: event_3_id} = insert(:event, %{date_start: Timex.shift(now, days: -15)})
+      %{id: event_4_id} = insert(:event, %{date_start: Timex.shift(now, days: -16)})
+
+      events = Events.autoarchive_events()
+
+      assert true = is_list(events)
+
+      assert %VisitorTracking.Events.Event{status: "created"} = Events.get_event(event_1_id)
+      assert %VisitorTracking.Events.Event{status: "created"} = Events.get_event(event_2_id)
+      assert %VisitorTracking.Events.Event{status: "created"} = Events.get_event(event_3_id)
+      assert %VisitorTracking.Events.Event{status: "archived"} = Events.get_event(event_4_id)
     end
   end
 end

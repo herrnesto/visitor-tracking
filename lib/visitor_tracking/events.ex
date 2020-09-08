@@ -12,6 +12,8 @@ defmodule VisitorTracking.Events do
     Repo
   }
 
+  alias __MODULE__
+
   import Ecto.Query
 
   use Timex
@@ -315,8 +317,8 @@ defmodule VisitorTracking.Events do
   def autostart_events() do
     threshold =
       NaiveDateTime.utc_now()
-      |> Timex.shift(hours: 1)
       |> Timezone.convert("Europe/Zurich")
+      |> Timex.shift(hours: 1)
 
     Event
     |> where([e], e.status == "created")
@@ -333,5 +335,39 @@ defmodule VisitorTracking.Events do
 
       acc ++ [event]
     end)
+  end
+
+  @doc """
+  Archive events where the start date is older than 15 days.
+  """
+  def autoarchive_events() do
+    threshold =
+      NaiveDateTime.utc_now()
+      |> Timezone.convert("Europe/Zurich")
+      |> Timex.shift(days: -15)
+
+    Event
+    |> where([e], e.status != "archived")
+    |> where([e], e.date_start < ^threshold)
+    |> Repo.all()
+    |> Enum.reduce([], fn x, acc ->
+      event = Events.change_state(x, :archive_event)
+
+      acc ++ [event]
+    end)
+  end
+
+  def change_state(event, state) do
+    rule = Rules.from_event(event)
+
+    with {:ok, rule_after} <- Rules.check(rule, :archive_event),
+         {:ok, event} =
+           event
+           |> Event.changeset(%{"status" => rule_after.state})
+           |> Repo.update() do
+      event
+    else
+      :error -> "error"
+    end
   end
 end
