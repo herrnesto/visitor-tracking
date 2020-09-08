@@ -479,14 +479,15 @@ defmodule VisitorTracking.EventsTest do
 
   describe "autostart_event/1" do
     test "start events" do
-      %{id: event_1_id} =
-        insert(:event, %{date_start: Timex.shift(NaiveDateTime.utc_now(), hours: -2)})
+      now =
+        NaiveDateTime.utc_now()
+        |> Timezone.convert("Europe/Zurich")
 
-      %{id: event_2_id} =
-        insert(:event, %{date_start: Timex.shift(NaiveDateTime.utc_now(), minutes: 50)})
+      %{id: event_1_id} = insert(:event, %{date_start: Timex.shift(now, hours: -2)})
 
-      %{id: event_3_id} =
-        insert(:event, %{date_start: Timex.shift(NaiveDateTime.utc_now(), hours: 2)})
+      %{id: event_2_id} = insert(:event, %{date_start: Timex.shift(now, minutes: 50)})
+
+      %{id: event_3_id} = insert(:event, %{date_start: Timex.shift(now, hours: 2)})
 
       events = Events.autostart_events()
 

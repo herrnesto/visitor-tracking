@@ -40,6 +40,11 @@ config :phoenix_meta_tags,
   description: "Das COVID19 Schutzkonzept des Bundes einfach umgesetzt für Clubs und Bars.",
   url: "https://www.vesita.ch"
 
+config :visitor_tracking, VisitorTracking.Scheduler,
+  jobs: [
+    {"* * * * *", fn -> VisitorTracking.Events.autostart_events() end}
+  ]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

@@ -66,7 +66,8 @@ defmodule VisitorTracking.MixProject do
       {:sentry, "~> 7.0"},
       {:cors_plug, "~> 2.0"},
       {:phoenix_meta_tags, ">= 0.1.8"},
-      {:timex, "~> 3.5"}
+      {:timex, "~> 3.5"},
+      {:quantum, "~> 3.0"}
     ]
   end
 

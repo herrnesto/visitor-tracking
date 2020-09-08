@@ -313,7 +313,10 @@ defmodule VisitorTracking.Events do
   defp update_actions(list, action) when is_map(action), do: [action]
 
   def autostart_events() do
-    threshold = Timex.shift(NaiveDateTime.utc_now(), hours: 1)
+    threshold =
+      NaiveDateTime.utc_now()
+      |> Timex.shift(hours: 1)
+      |> Timezone.convert("Europe/Zurich")
 
     Event
     |> where([e], e.status == "created")
@@ -327,8 +330,8 @@ defmodule VisitorTracking.Events do
         x
         |> Event.changeset(%{"status" => rule_after.state})
         |> Repo.update()
-        acc ++ [event]
+
+      acc ++ [event]
     end)
-    |> IO.inspect
   end
 end
