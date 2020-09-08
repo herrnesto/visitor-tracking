@@ -33,7 +33,7 @@ defmodule VisitorTrackingWeb.EventControllerTest do
   setup %{conn: conn} do
     user = insert(:user, email_verified: true, phone_verified: true)
     conn = assign(conn, :current_user, user)
-    event = insert(:event, organiser: user)
+    event = insert(:event, %{organiser: user})
 
     {:ok, %{conn: conn, event: event}}
   end

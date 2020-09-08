@@ -1,6 +1,8 @@
 defmodule VisitorTracking.EventsTest do
   use VisitorTracking.DataCase, async: true
 
+  use Timex
+
   alias VisitorTracking.{Accounts, Events, Events.Event, Events.Visitor}
 
   setup do
@@ -182,7 +184,7 @@ defmodule VisitorTracking.EventsTest do
 
   describe "assign_visitor/2" do
     test "assigns a visitor to an event" do
-      %{id: event_id} = event = insert(:event, status: "open")
+      %{id: event_id} = event = insert(:event, %{status: "open"})
       %{id: user_id} = user = insert(:user)
 
       assert {:ok, %Visitor{user_id: ^user_id, event_id: ^event_id}} =
@@ -190,7 +192,7 @@ defmodule VisitorTracking.EventsTest do
     end
 
     test "returns an error if visitor is already assigned" do
-      event = insert(:event, status: "open")
+      event = insert(:event, %{status: "open"})
       user = insert(:user)
       Events.assign_visitor(event, user)
 
@@ -206,7 +208,7 @@ defmodule VisitorTracking.EventsTest do
     end
 
     test "returns an error if the event is closed" do
-      event = insert(:event, status: "closed")
+      event = insert(:event, %{status: "closed"})
       user = insert(:user)
 
       assert {:error, :event_closed} = Events.assign_visitor(event, user)
@@ -220,7 +222,7 @@ defmodule VisitorTracking.EventsTest do
     end
 
     test "returns a number when the id is an integer" do
-      event = insert(:event, status: "open")
+      event = insert(:event, %{status: "open"})
       user = insert(:user)
       Events.assign_visitor(event, user)
 
@@ -228,7 +230,7 @@ defmodule VisitorTracking.EventsTest do
     end
 
     test "returns a number when the id is a string" do
-      event = insert(:event, status: "open")
+      event = insert(:event, %{status: "open"})
       user = insert(:user)
       Events.assign_visitor(event, user)
 
@@ -472,6 +474,28 @@ defmodule VisitorTracking.EventsTest do
       event_id = 999
       assert [] = Events.get_all_visitor_actions_by_event(event_id, 999)
       assert true = Enum.empty?(Events.get_all_visitor_actions_by_event(event_id, 999))
+    end
+  end
+
+  describe "autostart_event/1" do
+    test "start events" do
+      now =
+        NaiveDateTime.utc_now()
+        |> Timezone.convert("Europe/Zurich")
+
+      %{id: event_1_id} = insert(:event, %{date_start: Timex.shift(now, hours: -2)})
+
+      %{id: event_2_id} = insert(:event, %{date_start: Timex.shift(now, minutes: 50)})
+
+      %{id: event_3_id} = insert(:event, %{date_start: Timex.shift(now, hours: 2)})
+
+      events = Events.autostart_events()
+
+      assert true = is_list(events)
+
+      assert %VisitorTracking.Events.Event{status: "open"} = Events.get_event(event_1_id)
+      assert %VisitorTracking.Events.Event{status: "open"} = Events.get_event(event_2_id)
+      assert %VisitorTracking.Events.Event{status: "created"} = Events.get_event(event_3_id)
     end
   end
 end

@@ -7,16 +7,11 @@ defmodule VisitorTracking.Application do
 
   def start(_type, _args) do
     children = [
-      # Start the Ecto repository
       VisitorTracking.Repo,
-      # Start the Telemetry supervisor
       VisitorTrackingWeb.Telemetry,
-      # Start the PubSub system
       {Phoenix.PubSub, name: VisitorTracking.PubSub},
-      # Start the Endpoint (http/https)
-      VisitorTrackingWeb.Endpoint
-      # Start a worker by calling: VisitorTracking.Worker.start_link(arg)
-      # {VisitorTracking.Worker, arg}
+      VisitorTrackingWeb.Endpoint,
+      VisitorTracking.Scheduler
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

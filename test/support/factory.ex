@@ -48,14 +48,18 @@ defmodule VisitorTracking.Factory do
     }
   end
 
-  def event_factory do
+  def event_factory(params) do
+    date_start = Map.get(params, :date_start, NaiveDateTime.utc_now())
+    status = Map.get(params, :status, "created")
+    organiser = Map.get(params, :organiser, insert(:user))
+
     %Events.Event{
-      organiser: insert(:user),
+      organiser: organiser,
       name: "Test Event",
       venue: "Test Venue",
       visitor_limit: 100,
-      date_start: NaiveDateTime.utc_now(),
-      status: "created"
+      date_start: date_start,
+      status: status
     }
   end
 
