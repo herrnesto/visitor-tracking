@@ -311,4 +311,24 @@ defmodule VisitorTracking.Events do
 
   defp update_actions(list, action) when is_list(list) and is_map(action), do: list ++ action
   defp update_actions(list, action) when is_map(action), do: [action]
+
+  def autostart_events() do
+    threshold = Timex.shift(NaiveDateTime.utc_now(), hours: 1)
+
+    Event
+    |> where([e], e.status == "created")
+    |> where([e], e.date_start < ^threshold)
+    |> Repo.all()
+    |> Enum.reduce([], fn x, acc ->
+      rule = Rules.from_event(x)
+      {:ok, rule_after} = Rules.check(rule, :start_event)
+
+      {:ok, event} =
+        x
+        |> Event.changeset(%{"status" => rule_after.state})
+        |> Repo.update()
+        acc ++ [event]
+    end)
+    |> IO.inspect
+  end
 end
