@@ -361,7 +361,7 @@ defmodule VisitorTracking.Events do
     rule = Rules.from_event(event)
 
     with {:ok, rule_after} <- Rules.check(rule, :archive_event),
-         {:ok, event} =
+         {:ok, event} <-
            event
            |> Event.changeset(%{"status" => rule_after.state})
            |> Repo.update() do

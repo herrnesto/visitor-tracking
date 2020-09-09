@@ -43,7 +43,7 @@ config :phoenix_meta_tags,
 config :visitor_tracking, VisitorTracking.Scheduler,
   jobs: [
     {"*/5 * * * *", fn -> VisitorTracking.Events.autostart_events() end},
-    {"1 * * * *", fn -> VisitorTracking.Events.autoarchive_events() end},
+    {"1 * * * *", fn -> VisitorTracking.Events.autoarchive_events() end}
   ]
 
 # Import environment specific config. This must remain at the bottom
