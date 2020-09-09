@@ -3,7 +3,7 @@
 <section>
   <div class="container">
     <div class="column">
-      <h1 class="title"><%= @event.name %> <span class="tag is-primary"><%= @event.status %></span></h1>
+      <h1 class="title"><%= @event.name %></h1>
       <p class="subtitle"><%= @event.date_start %> @ <%= @event.venue %></p>
       <div class="tags has-addons">
         <span class="tag <%= if @event.status == "created" do %>is-primary<% end %>">Erstellt</span>
@@ -18,88 +18,91 @@
         </div>
       <% end %>
 
-      <h2 class="title is-4 mt-6">Aktionen</h2>
-      
-      <%= if @event.status == "closed" do %>
-      <article class="message is-warning">
-        <div class="message-body">
-          Der Event wurde geschlossen. Es können <strong>keine Besucher</strong> mehr erfasst werden. Falls der Event noch nicht fertig ist kannst du ihn wieder öffnen.<br>
-          <%= link to: Routes.event_path(@conn, :start_event, @event), class: "button is-info is-outlined" do %>
-          <span>Event wieder öffnen</span>
-          <% end %>
-        </div>
-      </article>
-      <% end %>
+      <%= if @event.status != "archived" do %>
 
-      <p class="buttons">
+        <h2 class="title is-4 mt-6">Aktionen</h2>
 
-      <%= if @event.status == "created" do %>
-          <a class="button is-link is-outlined" href="<%= Routes.event_path(@conn, :edit, @event) %>">
-            <span class="icon is-small">
-              <i class="fas fa-edit"></i>
-            </span>
-            <span>Veranstaltung Bearbeiten</span>
-          </a>
-
-          <%= link to: Routes.event_path(@conn, :delete, @event), method: :delete, class: "button is-danger is-outlined", data: [confirm: "Wirklich löschen?"] do %>
-            <span class="icon is-small">
-              <i class="fas fa-times"></i>
-            </span>
-            <span>Veranstaltung Löschen</span>
-          <% end %>
-        <% end %>
-
-        <%= if event_organiser?(@conn, @event) do %>
-          <%= if @event.status != "closed" do %>
-            <%= link to: "/events/#{@event.id}/scanners/new", class: "button is-primary is-outlined" do %>
-              <span class="icon is-small">
-                        <i class="fas fa-user-plus"></i>
-                      </span>
-              <span>Scanner hinzufügen</span>
+        <%= if @event.status == "closed" do %>
+        <article class="message is-warning">
+          <div class="message-body">
+            Der Event wurde geschlossen. Es können <strong>keine Besucher</strong> mehr erfasst werden. Falls der Event noch nicht fertig ist kannst du ihn wieder öffnen.<br>
+            <%= link to: Routes.event_path(@conn, :start_event, @event), class: "button is-info is-outlined" do %>
+            <span>Event wieder öffnen</span>
             <% end %>
-          <% end %>
-
-          <%= if @event.status == "closed" do %>
-            <%= if !@emergency do %>
-              <%= link to: Routes.emergency_path(@conn, :new, @event.id), class: "button is-danger" do %>
-              <span class="icon is-small">
-                      <i class="fas fa-times"></i>
-                    </span>
-              <span>Ernstfall einleiten</span>
-              <% end %>
-            <% else %>
-                <em>Keine Aktionen möglich.</em>
-            <% end %>
-          <% end %>
+          </div>
+        </article>
         <% end %>
 
-        <%= if @event.status == "open" do %>
-          <%= link to: Routes.event_path(@conn, :close_event, @event), class: "button is-danger is-outlined", data: [confirm: "Event wirklich schliesse? Es können keine Besucher mehr reingelassen werden."] do %>
-          <span class="icon is-small">
-                    <i class="fas fa-times"></i>
-                  </span>
-          <span>Event schliessen</span>
-          <% end %>
-        <% end %>
-
-        <%= if @event.status == "open" do %>
-          <%= link to: Routes.scan_path(@conn, :show, @event), method: :get, class: "button is-link is-outlined", data: [confirm: "Mit dem Scannen starten?"] do %>
-          <span class="icon is-small">
-              <i class="fas fa-qrcode"></i>
-            </span>
-          <span>Scanner starten</span>
-          <% end %>
-        <% end %>
+        <p class="buttons">
 
         <%= if @event.status == "created" do %>
-          <%= link to: Routes.event_path(@conn, :start_event, @event), class: "button is-info is-outlined" do %>
-          <span class="icon is-small">
+            <a class="button is-link is-outlined" href="<%= Routes.event_path(@conn, :edit, @event) %>">
+              <span class="icon is-small">
+                <i class="fas fa-edit"></i>
+              </span>
+              <span>Veranstaltung Bearbeiten</span>
+            </a>
+
+            <%= link to: Routes.event_path(@conn, :delete, @event), method: :delete, class: "button is-danger is-outlined", data: [confirm: "Wirklich löschen?"] do %>
+              <span class="icon is-small">
                 <i class="fas fa-times"></i>
               </span>
-          <span>Event starten</span>
+              <span>Veranstaltung Löschen</span>
+            <% end %>
           <% end %>
-        <% end %>
-      </p>
+
+          <%= if event_organiser?(@conn, @event) do %>
+            <%= if @event.status != "closed" do %>
+              <%= link to: "/events/#{@event.id}/scanners/new", class: "button is-primary is-outlined" do %>
+                <span class="icon is-small">
+                          <i class="fas fa-user-plus"></i>
+                        </span>
+                <span>Scanner hinzufügen</span>
+              <% end %>
+            <% end %>
+
+            <%= if @event.status == "closed" do %>
+              <%= if !@emergency do %>
+                <%= link to: Routes.emergency_path(@conn, :new, @event.id), class: "button is-danger" do %>
+                <span class="icon is-small">
+                        <i class="fas fa-times"></i>
+                      </span>
+                <span>Ernstfall einleiten</span>
+                <% end %>
+              <% else %>
+                  <em>Keine Aktionen möglich.</em>
+              <% end %>
+            <% end %>
+          <% end %>
+
+          <%= if @event.status == "open" do %>
+            <%= link to: Routes.event_path(@conn, :close_event, @event), class: "button is-danger is-outlined", data: [confirm: "Event wirklich schliesse? Es können keine Besucher mehr reingelassen werden."] do %>
+            <span class="icon is-small">
+                      <i class="fas fa-times"></i>
+                    </span>
+            <span>Event schliessen</span>
+            <% end %>
+          <% end %>
+
+          <%= if @event.status == "open" do %>
+            <%= link to: Routes.scan_path(@conn, :show, @event), method: :get, class: "button is-link is-outlined", data: [confirm: "Mit dem Scannen starten?"] do %>
+            <span class="icon is-small">
+                <i class="fas fa-qrcode"></i>
+              </span>
+            <span>Scanner starten</span>
+            <% end %>
+          <% end %>
+
+          <%= if @event.status == "created" do %>
+            <%= link to: Routes.event_path(@conn, :start_event, @event), class: "button is-info is-outlined" do %>
+            <span class="icon is-small">
+                  <i class="fas fa-times"></i>
+                </span>
+            <span>Event starten</span>
+            <% end %>
+          <% end %>
+        </p>
+      <% end %>
 
       <h2 class="title is-4 mt-6">Besucher Übersicht</h2>
       <p><%= @visitors.active_visitors %> von <%= @event.visitor_limit %></p>
@@ -109,19 +112,21 @@
   </div>
 </section>
 
-<section class="mt-6">
-  <div class="container">
-    <div class="column">
-      <h1 class="title is-4">Scanners</h1>
-      <p class="subtitle">Hier kannst du Personen hinzufügen, welche die Besucher registrieren können. Die Personen müssen bei Vesita registriert sein.</p>
+<%= if @event.status != "archived" do %>
+  <section class="mt-6">
+    <div class="container">
+      <div class="column">
+        <h1 class="title is-4">Scanners</h1>
+        <p class="subtitle">Hier kannst du Personen hinzufügen, welche die Besucher registrieren können. Die Personen müssen bei Vesita registriert sein.</p>
+      </div>
     </div>
-  </div>
-  <div class="container">
-    <div class="column">
-      <%= render(VisitorTrackingWeb.ScannerView, "index.html", %{ conn: @conn, current_user: @current_user, event_id: @event.id, scanners: @scanners, organiser: @event.organiser}) %>
+    <div class="container">
+      <div class="column">
+        <%= render(VisitorTrackingWeb.ScannerView, "index.html", %{ conn: @conn, current_user: @current_user, event_id: @event.id, scanners: @scanners, organiser: @event.organiser}) %>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+<% end %>
 
 <section class="mt-6">
   <div class="container">
