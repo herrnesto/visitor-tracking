@@ -4,7 +4,7 @@ defmodule VisitorTracking.Accounts do
   """
 
   alias VisitorTracking.Accounts.User
-  alias VisitorTracking.{Repo, Verification}
+  alias VisitorTracking.{Events.Event, Repo, Verification}
 
   import Ecto.Query
 
@@ -76,6 +76,6 @@ defmodule VisitorTracking.Accounts do
   def get_all_events_from_scanner(id) do
     User
     |> Repo.get(id)
-    |> Repo.preload([:event_scanner])
+    |> Repo.preload([event_scanner: (from e in Event, order_by: [desc: e.date_start])])
   end
 end
