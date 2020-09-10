@@ -26,7 +26,8 @@
    <div class="container mb-4">
      <div class="column is-8 is-offset-2 has-text-centered">
        <h2 class="title">Warum Vesita?</h2>
-       <p class="subtitle mt-2">Mit Vesita hast Du die Möglichkeit, innert Sekunden die validierten Kontaktdaten deiner Gäste zu sammeln. Im Notfall kannst du sie direkt den kantonsärztlichen Diensten weiterleiten lassen, ohne dass du dich mit Listen oder Downloads herumschlagen musst.<br><br>Wir haben ein <strong>Pay-As-You-Go</strong> Preismodell. Mehr informationen findest du bei unseren <a href="<%= Routes.cms_path(@conn, :prices) %>">Preisen</a>.</p>
+       <p class="subtitle mt-2">Mit Vesita hast Du die Möglichkeit, innert Sekunden die validierten Kontaktdaten deiner Gäste zu sammeln. Im Notfall kannst du sie direkt den kantonsärztlichen Diensten weiterleiten lassen, ohne dass du dich mit Listen oder Downloads herumschlagen musst.<br><br>
+         Wir sind unabhängig und verkaufen keine Daten. Unsere Auslagen decken wir mit einem <strong>Pay-As-You-Go</strong> Preismodell. Mehr Informationen findest du bei unseren <a href="<%= Routes.cms_path(@conn, :prices) %>">Preisen</a>.</p>
        <p>
          <a href="<%= Routes.cms_path(@conn, :howto) %>"><button class="button is-large is-outlined is-info">Zur Anleitung</button></a>
        </p>
