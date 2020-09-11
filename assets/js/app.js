@@ -71,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 import Vue from "vue";
 import PhoneInput from "./components/PhoneInput.vue";
+import DatetimeInput from "./components/DatetimeInput.vue";
 import EventScanner from "./components/EventScanner.vue";
 import ContactForm from "./components/ContactForm.vue";
 import RegistrationForm from "./components/RegistrationForm.vue";
@@ -87,6 +88,13 @@ if (phone_input_field) {
   new Vue({
     render: h => h(PhoneInput)
   }).$mount("#phone-input")
+}
+
+const datetime_input_field = document.querySelector('#datetime-input')
+if (datetime_input_field) {
+  new Vue({
+    render: h => h(DatetimeInput)
+  }).$mount("#datetime-input")
 }
 
 const event_scanner_field = document.querySelector('#event-scanner')
@@ -116,5 +124,3 @@ if (token_form) {
     render: h => h(TokenForm)
   }).$mount("#vue-token-form")
 }
-
-

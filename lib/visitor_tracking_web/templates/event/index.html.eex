@@ -43,7 +43,7 @@
                       <%= event.status %></span>
                   </td>
                   <td><%= event.visitor_limit %></td>
-                  <td><%= event.date_start %></td>
+                  <td><%= datetime_convert(event.date_start)  %></td>
                 </tr>
             <% end %>
           </tbody>

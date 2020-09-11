@@ -4,7 +4,7 @@
   <div class="container">
     <div class="column">
       <h1 class="title"><%= @event.name %></h1>
-      <p class="subtitle"><%= @event.date_start %> @ <%= @event.venue %></p>
+      <p class="subtitle"><%= datetime_convert(@event.date_start) %> @ <%= @event.venue %></p>
       <div class="tags has-addons">
         <span class="tag <%= if @event.status == "created" do %>is-primary<% end %>">Erstellt</span>
         <span class="tag <%= if @event.status == "open" do %>is-success<% end %>">Gestartet</span>

@@ -1,5 +1,6 @@
 /* This file is for your main application css. */
 @import "../node_modules/nprogress/nprogress.css";
+@import "../node_modules/vue-datetime/dist/vue-datetime.min.css";
 
 /*! bulma.io v0.9.0 | MIT License | github.com/jgthms/bulma */
 @import "bulma/utilities/_all";
@@ -24,7 +25,8 @@
   &-burger {
     color: white;
   }
-  &-item:hover {
+  &-item:hover,
+  &-item:active {
     .navbar-link {
       color: #4a4a4a !important;
     }
