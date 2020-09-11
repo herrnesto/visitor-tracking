@@ -14,8 +14,9 @@ export default {
       datetime: ""
     }
   },
-  created() {
-    console.log("Vue component created")
+  mounted() {
+    var datetime = document.querySelector("[name~=datetime-tmp]").value;
+    console.log(document.querySelector("[name~=datetime-tmp]").value)
   }
 }
 </script>
