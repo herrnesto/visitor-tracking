@@ -24,7 +24,7 @@
   &-burger {
     color: white;
   }
-  &-item.is-active {
+  &-item:hover {
     .navbar-link {
       color: #4a4a4a !important;
     }
