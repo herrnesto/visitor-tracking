@@ -73,7 +73,8 @@ database_url =
 config :visitor_tracking, VisitorTracking.Repo,
   # ssl: true,
   url: database_url,
-  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
+  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
+  pool_size: String.to_integer(System.get_env("DATABASE_PORT") || "5421")
 
 twilio_account_sid = System.get_env("TWILIO_ACCOUNT_SID") || raise "Twilio account sid is missing"
 twilio_auth_token = System.get_env("TWILIO_AUTH_TOKEN") || raise "Twilio auth token missing"
