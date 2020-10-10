@@ -2,7 +2,7 @@ defmodule VisitorTracking.Factory do
   @moduledoc false
 
   use ExMachina.Ecto, repo: VisitorTracking.Repo
-  alias VisitorTracking.{Accounts, Events, Verification, Emergencies}
+  alias VisitorTracking.{Accounts, Events, Verification, Emergencies, Password}
 
   def user_factory do
     %Accounts.User{
@@ -44,6 +44,19 @@ defmodule VisitorTracking.Factory do
       token: nil,
       email: nil,
       code: "654321",
+      mobile: "+10000000000"
+    }
+  end
+
+  def password_token_factory do
+    key = Time.utc_now() |> Time.to_string()
+
+    token =
+      :crypto.hmac(:sha256, key, sequence(:mobile, &"+4179100000#{&1}"))
+      |> Base.encode16()
+
+    %Password.Token{
+      token: token,
       mobile: "+10000000000"
     }
   end
