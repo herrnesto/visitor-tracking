@@ -19,7 +19,7 @@ defmodule VisitorTrackingWeb.PasswordController do
         conn
         |> put_flash(
           :error,
-          "Du kannst nur alle 5 Minuten einen Link anfordern. Bitte lade die Seite in wenigen Augenblicken neu."
+          "Du kannst nur alle 15 Minuten einen Link anfordern. Bitte lade die Seite in wenigen Augenblicken neu."
         )
         |> render("reset_password.html")
 
