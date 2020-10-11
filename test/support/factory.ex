@@ -57,7 +57,7 @@ defmodule VisitorTracking.Factory do
 
     %Password.Token{
       token: token,
-      mobile: "+10000000000"
+      phone: "+10000000000"
     }
   end
 

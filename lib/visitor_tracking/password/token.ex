@@ -7,17 +7,26 @@ defmodule VisitorTracking.Password.Token do
 
   schema "password_tokens" do
     field :token, :string
-    field :mobile, :string
-    field :valid, :boolean
+    field :phone, :string
 
     timestamps()
   end
 
   @doc false
   def changeset(token, attrs) do
+    attrs = clean_phone_number(attrs)
+
     token
-    |> cast(attrs, [:token, :mobile])
-    |> validate_required([:token, :mobile])
+    |> cast(attrs, [:token, :phone])
+    |> validate_required([:token, :phone])
     |> unique_constraint(:token)
   end
+
+  defp clean_phone_number(%{"phone" => phone} = attrs) do
+    phone = String.replace(phone, " ", "")
+
+    Map.put(attrs, "phone", phone)
+  end
+
+  defp clean_phone_number(attrs), do: attrs
 end

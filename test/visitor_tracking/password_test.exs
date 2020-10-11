@@ -4,7 +4,6 @@ defmodule VisitorTracking.PasswordTest do
   alias VisitorTracking.Password
   alias VisitorTracking.Password.Token
 
-
   describe "create_token/1" do
     test "are different each time" do
       assert {:ok, code_1} = Password.create_token("+41791234567")
@@ -21,23 +20,23 @@ defmodule VisitorTracking.PasswordTest do
 
   describe "has_unexpired_token?/1" do
     test "is there a token not older than defined time minute" do
-      mobile = "+41791234567"
-      insert(:password_token, mobile: mobile)
-      assert Password.has_unexpired_token?(mobile)
+      phone = "+41791234567"
+      insert(:password_token, phone: phone)
+      assert Password.has_unexpired_token?(phone)
     end
 
     test "there is no token created within the last minute" do
-      mobile = "+41791234567"
-      refute Password.has_unexpired_token?(mobile)
+      phone = "+41791234567"
+      refute Password.has_unexpired_token?(phone)
     end
   end
 
   describe "verify_token/1" do
     test "valid" do
-      mobile = "+41791234567"
-      {:ok, token} = Password.create_token("+41791234567")
+      phone = "+41791234567"
+      {:ok, token} = Password.create_token(phone)
 
-      assert {:ok, mobile} == Password.verify_token(token)
+      assert {:ok, phone} == Password.verify_token(token)
     end
 
     test "not found" do
@@ -53,6 +52,35 @@ defmodule VisitorTracking.PasswordTest do
       |> Repo.update_all(set: [updated_at: time])
 
       assert {:error, _msg} = Password.verify_token(token)
+    end
+  end
+
+  describe "change_password/2" do
+    test "successfull change pasword" do
+      %{password: password_orig, password_hash: password_hash_orig} = user = insert(:user)
+
+      {:ok, token} = Password.create_token(user.phone)
+
+      assert {:ok, %{password: password, password_hash: password_hash}} =
+               Password.change_user_password(token, %{
+                 "password" => "00000000",
+                 "password_confirmation" => "00000000"
+               })
+
+      refute password_orig == password
+      refute password_hash_orig == password_hash
+    end
+
+    test "failed change pasword" do
+      user = insert(:user)
+
+      {:ok, token} = Password.create_token(user.phone)
+
+      assert {:error, changeset} =
+               Password.change_user_password(token, %{
+                 "password" => "00000000",
+                 "password_confirmation" => "11111111"
+               })
     end
   end
 end

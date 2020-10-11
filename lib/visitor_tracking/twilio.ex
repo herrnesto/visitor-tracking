@@ -32,6 +32,20 @@ defmodule VisitorTracking.Twilio do
     end
   end
 
+  def send_token(_), do: {:error, "missing params"}
+
+  def send_password_reset(%{url: url, target_number: target_number} = args) do
+    message = "Hier kannst du dein Passwort zurücksetzen: https://www.vesita.ch/#{url}"
+
+    with {:ok, response} <- Message.send(%{message: message, target_number: target_number}) do
+      Responses.log(response, args)
+
+      format_response(response.status_code)
+    end
+  end
+
+  def send_password_reset(_), do: {:error, "missing params"}
+
   def format_response(201), do: {:ok, "sms was sent"}
 
   def format_response(status_code), do: {:error, "status_code: #{status_code}"}

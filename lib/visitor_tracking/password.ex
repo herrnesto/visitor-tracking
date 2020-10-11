@@ -1,20 +1,23 @@
 defmodule VisitorTracking.Password do
   @moduledoc false
 
-  alias VisitorTracking.Repo
+  alias VisitorTracking.{Accounts, Repo}
+  alias VisitorTracking.Accounts.User
   alias VisitorTracking.Password.Token
 
   import Ecto.Query
 
   # 15 min
-  @token_expire_threshold 5 * 60
+  @token_expire_threshold 15 * 60
 
-  def create_token(mobile) do
-    with false <- has_unexpired_token?(mobile),
+  def create_token(phone) do
+    phone = String.replace(phone, " ", "")
+
+    with false <- has_unexpired_token?(phone),
          {:ok, token} <-
            create_password_token(%{
-             mobile: mobile,
-             token: generate_token(mobile)
+             phone: phone,
+             token: generate_token(phone)
            }) do
       {:ok, token.token}
     else
@@ -31,7 +34,7 @@ defmodule VisitorTracking.Password do
   def verify_token(token) do
     case get_valid_token(token) do
       nil -> {:error, "token not found or expired"}
-      token -> {:ok, token.mobile}
+      token -> {:ok, token.phone}
     end
   end
 
@@ -45,25 +48,34 @@ defmodule VisitorTracking.Password do
     |> Repo.one()
   end
 
-  defp generate_token(mobile) do
+  defp generate_token(phone) do
     key = Time.utc_now() |> Time.to_string()
 
-    :crypto.hmac(:sha256, key, mobile)
+    :crypto.hmac(:sha256, key, phone)
     |> Base.encode16()
   end
 
-  def has_unexpired_token?(mobile) do
+  def has_unexpired_token?(phone) do
     time = NaiveDateTime.utc_now() |> NaiveDateTime.add(-@token_expire_threshold)
 
     from(t in Token,
-      where: t.mobile == ^mobile,
+      where: t.phone == ^phone,
       where: t.inserted_at > ^time,
       limit: 1
     )
     |> Repo.one()
     |> case do
-         nil -> false
-         _ -> true
-       end
+      nil -> false
+      _ -> true
+    end
+  end
+
+  def change_user_password(token, user_params) do
+    token = get_valid_token(token)
+
+    %{phone: token.phone}
+    |> Accounts.get_user_by()
+    |> User.change_password_changeset(user_params)
+    |> Repo.update()
   end
 end
