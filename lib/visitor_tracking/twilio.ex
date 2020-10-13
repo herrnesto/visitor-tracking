@@ -7,23 +7,9 @@ defmodule VisitorTracking.Twilio do
 
   alias __MODULE__.{Message, Responses}
 
-  def send_token(%{token: token, target_number: target_number} = args) do
-    message = "Dein Token lautet: #{token}  - Schliesse die Registrierung unter #{get_website_url()} ab."
-
-    with {:ok, response} <- Message.send(%{message: message, target_number: target_number}) do
-      Responses.log(response, args)
-
-      format_response(response.status_code)
-    end
-  end
-
-  def send_token(_), do: {:error, "missing params"}
-
-  def send_qr(%{uuid: uuid, target_number: target_number} = args) do
+  def send_token(%{uri: uri, token: token, target_number: target_number} = args) do
     message =
-      "Bewahre diese SMS auf. Deinen QR-Code kannst du jederzeit hier abrufen: #{get_website_url()}/qr/#{
-        uuid
-      }"
+      "Dein Token lautet: #{token}  - Schliesse die Registrierung unter #{uri} ab."
 
     with {:ok, response} <- Message.send(%{message: message, target_number: target_number}) do
       Responses.log(response, args)
@@ -34,8 +20,20 @@ defmodule VisitorTracking.Twilio do
 
   def send_token(_), do: {:error, "missing params"}
 
-  def send_password_reset(%{url: url, target_number: target_number} = args) do
-    message = "Hier kannst du dein Passwort zurücksetzen: #{get_website_url()}/#{url}"
+  def send_qr(%{uri: uri, target_number: target_number} = args) do
+    message = "Bewahre diese SMS auf. Deinen QR-Code kannst du jederzeit hier abrufen: #{uri}"
+
+    with {:ok, response} <- Message.send(%{message: message, target_number: target_number}) do
+      Responses.log(response, args)
+
+      format_response(response.status_code)
+    end
+  end
+
+  def send_qr(_), do: {:error, "missing params"}
+
+  def send_password_reset(%{uri: uri, target_number: target_number} = args) do
+    message = "Hier kannst du dein Passwort zurücksetzen: #{uri}"
 
     with {:ok, response} <- Message.send(%{message: message, target_number: target_number}) do
       Responses.log(response, args)
@@ -60,17 +58,5 @@ defmodule VisitorTracking.Twilio do
     Responses.log(response, %{phone: phone})
 
     format_validation_response(response.status_code)
-  end
-
-  defp get_website_url do
-    get_protocol() <> get_host() <> ""
-  end
-
-  defp get_protocol do
-    Application.get_env(:visitor_tracking, :protocol)
-  end
-
-  defp get_host do
-    Application.get_env(:visitor_tracking, :host)
   end
 end
