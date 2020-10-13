@@ -8,8 +8,7 @@ defmodule VisitorTracking.Twilio do
   alias __MODULE__.{Message, Responses}
 
   def send_token(%{uri: uri, token: token, target_number: target_number} = args) do
-    message =
-      "Dein Token lautet: #{token}  - Schliesse die Registrierung unter #{uri} ab."
+    message = "Dein Token lautet: #{token}  - Schliesse die Registrierung unter #{uri} ab."
 
     with {:ok, response} <- Message.send(%{message: message, target_number: target_number}) do
       Responses.log(response, args)

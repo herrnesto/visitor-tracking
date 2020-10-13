@@ -99,7 +99,7 @@ defmodule VisitorTrackingWeb.RegistrationController do
     with {:ok, token} <- Verification.create_sms_code(user.id, user.phone),
          {:ok, _} <-
            Twilio.send_token(%{
-             uri: get_uri(Routes.registration_path(conn, :phone_verification, user.uuid)),
+             uri: get_uri(Routes.registration_path(conn, :phone_verification)),
              token: token,
              target_number: user.phone
            }) do
