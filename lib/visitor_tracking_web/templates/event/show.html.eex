@@ -9,7 +9,7 @@
         <span class="tag <%= if @event.status == "created" do %>is-primary<% end %>">Erstellt</span>
         <span class="tag <%= if @event.status == "open" do %>is-success<% end %>">Gestartet</span>
         <span class="tag <%= if @event.status == "closed" do %>is-warning<% end %>">Geschlossen</span>
-        <span class="tag <%= if @event.status == "archived" do %>is-danger<% end %>">Archiviert</span>
+        <span class="tag <%= if @event.status == "archived" do %><% end %>">Archiviert</span>
       </div>
 
       <%= if @emergency do %>
