@@ -10,10 +10,10 @@ defmodule VisitorTrackingWeb.PasswordController do
 
   def reset_password_request(conn, %{"phone" => phone}) do
     with {:ok, token} <- Password.create_token(phone),
-         uri <- Routes.password_path(conn, :reset_password, token),
+         path <- Routes.password_path(conn, :reset_password, token),
          {:ok, _} <-
            Twilio.send_password_reset(%{
-             uri: uri,
+             uri: get_uri(path),
              target_number: phone
            }) do
       render(conn, "reset_password_request.html")
@@ -56,6 +56,10 @@ defmodule VisitorTrackingWeb.PasswordController do
 
   defp get_api_uri do
     get_protocol() <> get_host()
+  end
+
+  defp get_uri(path) do
+    get_protocol() <> get_host() <> path
   end
 
   defp get_protocol do
