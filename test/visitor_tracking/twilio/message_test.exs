@@ -86,7 +86,5 @@ defmodule VisitorTracking.Twilio.MessageTest do
        }}
 
     assert {:ok, response} = Message.send(args)
-
-    # assert result.body = response.body
   end
 end

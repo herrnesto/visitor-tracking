@@ -22,7 +22,9 @@
 		      </div>
 		     	<p class="help is-danger"><%= error_tag f, :password %></p>
 		    </div>
-		    <%= submit "Anmelden", class: "button is-block is-primary is-fullwidth is-medium" %>
+        <p class="description mb-4"><%= link "Passwort vergessen?", to: Routes.password_path(@conn, :reset_password_request_form) %>.</p>
+
+        <%= submit "Anmelden", class: "button is-block is-primary is-fullwidth is-medium" %>
 		    <br />
 		  <% end %>
 		</div>

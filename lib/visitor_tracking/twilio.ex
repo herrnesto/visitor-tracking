@@ -7,8 +7,8 @@ defmodule VisitorTracking.Twilio do
 
   alias __MODULE__.{Message, Responses}
 
-  def send_token(%{token: token, target_number: target_number} = args) do
-    message = "Dein Token lautet: #{token}"
+  def send_token(%{uri: uri, token: token, target_number: target_number} = args) do
+    message = "Dein Token lautet: #{token}  - Schliesse die Registrierung unter #{uri} ab."
 
     with {:ok, response} <- Message.send(%{message: message, target_number: target_number}) do
       Responses.log(response, args)
@@ -19,11 +19,8 @@ defmodule VisitorTracking.Twilio do
 
   def send_token(_), do: {:error, "missing params"}
 
-  def send_qr(%{uuid: uuid, target_number: target_number} = args) do
-    message =
-      "Bewahre diese SMS auf. Deinen QR-Code kannst du jederzeit hier abrufen: https://www.vesita.ch/qr/#{
-        uuid
-      }"
+  def send_qr(%{uri: uri, target_number: target_number} = args) do
+    message = "Bewahre diese SMS auf. Deinen QR-Code kannst du jederzeit hier abrufen: #{uri}"
 
     with {:ok, response} <- Message.send(%{message: message, target_number: target_number}) do
       Responses.log(response, args)
@@ -31,6 +28,20 @@ defmodule VisitorTracking.Twilio do
       format_response(response.status_code)
     end
   end
+
+  def send_qr(_), do: {:error, "missing params"}
+
+  def send_password_reset(%{uri: uri, target_number: target_number} = args) do
+    message = "Hier kannst du dein Passwort zurücksetzen: #{uri}"
+
+    with {:ok, response} <- Message.send(%{message: message, target_number: target_number}) do
+      Responses.log(response, args)
+
+      format_response(response.status_code)
+    end
+  end
+
+  def send_password_reset(_), do: {:error, "missing params"}
 
   def format_response(201), do: {:ok, "sms was sent"}
 

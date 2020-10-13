@@ -10,7 +10,7 @@ defmodule VisitorTrackingWeb.ScanController do
       event = %{status: "open"} ->
         conn
         |> put_layout("scanner.html")
-        |> render("index.html", %{event: event, api_url: get_api_url()})
+        |> render("index.html", %{event: event, api_url: get_api_uri()})
 
       %{status: _} ->
         conn
@@ -61,7 +61,7 @@ defmodule VisitorTrackingWeb.ScanController do
     end
   end
 
-  defp get_api_url do
+  defp get_api_uri do
     get_protocol() <> get_host() <> "/api"
   end
 

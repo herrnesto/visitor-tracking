@@ -21,7 +21,7 @@ defmodule VisitorTrackingWeb.ContactFormController do
         "https://" <>
           Application.get_env(:visitor_tracking, :host) <> "/images/vesita-logo-full-klein.png"
     })
-    |> render("new.html", changeset: changeset, api_url: get_api_url())
+    |> render("new.html", changeset: changeset, api_url: get_api_uri())
   end
 
   def create(conn, %{"contact_form" => contact_form_params}) do
@@ -43,7 +43,7 @@ defmodule VisitorTrackingWeb.ContactFormController do
     render(conn, "show.html", contact_form: contact_form)
   end
 
-  defp get_api_url do
+  defp get_api_uri do
     get_protocol() <> get_host()
   end
 

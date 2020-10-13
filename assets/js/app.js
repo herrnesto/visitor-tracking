@@ -75,6 +75,7 @@ import DatetimeInput from "./components/DatetimeInput.vue";
 import EventScanner from "./components/EventScanner.vue";
 import ContactForm from "./components/ContactForm.vue";
 import RegistrationForm from "./components/RegistrationForm.vue";
+import PasswordResetForm from "./components/PasswordResetForm.vue";
 import TokenForm from "./components/TokenForm.vue";
 import Buefy from 'buefy'
 import "./vee-validate";
@@ -123,4 +124,11 @@ if (token_form) {
   new Vue({
     render: h => h(TokenForm)
   }).$mount("#vue-token-form")
+}
+
+const password_reset_form = document.querySelector('#vue-password-reset-form')
+if (password_reset_form) {
+  new Vue({
+    render: h => h(PasswordResetForm)
+  }).$mount("#vue-password-reset-form")
 }

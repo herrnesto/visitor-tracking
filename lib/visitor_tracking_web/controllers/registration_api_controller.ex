@@ -26,7 +26,10 @@ defmodule VisitorTrackingWeb.RegistrationApiController do
       {:ok, visitor_id} ->
         Accounts.verify_phone(visitor_id)
 
-        Twilio.send_qr(%{uuid: user.uuid, target_number: user.phone})
+        Twilio.send_qr(%{
+          uri: get_uri(Routes.qr_path(conn, :show, user.uuid)),
+          target_number: user.phone
+        })
 
         send_email_verifictation(user)
 
@@ -40,5 +43,17 @@ defmodule VisitorTrackingWeb.RegistrationApiController do
     user.email
     |> Email.verification_email(token)
     |> Mailer.deliver_later()
+  end
+
+  defp get_uri(path) do
+    get_protocol() <> get_host() <> path
+  end
+
+  defp get_protocol do
+    Application.get_env(:visitor_tracking, :protocol)
+  end
+
+  defp get_host do
+    Application.get_env(:visitor_tracking, :host)
   end
 end

@@ -45,6 +45,13 @@ defmodule VisitorTrackingWeb.Router do
     get "/kontakt", ContactFormController, :new
   end
 
+  scope "/password/", VisitorTrackingWeb do
+    pipe_through :browser
+    get "/", PasswordController, :reset_password_request_form
+    post "/", PasswordController, :reset_password_request
+    get "/:token", PasswordController, :reset_password
+  end
+
   scope "/", VisitorTrackingWeb do
     pipe_through [:browser, :check_registered]
 
@@ -95,6 +102,7 @@ defmodule VisitorTrackingWeb.Router do
     post "/scan/insert_action", ScanController, :insert_action
     post "/registration/user", RegistrationApiController, :create
     post "/phone", RegistrationApiController, :verify_phone
+    post "/password/reset", PasswordApiController, :reset_password
   end
 
   # Enables LiveDashboard only for development

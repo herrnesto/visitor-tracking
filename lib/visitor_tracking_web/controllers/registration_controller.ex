@@ -35,7 +35,7 @@ defmodule VisitorTrackingWeb.RegistrationController do
     with :phone_verified <- Twilio.validate_phone(phone),
          nil <- Accounts.get_user_by(phone: phone),
          changeset <- Accounts.change_user() do
-      render(conn, "new.html", changeset: changeset, phone: phone, api_url: get_api_url())
+      render(conn, "new.html", changeset: changeset, phone: phone, api_url: get_api_uri())
     else
       %Accounts.User{} ->
         conn
@@ -80,7 +80,10 @@ defmodule VisitorTrackingWeb.RegistrationController do
       {:ok, visitor_id} ->
         Accounts.verify_phone(visitor_id)
 
-        Twilio.send_qr(%{uuid: user.uuid, target_number: user.phone})
+        Twilio.send_qr(%{
+          uri: get_uri(Routes.qr_path(conn, :show, user.uuid)),
+          target_number: user.phone
+        })
 
         send_email_verifictation(user)
 
@@ -94,8 +97,13 @@ defmodule VisitorTrackingWeb.RegistrationController do
     user = conn.assigns.current_user
 
     with {:ok, token} <- Verification.create_sms_code(user.id, user.phone),
-         {:ok, _} <- Twilio.send_token(%{token: token, target_number: user.phone}) do
-      render(conn, "phone_verification.html", api_url: get_api_url())
+         {:ok, _} <-
+           Twilio.send_token(%{
+             uri: get_uri(Routes.registration_path(conn, :phone_verification)),
+             token: token,
+             target_number: user.phone
+           }) do
+      render(conn, "phone_verification.html", api_url: get_api_uri())
     else
       {:error, :wait_before_recreate} ->
         conn
@@ -103,17 +111,17 @@ defmodule VisitorTrackingWeb.RegistrationController do
           :error,
           "Du kannst nur alle 5 Minuten einen Token anfordern. Bitte lade die Seite in wenigen Augenblicken neu."
         )
-        |> render("phone_verification.html", api_url: get_api_url())
+        |> render("phone_verification.html", api_url: get_api_uri())
 
       {:error, status} ->
         conn
         |> put_flash(:error, "SMS Gateway Fehler (#{status})")
-        |> render("phone_verification.html", api_url: get_api_url())
+        |> render("phone_verification.html", api_url: get_api_uri())
 
       error ->
         conn
         |> put_flash(:error, error)
-        |> render("phone_verification.html", api_url: get_api_url())
+        |> render("phone_verification.html", api_url: get_api_uri())
     end
   end
 
@@ -137,8 +145,12 @@ defmodule VisitorTrackingWeb.RegistrationController do
     end
   end
 
-  defp get_api_url do
+  defp get_api_uri do
     get_protocol() <> get_host()
+  end
+
+  defp get_uri(path) do
+    get_protocol() <> get_host() <> path
   end
 
   defp get_protocol do

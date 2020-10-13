@@ -96,6 +96,27 @@ defmodule VisitorTracking.Accounts.User do
     |> hash_password()
   end
 
+  def change_password_changeset(user, attrs) do
+    user
+    |> cast(attrs, [
+      :password,
+      :password_confirmation
+    ])
+    |> validate_required(
+      [
+        :password,
+        :password_confirmation
+      ],
+      message: "Pflichtfeld"
+    )
+    |> validate_length(:password, min: 8)
+    |> validate_confirmation(:password,
+      required: true,
+      message: "password and confirmation do not match"
+    )
+    |> hash_password()
+  end
+
   def phone_verification_changeset(user, attrs) do
     user
     |> cast(attrs, [:phone_verified])

@@ -39,7 +39,7 @@
                       <%= if event.status == "created" do %>is-primary<% end %>
                       <%= if event.status == "open" do %>is-success<% end %>
                       <%= if event.status == "closed" do %>is-warning<% end %>
-                      <%= if event.status == "archived" do %>is-danger<% end %>">
+                      <%= if event.status == "archived" do %><% end %>">
                       <%= event.status %></span>
                   </td>
                   <td><%= event.visitor_limit %></td>
