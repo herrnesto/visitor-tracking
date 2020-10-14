@@ -1,6 +1,6 @@
-defmodule VisitorTracking.Twilio.Responses.Response do
+defmodule VisitorTracking.Twilio.Response.Response do
   @moduledoc """
-  Ecto schema for Twilio responses for faster debugging.
+  Ecto schema for Twilio Response for faster debugging.
   """
   use Ecto.Schema
 

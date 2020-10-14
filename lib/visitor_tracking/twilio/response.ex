@@ -1,9 +1,9 @@
-defmodule VisitorTracking.Twilio.Responses do
+defmodule VisitorTracking.Twilio.Response do
   @moduledoc """
-  Handle Twilio API responses.
+  Handle Twilio API Response.
   """
   alias VisitorTracking.Repo
-  alias VisitorTracking.Twilio.Responses.Response
+  alias VisitorTracking.Twilio.Response.Response
 
   @doc """
   Log the response in the database.
