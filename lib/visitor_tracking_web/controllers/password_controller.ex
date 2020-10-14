@@ -28,7 +28,7 @@ defmodule VisitorTrackingWeb.PasswordController do
 
       {:error, status} ->
         conn
-        |> put_flash(:error, "SMS Gateway Fehler (#{status})")
+        |> put_flash(:error, status)
         |> render("reset_password.html")
 
       error ->

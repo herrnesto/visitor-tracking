@@ -115,7 +115,7 @@ defmodule VisitorTrackingWeb.RegistrationController do
 
       {:error, status} ->
         conn
-        |> put_flash(:error, "SMS Gateway Fehler (#{status})")
+        |> put_flash(:error, status)
         |> render("phone_verification.html", api_url: get_api_uri())
 
       error ->

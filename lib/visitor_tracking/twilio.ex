@@ -41,7 +41,7 @@ defmodule VisitorTracking.Twilio do
     with {:ok, response} <- Message.send(%{message: message, target_number: target_number}) do
       Response.log(response, args)
 
-      {:ok, reponse_body} = Jason.decode(response)
+      {:ok, reponse_body} = Jason.decode(response.body)
 
       format_response(response.status_code, reponse_body)
     end
