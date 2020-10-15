@@ -29,7 +29,8 @@ defmodule VisitorTracking.TwilioTest do
     end
 
     test "429" do
-      assert {:error, "Fehler: 429 - Es wurden zu viele Anfragen an Twilio geschickt. Versuche es in einer Minute nochmals."} ==
+      assert {:error,
+              "Fehler: 429 - Es wurden zu viele Anfragen an Twilio geschickt. Versuche es in einer Minute nochmals."} ==
                Twilio.format_response(
                  429,
                  '{"code": 20429, "message": "Too Many Requests", "more_info": "https://www.twilio.com/docs/errors/20429", "status": 429}'
