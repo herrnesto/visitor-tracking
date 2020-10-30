@@ -20,6 +20,7 @@ defmodule VisitorTrackingWeb.Router do
         "https://www.vesita.local:4001",
         "https://0.0.0.0:4001",
         "https://visitor-tracking-staging.gigalixirapp.com",
+        "https://vesita-prod.herokuapp.com",
         "https://www.vesita.ch"
       ]
 
